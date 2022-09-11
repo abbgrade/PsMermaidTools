@@ -1,4 +1,10 @@
 
+[CmdletBinding()]
+param (
+    [Parameter()]
+    [int] $BuildNumber
+)
+
 $ModuleName = 'PsMermaidTools'
 
 . $PSScriptRoot/tasks/Build.Tasks.ps1
