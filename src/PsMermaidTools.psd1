@@ -30,7 +30,7 @@ CompanyName = ''
 Copyright = '(c) Steffen Kampmann. All rights reserved.'
 
 # Description of the functionality provided by this module
-# Description = ''
+Description = 'PowerShell Module to create Mermaid diagrams.'
 
 # Minimum version of the PowerShell engine required by this module
 # PowerShellVersion = ''
@@ -95,19 +95,19 @@ PrivateData = @{
     PSData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
-        # Tags = @()
+        Tags = @('mermaid', 'documentation')
 
         # A URL to the license for this module.
-        # LicenseUri = ''
+        LicenseUri = 'https://github.com/abbgrade/PsMermaidTools/blob/develop/LICENSE'
 
         # A URL to the main website for this project.
-        # ProjectUri = ''
+        ProjectUri = 'https://github.com/abbgrade/PsMermaidTools'
 
         # A URL to an icon representing this module.
         # IconUri = ''
 
         # ReleaseNotes of this module
-        # ReleaseNotes = ''
+        ReleaseNotes = 'https://github.com/abbgrade/PsMermaidTools/blob/develop/CHANGELOG.md'
 
         # Prerelease string of this module
         # Prerelease = ''
