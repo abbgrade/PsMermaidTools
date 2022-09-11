@@ -32,12 +32,12 @@ Describe ConvertTo-String {
         It works-for-diagram {
             $output = $diagram | ConvertTo-MermaidString
             $output | Should -Not -BeNullOrEmpty
-            $output | Should -Be @"
+            $output | Should -Be (@"
 erDiagram
     Customer ||--o{ Order : places
     Order ||--|{ LineItem : contains
     Customer }|..|{ DeliveryAddress : uses
-"@
+"@.Replace("`r`n", [Environment]::NewLine))
         }
     }
 }

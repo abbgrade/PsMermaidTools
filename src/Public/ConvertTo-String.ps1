@@ -116,6 +116,6 @@ function ConvertTo-String {
                     Write-Error "convert $_ is not supported."
                 }
             }
-        ) -join "`r`n" | Write-Output
+        ) -join [Environment]::NewLine | Write-Output
     }
 }
