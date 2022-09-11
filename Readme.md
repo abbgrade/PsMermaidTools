@@ -22,6 +22,8 @@ Invoke-Build Install
 
 ## Commands
 
+See the [docs](https://abbgrade.github.io/PsMermaidTools/).
+
 ## Changelog
 
 See the [changelog](./CHANGELOG.md) file.
