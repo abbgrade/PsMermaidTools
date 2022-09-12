@@ -39,42 +39,56 @@ function Add-Relation {
         $Diagram,
 
         # The first entity of the relation.
-        [Parameter(Position = 1)]
+        [Parameter(Mandatory, ParameterSetName='Entity')]
+        [ValidateNotNullOrEmpty()]
+        [string] $Entity,
+
+        # The first entity of the relation.
+        [Parameter(Mandatory, Position = 1, ParameterSetName='Relation')]
         [ValidateNotNullOrEmpty()]
         [string] $FirstEntity,
 
         # How often the first entity exists in the relation.
-        [Parameter(Position = 0)]
+        [Parameter(Mandatory, Position = 0, ParameterSetName='Relation')]
         [ValidateSet('Zero-or-one', 'Exactly-one', 'Zero-or-more', 'One-or-more')]
         [string] $FirstCardinality,
 
         # The second entity of the relation.
-        [Parameter(Position = 4)]
+        [Parameter(Mandatory, Position = 4, ParameterSetName='Relation')]
         [ValidateNotNullOrEmpty()]
         [string] $SecondEntity,
 
         # How often the second entity exists in the relation.
-        [Parameter(Position = 3)]
+        [Parameter(Mandatory, Position = 3, ParameterSetName='Relation')]
         [ValidateSet('Zero-or-one', 'Exactly-one', 'Zero-or-more', 'One-or-more')]
         [string] $SecondCardinality,
 
         # Describes the relationship.
-        [Parameter( Position = 2)]
+        [Parameter(Mandatory, Position = 2, ParameterSetName='Relation')]
         [string] $Label,
 
         # Specifies if one of the entities may exist without the other.
-        [Parameter()]
+        [Parameter(ParameterSetName='Relation')]
         [switch] $NonIdentifying
     )
 
-    $Diagram.Relations += [PSCustomObject]@{
-        FirstEntity = $FirstEntity
-        Relationship = [PSCustomObject]@{
-            FirstCardinality = $FirstCardinality
-            SecondCardinality = $SecondCardinality
-            Identifying = -Not $NonIdentifying.IsPresent
+    switch ( $PSCmdlet.ParameterSetName ) {
+        Relation {
+            $Diagram.Relations += [PSCustomObject]@{
+                FirstEntity = $FirstEntity
+                Relationship = [PSCustomObject]@{
+                    FirstCardinality = $FirstCardinality
+                    SecondCardinality = $SecondCardinality
+                    Identifying = -Not $NonIdentifying.IsPresent
+                }
+                SecondEntity = $SecondEntity
+                Label = $Label
+            }
         }
-        SecondEntity = $SecondEntity
-        Label = $Label
+        Entity {
+            $Diagram.Relations += [PSCustomObject]@{
+                FirstEntity = $Entity
+            }
+        }
     }
 }

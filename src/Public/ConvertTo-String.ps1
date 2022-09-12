@@ -50,11 +50,11 @@ function ConvertTo-String {
         [string] $FirstEntity,
 
         # Relationship of the relation.
-        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'erRelation')]
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'erRelation')]
         [PSObject] $Relationship,
 
         # First second of the relation.
-        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'erRelation')]
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'erRelation')]
         [string] $SecondEntity,
 
         # Describes the relation.
@@ -88,7 +88,12 @@ function ConvertTo-String {
                     $Relations | ConvertTo-String | Write-Output
                 }
                 erRelation {
-                    Write-Output "    $($FirstEntity) $( $Relationship | ConvertTo-String ) $( $SecondEntity )$( if ( $Label ) {" : $( $Label )" })"
+                    if ( $SecondEntity ) {
+                        Write-Output "    $FirstEntity $( $Relationship | ConvertTo-String ) $SecondEntity$( if ( $Label ) {" : $Label" })"
+                    }
+                    else {
+                        Write-Output "    $FirstEntity"
+                    }
                 }
                 erRelationship {
                     $FirstCardinalityCode = switch ($FirstCardinality) {
