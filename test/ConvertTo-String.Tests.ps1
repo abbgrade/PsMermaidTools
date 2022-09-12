@@ -12,31 +12,48 @@ Describe ConvertTo-String {
         }
 
         It works-for-identifying-relationship {
-            $output = $diagram.Relations[0].Relationship | ConvertTo-MermaidString
+            $output = $diagram.Relations[0].Relationship | ConvertTo-MermaidString -ErrorAction Stop
             $output | Should -Not -BeNullOrEmpty
             $output | Should -Be '||--o{'
         }
 
         It works-for-non-identifying-relationship {
-            $output = $diagram.Relations[2].Relationship | ConvertTo-MermaidString
+            $output = $diagram.Relations[2].Relationship | ConvertTo-MermaidString -ErrorAction Stop
             $output | Should -Not -BeNullOrEmpty
             $output | Should -Be '}|..|{'
         }
 
         It works-for-relation {
-            $output = $diagram.Relations[0] | ConvertTo-MermaidString
+            $output = $diagram.Relations[0] | ConvertTo-MermaidString -ErrorAction Stop
             $output | Should -Not -BeNullOrEmpty
             $output | Should -Be '    Customer ||--o{ Order : places'
         }
 
         It works-for-diagram {
-            $output = $diagram | ConvertTo-MermaidString
+            $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
             $output | Should -Not -BeNullOrEmpty
             $output | Should -Be (@"
 erDiagram
     Customer ||--o{ Order : places
     Order ||--|{ LineItem : contains
     Customer }|..|{ DeliveryAddress : uses
+"@.Replace("`r`n", [Environment]::NewLine))
+        }
+    }
+
+    Context minimum-erDiagram {
+        BeforeAll {
+            $diagram = New-MermaidDiagram -Type erDiagram
+            $diagram | Add-MermaidRelation -
+            Entity Entity
+        }
+
+        It works {
+            $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+            $output | Should -Not -BeNullOrEmpty
+            $output | Should -Be (@"
+erDiagram
+    Entity
 "@.Replace("`r`n", [Environment]::NewLine))
         }
     }

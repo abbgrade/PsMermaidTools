@@ -19,8 +19,8 @@ ConvertTo-MermaidString -Type <String> -Relations <PSObject[]> [<CommonParameter
 
 ### erRelation
 ```
-ConvertTo-MermaidString -FirstEntity <String> -Relationship <PSObject> -SecondEntity <String> [-Label <String>]
- [<CommonParameters>]
+ConvertTo-MermaidString -FirstEntity <String> [-Relationship <PSObject>] [-SecondEntity <String>]
+ [-Label <String>] [<CommonParameters>]
 ```
 
 ### erRelationship
@@ -104,7 +104,7 @@ Type: PSObject
 Parameter Sets: erRelation
 Aliases:
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
@@ -119,7 +119,7 @@ Type: String
 Parameter Sets: erRelation
 Aliases:
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)

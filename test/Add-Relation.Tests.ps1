@@ -55,6 +55,14 @@ Describe Add-Relation {
             $diagram.Relations[2].Relationship.Identifying | Should -Be $false
             $diagram.Relations[2].Label | Should -Be uses
         }
+
+        It works-without-second-entity {
+            $diagram | Add-MermaidRelation -Entity First
+            $diagram | Should -Not -BeNullOrEmpty
+            $diagram.Relations | Should -Not -BeNullOrEmpty
+            $diagram.Relations.Count | Should -Be 1
+            $diagram.Relations[0].FirstEntity | Should -Be First
+        }
     }
 
 }

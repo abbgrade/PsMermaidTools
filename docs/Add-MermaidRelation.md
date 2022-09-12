@@ -12,9 +12,15 @@ Add a relation to a erDiagram.
 
 ## SYNTAX
 
+### Entity
 ```
-Add-MermaidRelation [-Diagram <Object>] [[-FirstEntity] <String>] [[-FirstCardinality] <String>]
- [[-SecondEntity] <String>] [[-SecondCardinality] <String>] [[-Label] <String>] [-NonIdentifying]
+Add-MermaidRelation [-Diagram <Object>] -Entity <String> [<CommonParameters>]
+```
+
+### Relation
+```
+Add-MermaidRelation [-Diagram <Object>] [-FirstEntity] <String> [-FirstCardinality] <String>
+ [-SecondEntity] <String> [-SecondCardinality] <String> [-Label] <String> [-NonIdentifying]
  [<CommonParameters>]
 ```
 
@@ -56,15 +62,30 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
+### -Entity
+The first entity of the relation.
+
+```yaml
+Type: String
+Parameter Sets: Entity
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -FirstEntity
 The first entity of the relation.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Relation
 Aliases:
 
-Required: False
+Required: True
 Position: 2
 Default value: None
 Accept pipeline input: False
@@ -76,10 +97,10 @@ How often the first entity exists in the relation.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Relation
 Aliases:
 
-Required: False
+Required: True
 Position: 1
 Default value: None
 Accept pipeline input: False
@@ -91,10 +112,10 @@ The second entity of the relation.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Relation
 Aliases:
 
-Required: False
+Required: True
 Position: 5
 Default value: None
 Accept pipeline input: False
@@ -106,10 +127,10 @@ How often the second entity exists in the relation.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Relation
 Aliases:
 
-Required: False
+Required: True
 Position: 4
 Default value: None
 Accept pipeline input: False
@@ -121,10 +142,10 @@ Describes the relationship.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Relation
 Aliases:
 
-Required: False
+Required: True
 Position: 3
 Default value: None
 Accept pipeline input: False
@@ -136,7 +157,7 @@ Specifies if one of the entities may exist without the other.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: Relation
 Aliases:
 
 Required: False
