@@ -44,8 +44,7 @@ erDiagram
     Context minimum-erDiagram {
         BeforeAll {
             $diagram = New-MermaidDiagram -Type erDiagram
-            $diagram | Add-MermaidRelation -
-            Entity Entity
+            $diagram | Add-MermaidRelation -Entity Entity
         }
 
         It works {
