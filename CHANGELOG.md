@@ -7,8 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2022-09-14
+
+### Added
+
+- Parameter validation and entity creation.
+
 ## [0.1.0] - 2022-09-11
 
 ### Added
 
 - erDiagram generation.
+
+<!-- markdownlint-configure-file {"MD024": { "siblings_only": true } } -->
