@@ -34,9 +34,10 @@ function ConvertTo-String {
 
         #region diagram
 
-        # The diagram type.
+        # The diagram or flowchart link type.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'erDiagram')]
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartLink')]
         [string] $Type,
 
         #region erDiagram

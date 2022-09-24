@@ -12,8 +12,14 @@ Creates a new mermaid diagram.
 
 ## SYNTAX
 
+### erDiagram (Default)
 ```
-New-MermaidDiagram [-Type] <String> [<CommonParameters>]
+New-MermaidDiagram -Type <String> [<CommonParameters>]
+```
+
+### flowchart
+```
+New-MermaidDiagram -Type <String> -Orientation <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -47,7 +53,22 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 1
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Orientation
+The diagram oriuebtatuib.
+
+```yaml
+Type: String
+Parameter Sets: flowchart
+Aliases:
+
+Required: True
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

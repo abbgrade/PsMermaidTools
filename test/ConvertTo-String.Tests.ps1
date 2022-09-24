@@ -57,10 +57,38 @@ erDiagram
         }
     }
 
+    Context empty-erDiagram {
+        BeforeAll {
+            $diagram = New-MermaidDiagram -Type erDiagram
+        }
+
+        It works {
+            $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+            $output | Should -Not -BeNullOrEmpty
+            $output | Should -Be (@"
+erDiagram
+"@.Replace("`r`n", [Environment]::NewLine))
+        }
+    }
+
+    Context empty-flowchart {
+        BeforeAll {
+            $diagram = New-MermaidDiagram -Type flowchart -Orientation LR
+        }
+
+        It works {
+            $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+            $output | Should -Not -BeNullOrEmpty
+            $output | Should -Be (@"
+flowchart LR
+"@.Replace("`r`n", [Environment]::NewLine))
+        }
+    }
+
     Context flowchart {
         BeforeAll {
             $diagram = New-MermaidDiagram -Type flowchart -Orientation LR
-            $diagram | Add-MermaidLink A B
+            $diagram | Add-MermaidLink A B arrow
         }
 
         It works {
@@ -76,7 +104,7 @@ flowchart LR
     Context flowchart-with-nodes {
         BeforeAll {
             $diagram = New-MermaidDiagram -Type flowchart -Orientation LR
-            $diagram | Add-MermaidLink A B
+            $diagram | Add-MermaidLink A B arrow
             $diagram | Add-MermaidNode A test cylindrical
         }
 
