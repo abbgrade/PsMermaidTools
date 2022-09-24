@@ -56,4 +56,20 @@ erDiagram
 "@.Replace("`r`n", [Environment]::NewLine))
         }
     }
+
+    Context flowchart {
+        BeforeAll {
+            $diagram = New-MermaidDiagram -Type flowchart -Orientation LR
+            $diagram | Add-MermaidLink A B
+        }
+
+        It works {
+            $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+            $output | Should -Not -BeNullOrEmpty
+            $output | Should -Be (@"
+flowchart LR
+    A-->B
+"@.Replace("`r`n", [Environment]::NewLine))
+        }
+    }
 }

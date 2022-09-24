@@ -31,17 +31,33 @@ function ConvertTo-String {
 
     [CmdletBinding()]
     param (
-        #region erDiagram
+
+        #region diagram
 
         # The diagram type.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'erDiagram')]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
         [string] $Type,
+
+        #region erDiagram
 
         # Collection of relations.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'erDiagram')]
         [PsObject[]] $Relations,
 
         #end region
+        #region flowchart
+
+        # Orientation of the flowchart.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
+        [string] $Orientation,
+
+        # Collection of links for a flowchart.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
+        [PsObject[]] $Links,
+
+        #end region
+        #endregion
 
         #region erRelation
 
@@ -62,6 +78,18 @@ function ConvertTo-String {
         [string] $Label,
 
         #end region
+
+        #region flowchartLink
+
+        # Source node of the link.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartLink')]
+        [string] $SourceNode,
+
+        # Destination node of the link.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartLink')]
+        [string] $DestinationNode,
+
+        #endregion
 
         #region erRelationship
 
@@ -87,6 +115,10 @@ function ConvertTo-String {
                     $Type | Write-Output
                     $Relations | ConvertTo-String | Write-Output
                 }
+                flowchart {
+                    "$Type $Orientation" | Write-Output
+                    $Links | ConvertTo-String | Write-Output
+                }
                 erRelation {
                     if ( $SecondEntity ) {
                         Write-Output "    $FirstEntity $( $Relationship | ConvertTo-String ) $SecondEntity$( if ( $Label ) {" : $Label" })"
@@ -94,6 +126,9 @@ function ConvertTo-String {
                     else {
                         Write-Output "    $FirstEntity"
                     }
+                }
+                flowchartLink {
+                    Write-Output "    $SourceNode-->$DestinationNode"
                 }
                 erRelationship {
                     $FirstCardinalityCode = switch ($FirstCardinality) {
