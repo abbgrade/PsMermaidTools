@@ -44,6 +44,7 @@ function ConvertTo-String {
 
         # Collection of relations.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'erDiagram')]
+        [AllowEmptyCollection()]
         [PsObject[]] $Relations,
 
         #end region
@@ -55,10 +56,12 @@ function ConvertTo-String {
 
         # Collection of nodes for a flowchart.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
+        [AllowEmptyCollection()]
         [PsObject[]] $Nodes,
 
         # Collection of links for a flowchart.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
+        [AllowEmptyCollection()]
         [PsObject[]] $Links,
 
         #end region
