@@ -97,13 +97,17 @@ function ConvertTo-String {
 
         #region flowchartNode
 
-        # Source node of the node.
+        # Indentifier of the node.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartNode')]
         [string] $Key,
 
-        # Destination node of the node.
+        # Name of the node.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartNode')]
         [string] $Name,
+
+        # Shape of the node.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartNode')]
+        [string] $Shape,
 
         #endregion
 
@@ -148,7 +152,24 @@ function ConvertTo-String {
                     Write-Output "    $SourceNode-->$DestinationNode"
                 }
                 flowchartNode {
-                    Write-Output "    $Key[$Name]"
+                    switch ( $Shape ) {
+                        round-edges { Write-Output "    $Key($Name)" }
+                        stadium { Write-Output "    $Key([$Name])" }
+                        subroutine { Write-Output "    $Key[[$Name]]" }
+                        cylindrical { Write-Output "    $Key[($Name)]" }
+                        circle { Write-Output "    $Key(($Name))" }
+                        asymmetric { Write-Output "    $Key>$Name]" }
+                        rhombus { Write-Output "    $Key{$Name}" }
+                        hexagon { Write-Output "    $Key{{$Name}}" }
+                        parallelogram { Write-Output "    $Key[/$Name/]" }
+                        parallelogram-alt { Write-Output "    $Key[\$Name\]" }
+                        trapezoid { Write-Output "    $Key[/$Name\]" }
+                        trapezoid-alt { Write-Output "    $Key[\$Name/]" }
+                        double-circle { Write-Output "    $Key((($Name)))" }
+                        Default {
+                            Write-Error "'$_' is not supported for Node Shape."
+                        }
+                    }
                 }
                 erRelationship {
                     $FirstCardinalityCode = switch ($FirstCardinality) {

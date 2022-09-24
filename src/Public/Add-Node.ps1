@@ -14,12 +14,32 @@ function Add-Node {
         # The node name.
         [Parameter(Mandatory, Position = 1)]
         [ValidateNotNullOrEmpty()]
-        [string] $Name
+        [string] $Name,
+
+        # The node shape.
+        [Parameter(Mandatory, Position = 2)]
+        [ValidateSet(
+            'round-edges',
+            'stadium',
+            'subroutine',
+            'cylindrical',
+            'circle',
+            'asymmetric',
+            'rhombus',
+            'hexagon',
+            'parallelogram',
+            'parallelogram-alt',
+            'trapezoid',
+            'trapezoid-alt',
+            'double-circle'
+        )]
+        [string] $Shape
     )
 
     $Diagram.Nodes += [PSCustomObject]@{
         Key = $Key
         Name = $Name
+        Shape = $Shape
     }
 
 }

@@ -77,7 +77,7 @@ flowchart LR
         BeforeAll {
             $diagram = New-MermaidDiagram -Type flowchart -Orientation LR
             $diagram | Add-MermaidLink A B
-            $diagram | Add-MermaidNode A test
+            $diagram | Add-MermaidNode A test cylindrical
         }
 
         It works {
@@ -85,7 +85,7 @@ flowchart LR
             $output | Should -Not -BeNullOrEmpty
             $output | Should -Be (@"
 flowchart LR
-    A[test]
+    A[(test)]
     A-->B
 "@.Replace("`r`n", [Environment]::NewLine))
         }
