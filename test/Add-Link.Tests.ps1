@@ -3,7 +3,7 @@ Describe Add-Link {
         Import-Module $PSScriptRoot/../src/PsMermaidTools.psd1 -Force
     }
 
-    Context flowchar {
+    Context flowchart {
         BeforeEach {
             $diagram = New-MermaidDiagram -Type flowchart -Orientation TD
         }

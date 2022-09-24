@@ -56,6 +56,7 @@ function New-Diagram {
         }
         flowchart {
             $definition | Add-Member Orientation $Orientation
+            $definition | Add-Member Nodes $()
             $definition | Add-Member Links $()
         }
     }

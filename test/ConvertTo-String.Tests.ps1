@@ -72,4 +72,22 @@ flowchart LR
 "@.Replace("`r`n", [Environment]::NewLine))
         }
     }
+
+    Context flowchart-with-nodes {
+        BeforeAll {
+            $diagram = New-MermaidDiagram -Type flowchart -Orientation LR
+            $diagram | Add-MermaidLink A B
+            $diagram | Add-MermaidNode A test
+        }
+
+        It works {
+            $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+            $output | Should -Not -BeNullOrEmpty
+            $output | Should -Be (@"
+flowchart LR
+    A[test]
+    A-->B
+"@.Replace("`r`n", [Environment]::NewLine))
+        }
+    }
 }

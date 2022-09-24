@@ -52,6 +52,10 @@ function ConvertTo-String {
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
         [string] $Orientation,
 
+        # Collection of nodes for a flowchart.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
+        [PsObject[]] $Nodes,
+
         # Collection of links for a flowchart.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
         [PsObject[]] $Links,
@@ -91,6 +95,18 @@ function ConvertTo-String {
 
         #endregion
 
+        #region flowchartNode
+
+        # Source node of the node.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartNode')]
+        [string] $Key,
+
+        # Destination node of the node.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartNode')]
+        [string] $Name,
+
+        #endregion
+
         #region erRelationship
 
         # Cardinality of the first entity.
@@ -117,6 +133,7 @@ function ConvertTo-String {
                 }
                 flowchart {
                     "$Type $Orientation" | Write-Output
+                    $Nodes | ConvertTo-String | Write-Output
                     $Links | ConvertTo-String | Write-Output
                 }
                 erRelation {
@@ -129,6 +146,9 @@ function ConvertTo-String {
                 }
                 flowchartLink {
                     Write-Output "    $SourceNode-->$DestinationNode"
+                }
+                flowchartNode {
+                    Write-Output "    $Key[$Name]"
                 }
                 erRelationship {
                     $FirstCardinalityCode = switch ($FirstCardinality) {

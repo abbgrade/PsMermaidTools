@@ -9,6 +9,7 @@ Describe New-Diagram {
         $diagram.Type | Should -Be erDiagram
         $diagram.Relations | Should -Be @()
         $diagram.Links | Should -BeNull
+        $diagram.Nodes | Should -BeNull
     }
 
     It creates-flowchart-diagram {
@@ -17,5 +18,6 @@ Describe New-Diagram {
         $diagram.Type | Should -Be flowchart
         $diagram.Relations | Should -BeNull
         $diagram.Links | Should -Be @()
+        $diagram.Nodes | Should -Be @()
     }
 }
