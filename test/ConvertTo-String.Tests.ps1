@@ -101,11 +101,10 @@ flowchart LR
         }
     }
 
-    Context flowchart-with-nodes {
+    Context flowchart-with-a-node-with-round-edges {
         BeforeAll {
             $diagram = New-MermaidDiagram -Type flowchart -Orientation left-to-right
-            $diagram | Add-MermaidLink A B arrow
-            $diagram | Add-MermaidNode A test cylindrical
+            $diagram | Add-MermaidNode A node round-edges
         }
 
         It works {
@@ -113,8 +112,199 @@ flowchart LR
             $output | Should -Not -BeNullOrEmpty
             $output | Should -Be (@"
 flowchart LR
-    A[(test)]
-    A-->B
+    A(node)
+"@.Replace("`r`n", [Environment]::NewLine))
+        }
+    }
+
+    Context flowchart-with-a-stadium-shape {
+        BeforeAll {
+            $diagram = New-MermaidDiagram -Type flowchart -Orientation left-to-right
+            $diagram | Add-MermaidNode A node stadium
+        }
+
+        It works {
+            $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+            $output | Should -Not -BeNullOrEmpty
+            $output | Should -Be (@"
+flowchart LR
+    A([node])
+"@.Replace("`r`n", [Environment]::NewLine))
+        }
+    }
+
+    Context flowchart-with-a-subroutine {
+        BeforeAll {
+            $diagram = New-MermaidDiagram -Type flowchart -Orientation left-to-right
+            $diagram | Add-MermaidNode A node subroutine
+        }
+
+        It works {
+            $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+            $output | Should -Not -BeNullOrEmpty
+            $output | Should -Be (@"
+flowchart LR
+    A[[node]]
+"@.Replace("`r`n", [Environment]::NewLine))
+        }
+    }
+
+    Context flowchart-with-a-cylindrical-shape {
+        BeforeAll {
+            $diagram = New-MermaidDiagram -Type flowchart -Orientation left-to-right
+            $diagram | Add-MermaidNode A node cylindrical
+        }
+
+        It works {
+            $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+            $output | Should -Not -BeNullOrEmpty
+            $output | Should -Be (@"
+flowchart LR
+    A[(node)]
+"@.Replace("`r`n", [Environment]::NewLine))
+        }
+    }
+
+    Context flowchart-with-a-circle {
+        BeforeAll {
+            $diagram = New-MermaidDiagram -Type flowchart -Orientation left-to-right
+            $diagram | Add-MermaidNode A node circle
+        }
+
+        It works {
+            $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+            $output | Should -Not -BeNullOrEmpty
+            $output | Should -Be (@"
+flowchart LR
+    A((node))
+"@.Replace("`r`n", [Environment]::NewLine))
+        }
+    }
+
+    Context flowchart-with-a-asymmetric-shape {
+        BeforeAll {
+            $diagram = New-MermaidDiagram -Type flowchart -Orientation left-to-right
+            $diagram | Add-MermaidNode A node asymmetric
+        }
+
+        It works {
+            $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+            $output | Should -Not -BeNullOrEmpty
+            $output | Should -Be (@"
+flowchart LR
+    A>node]
+"@.Replace("`r`n", [Environment]::NewLine))
+        }
+    }
+
+    Context flowchart-with-a-rhombus {
+        BeforeAll {
+            $diagram = New-MermaidDiagram -Type flowchart -Orientation left-to-right
+            $diagram | Add-MermaidNode A node rhombus
+        }
+
+        It works {
+            $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+            $output | Should -Not -BeNullOrEmpty
+            $output | Should -Be (@"
+flowchart LR
+    A{node}
+"@.Replace("`r`n", [Environment]::NewLine))
+        }
+    }
+
+    Context flowchart-with-a-hexagon {
+        BeforeAll {
+            $diagram = New-MermaidDiagram -Type flowchart -Orientation left-to-right
+            $diagram | Add-MermaidNode A node hexagon
+        }
+
+        It works {
+            $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+            $output | Should -Not -BeNullOrEmpty
+            $output | Should -Be (@"
+flowchart LR
+    A{{node}}
+"@.Replace("`r`n", [Environment]::NewLine))
+        }
+    }
+
+    Context flowchart-with-a-parallelogram {
+        BeforeAll {
+            $diagram = New-MermaidDiagram -Type flowchart -Orientation left-to-right
+            $diagram | Add-MermaidNode A node parallelogram
+        }
+
+        It works {
+            $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+            $output | Should -Not -BeNullOrEmpty
+            $output | Should -Be (@"
+flowchart LR
+    A[/node/]
+"@.Replace("`r`n", [Environment]::NewLine))
+        }
+    }
+
+    Context flowchart-with-a-alt-parallelogram {
+        BeforeAll {
+            $diagram = New-MermaidDiagram -Type flowchart -Orientation left-to-right
+            $diagram | Add-MermaidNode A node parallelogram-alt
+        }
+
+        It works {
+            $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+            $output | Should -Not -BeNullOrEmpty
+            $output | Should -Be (@"
+flowchart LR
+    A[\node\]
+"@.Replace("`r`n", [Environment]::NewLine))
+        }
+    }
+
+    Context flowchart-with-a-trapezoid {
+        BeforeAll {
+            $diagram = New-MermaidDiagram -Type flowchart -Orientation left-to-right
+            $diagram | Add-MermaidNode A node trapezoid
+        }
+
+        It works {
+            $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+            $output | Should -Not -BeNullOrEmpty
+            $output | Should -Be (@"
+flowchart LR
+    A[/node\]
+"@.Replace("`r`n", [Environment]::NewLine))
+        }
+    }
+
+    Context flowchart-with-a-alt-trapezoid {
+        BeforeAll {
+            $diagram = New-MermaidDiagram -Type flowchart -Orientation left-to-right
+            $diagram | Add-MermaidNode A node trapezoid-alt
+        }
+
+        It works {
+            $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+            $output | Should -Not -BeNullOrEmpty
+            $output | Should -Be (@"
+flowchart LR
+    A[\node/]
+"@.Replace("`r`n", [Environment]::NewLine))
+        }
+    }
+
+    Context flowchart-with-a-double-circle {
+        BeforeAll {
+            $diagram = New-MermaidDiagram -Type flowchart -Orientation left-to-right
+            $diagram | Add-MermaidNode A node double-circle
+        }
+
+        It works {
+            $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+            $output | Should -Not -BeNullOrEmpty
+            $output | Should -Be (@"
+flowchart LR
+    A(((node)))
 "@.Replace("`r`n", [Environment]::NewLine))
         }
     }
