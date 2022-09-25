@@ -3,6 +3,36 @@ Describe ConvertTo-String {
         Import-Module $PSScriptRoot/../src/PsMermaidTools.psd1 -Force
     }
 
+    Context empty-erDiagram {
+        BeforeAll {
+            $diagram = New-MermaidDiagram -Type erDiagram
+        }
+
+        It works {
+            $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+            $output | Should -Not -BeNullOrEmpty
+            $output | Should -Be (@"
+erDiagram
+"@.Replace("`r`n", [Environment]::NewLine))
+        }
+    }
+
+    Context minimum-erDiagram {
+        BeforeAll {
+            $diagram = New-MermaidDiagram -Type erDiagram
+            $diagram | Add-MermaidRelation -Entity Entity
+        }
+
+        It works {
+            $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+            $output | Should -Not -BeNullOrEmpty
+            $output | Should -Be (@"
+erDiagram
+    Entity
+"@.Replace("`r`n", [Environment]::NewLine))
+        }
+    }
+
     Context erDiagram {
         BeforeAll {
             $diagram = New-MermaidDiagram -Type erDiagram
@@ -41,39 +71,9 @@ erDiagram
         }
     }
 
-    Context minimum-erDiagram {
-        BeforeAll {
-            $diagram = New-MermaidDiagram -Type erDiagram
-            $diagram | Add-MermaidRelation -Entity Entity
-        }
-
-        It works {
-            $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
-            $output | Should -Not -BeNullOrEmpty
-            $output | Should -Be (@"
-erDiagram
-    Entity
-"@.Replace("`r`n", [Environment]::NewLine))
-        }
-    }
-
-    Context empty-erDiagram {
-        BeforeAll {
-            $diagram = New-MermaidDiagram -Type erDiagram
-        }
-
-        It works {
-            $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
-            $output | Should -Not -BeNullOrEmpty
-            $output | Should -Be (@"
-erDiagram
-"@.Replace("`r`n", [Environment]::NewLine))
-        }
-    }
-
     Context empty-flowchart {
         BeforeAll {
-            $diagram = New-MermaidDiagram -Type flowchart -Orientation LR
+            $diagram = New-MermaidDiagram -Type flowchart -Orientation left-to-right
         }
 
         It works {
@@ -87,7 +87,7 @@ flowchart LR
 
     Context flowchart {
         BeforeAll {
-            $diagram = New-MermaidDiagram -Type flowchart -Orientation LR
+            $diagram = New-MermaidDiagram -Type flowchart -Orientation left-to-right
             $diagram | Add-MermaidLink A B arrow
         }
 
@@ -103,7 +103,7 @@ flowchart LR
 
     Context flowchart-with-nodes {
         BeforeAll {
-            $diagram = New-MermaidDiagram -Type flowchart -Orientation LR
+            $diagram = New-MermaidDiagram -Type flowchart -Orientation left-to-right
             $diagram | Add-MermaidLink A B arrow
             $diagram | Add-MermaidNode A test cylindrical
         }

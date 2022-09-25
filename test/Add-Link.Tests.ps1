@@ -5,7 +5,7 @@ Describe Add-Link {
 
     Context flowchart {
         BeforeEach {
-            $diagram = New-MermaidDiagram -Type flowchart -Orientation TD
+            $diagram = New-MermaidDiagram -Type flowchart -Orientation top-down
         }
 
         It works-by-named-parmeters {

@@ -35,14 +35,14 @@ function New-Diagram {
     [CmdletBinding( DefaultParameterSetName = 'erDiagram' )]
     param (
         # The mermaid diagram type.
-        [Parameter( Mandatory, ParameterSetName = 'flowchart' )]
-        [Parameter( Mandatory, ParameterSetName = 'erDiagram' )]
+        [Parameter( Mandatory, ParameterSetName = 'flowchart', Position = 0 )]
+        [Parameter( Mandatory, ParameterSetName = 'erDiagram', Position = 0 )]
         [ValidateSet('erDiagram', 'flowchart')]
         [string] $Type,
 
-        # The diagram oriuebtatuib.
-        [Parameter( Mandatory, ParameterSetName = 'flowchart' )]
-        [ValidateSet('TB', 'TD', 'BT', 'RL', 'LR')]
+        # The diagram orientation.
+        [Parameter( Mandatory, ParameterSetName = 'flowchart', Position = 1 )]
+        [ValidateSet('top-to-bottom', 'top-down', 'bottom-to-top', 'right-to-left', 'left-to-right')]
         [string] $Orientation
     )
 

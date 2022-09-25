@@ -140,7 +140,13 @@ function ConvertTo-String {
                     $Relations | ConvertTo-String | Write-Output
                 }
                 flowchart {
-                    "$Type $Orientation" | Write-Output
+                    switch ( $Orientation ) {
+                        top-to-bottom { "$Type TB" | Write-Output }
+                        top-down { "$Type TD" | Write-Output }
+                        bottom-to-top { "$Type BT" | Write-Output }
+                        right-to-left { "$Type RL" | Write-Output }
+                        left-to-right { "$Type LR" | Write-Output }
+                    }
                     $Nodes | ConvertTo-String | Write-Output
                     $Links | ConvertTo-String | Write-Output
                 }
