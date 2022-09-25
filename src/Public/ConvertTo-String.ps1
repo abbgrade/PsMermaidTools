@@ -97,6 +97,10 @@ function ConvertTo-String {
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartLink')]
         [string] $DestinationNode,
 
+        # Link text.
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartLink')]
+        [string] $Text,
+
         #endregion
 
         #region flowchartNode
@@ -159,7 +163,17 @@ function ConvertTo-String {
                     }
                 }
                 flowchartLink {
-                    Write-Output "    $SourceNode-->$DestinationNode"
+                    Write-Output "    $SourceNode$(
+                        switch ( $Type ) {
+                            open { '---' }
+                            arrow { '-->' }
+                            dotted { '-.->' }
+                            thick { '==>' }
+                            Default {
+                                Write-Error "convert $_ is not supported."
+                            }
+                        }
+                    )$( if ( $Text ) { "|$Text|" } )$DestinationNode"
                 }
                 flowchartNode {
                     switch ( $Shape ) {

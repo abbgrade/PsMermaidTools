@@ -19,13 +19,23 @@ function Add-Link {
         # The link type.
         [Parameter( Mandatory, Position = 2 )]
         [ValidateSet('arrow', 'open', 'dotted', 'thick')]
-        [string] $Type
+        [string] $Type,
+
+        # The link text.
+        [Parameter()]
+        [string] $Text
     )
 
-    $Diagram.Links += [PSCustomObject]@{
+    $link = [PSCustomObject]@{
         SourceNode = $Source
         DestinationNode = $Destination
         Type = $Type
     }
+
+    if ( $Text ) {
+        $link | Add-Member Text $Text
+    }
+
+    $Diagram.Links += $link
 
 }

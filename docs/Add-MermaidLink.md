@@ -14,7 +14,7 @@ schema: 2.0.0
 
 ```
 Add-MermaidLink [-Diagram <Object>] [-Source] <String> [-Destination] <String> [-Type] <String>
- [<CommonParameters>]
+ [-Text <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -71,6 +71,21 @@ Aliases:
 
 Required: True
 Position: 0
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Text
+{{ Fill Text Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

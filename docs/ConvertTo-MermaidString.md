@@ -14,7 +14,8 @@ Converts a mermaid definition to string.
 
 ### flowchartLink
 ```
-ConvertTo-MermaidString -Type <String> -SourceNode <String> -DestinationNode <String> [<CommonParameters>]
+ConvertTo-MermaidString -Type <String> -SourceNode <String> -DestinationNode <String> [-Text <String>]
+ [<CommonParameters>]
 ```
 
 ### flowchart
@@ -226,6 +227,21 @@ Parameter Sets: flowchartLink
 Aliases:
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Text
+Link text.
+
+```yaml
+Type: String
+Parameter Sets: flowchartLink
+Aliases:
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
