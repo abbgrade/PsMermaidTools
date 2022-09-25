@@ -12,12 +12,6 @@ Converts a mermaid definition to string.
 
 ## SYNTAX
 
-### flowchartLink
-```
-ConvertTo-MermaidString -Type <String> -SourceNode <String> -DestinationNode <String> [-Text <String>]
- [<CommonParameters>]
-```
-
 ### flowchart
 ```
 ConvertTo-MermaidString -Type <String> -Orientation <String> -Nodes <PSObject[]> -Links <PSObject[]>
@@ -33,6 +27,12 @@ ConvertTo-MermaidString -Type <String> -Relations <PSObject[]> [<CommonParameter
 ```
 ConvertTo-MermaidString -FirstEntity <String> [-Relationship <PSObject>] [-SecondEntity <String>]
  [-Label <String>] [<CommonParameters>]
+```
+
+### flowchartLink
+```
+ConvertTo-MermaidString -SourceNode <String> -SourceHead <String> -DestinationNode <String>
+ -DestinationHead <String> [-Text <String>] -Line <String> [<CommonParameters>]
 ```
 
 ### flowchartNode
@@ -69,11 +69,11 @@ Create a erDiagram, add a few relations and convert it to a diagram string.
 ## PARAMETERS
 
 ### -Type
-The diagram or flowchart link type.
+The diagram link type.
 
 ```yaml
 Type: String
-Parameter Sets: flowchartLink, flowchart, erDiagram
+Parameter Sets: flowchart, erDiagram
 Aliases:
 
 Required: True
@@ -218,7 +218,37 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -SourceHead
+Source node of the link.
+
+```yaml
+Type: String
+Parameter Sets: flowchartLink
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -DestinationNode
+Destination node of the link.
+
+```yaml
+Type: String
+Parameter Sets: flowchartLink
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -DestinationHead
 Destination node of the link.
 
 ```yaml
@@ -242,6 +272,21 @@ Parameter Sets: flowchartLink
 Aliases:
 
 Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Line
+{{ Fill Line Description }}
+
+```yaml
+Type: String
+Parameter Sets: flowchartLink
+Aliases:
+
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)

@@ -13,8 +13,8 @@ schema: 2.0.0
 ## SYNTAX
 
 ```
-Add-MermaidLink [-Diagram <Object>] [-Source] <String> [-Destination] <String> [-Type] <String>
- [-Text <String>] [<CommonParameters>]
+Add-MermaidLink [-Diagram <Object>] [-Source] <String> [-Destination] <String> [[-Text] <String>]
+ [-Line <String>] [-DestinationHead <String>] [-SourceHead <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -46,6 +46,22 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -DestinationHead
+{{ Fill DestinationHead Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+Accepted values: arrow, open, circle, cross
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Diagram
 {{ Fill Diagram Description }}
 
@@ -58,6 +74,22 @@ Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -Line
+{{ Fill Line Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+Accepted values: solid, dotted, thick
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -76,6 +108,22 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -SourceHead
+{{ Fill SourceHead Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+Accepted values: arrow, open, circle, cross
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Text
 {{ Fill Text Description }}
 
@@ -85,22 +133,6 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Type
-{{ Fill Type Description }}
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-Accepted values: arrow, open, dotted, thick
-
-Required: True
 Position: 2
 Default value: None
 Accept pipeline input: False

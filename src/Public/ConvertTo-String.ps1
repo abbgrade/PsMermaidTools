@@ -34,10 +34,9 @@ function ConvertTo-String {
 
         #region diagram
 
-        # The diagram or flowchart link type.
+        # The diagram link type.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'erDiagram')]
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
-        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartLink')]
         [string] $Type,
 
         #region erDiagram
@@ -93,13 +92,24 @@ function ConvertTo-String {
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartLink')]
         [string] $SourceNode,
 
+        # Source node of the link.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartLink')]
+        [string] $SourceHead,
+
         # Destination node of the link.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartLink')]
         [string] $DestinationNode,
 
+        # Destination node of the link.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartLink')]
+        [string] $DestinationHead,
+
         # Link text.
         [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartLink')]
         [string] $Text,
+
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartLink')]
+        [string] $Line,
 
         #endregion
 
@@ -163,17 +173,80 @@ function ConvertTo-String {
                     }
                 }
                 flowchartLink {
-                    Write-Output "    $SourceNode$(
-                        switch ( $Type ) {
-                            open { '---' }
-                            arrow { '-->' }
-                            dotted { '-.->' }
-                            thick { '==>' }
+                    Write-Output "    $SourceNode $(
+                        switch ( $Line ) {
+                            solid { "$(
+                                switch ( $SourceHead ) {
+                                    open { '-' }
+                                    arrow { '<' }
+                                    circle { 'o' }
+                                    cross { 'x' }
+                                    Default {
+                                        Write-Error "convert $_ is not supported."
+                                    }
+                                }
+                            )$(
+                                if ( $SourceHead -ne 'open' ) { '-'}
+                             )-$(
+                                switch ( $DestinationHead ) {
+                                    open { '-' }
+                                    arrow { '>' }
+                                    circle { 'o' }
+                                    cross { 'x' }
+                                    Default {
+                                        Write-Error "convert $_ is not supported."
+                                    }
+                                }
+                            )" }
+                            dotted { "$(
+                                switch ( $SourceHead ) {
+                                    open { '' }
+                                    arrow { '>' }
+                                    circle { 'o' }
+                                    cross { 'x' }
+                                    Default {
+                                        Write-Error "convert $_ is not supported."
+                                    }
+                                }
+                            )-.-$(
+                                switch ( $DestinationHead ) {
+                                    open { '' }
+                                    arrow { '>' }
+                                    circle { 'o' }
+                                    cross { 'x' }
+                                    Default {
+                                        Write-Error "convert $_ is not supported."
+                                    }
+                                }
+                            )" }
+                            thick { "$(
+                                switch ( $SourceHead ) {
+                                    open { '=' }
+                                    arrow { '<' }
+                                    circle { 'o' }
+                                    cross { 'x' }
+                                    Default {
+                                        Write-Error "convert $_ is not supported."
+                                    }
+                                }
+                            )=$(
+                                if ( $SourceHead -ne 'open' ) { '=' }
+                             )$(
+                                switch ( $DestinationHead ) {
+                                    open { '=' }
+                                    arrow { '>' }
+                                    circle { 'o' }
+                                    cross { 'x' }
+                                    Default {
+                                        Write-Error "convert $_ is not supported."
+                                    }
+                                }
+                            )" }
                             Default {
                                 Write-Error "convert $_ is not supported."
                             }
                         }
-                    )$( if ( $Text ) { "|$Text|" } )$DestinationNode"
+                    )$( if ( $Text ) { "|$Text|" } ) $DestinationNode"
                 }
                 flowchartNode {
                     switch ( $Shape ) {

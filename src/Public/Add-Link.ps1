@@ -16,20 +16,32 @@ function Add-Link {
         [ValidateNotNullOrEmpty()]
         [string] $Destination,
 
-        # The link type.
-        [Parameter( Mandatory, Position = 2 )]
-        [ValidateSet('arrow', 'open', 'dotted', 'thick')]
-        [string] $Type,
-
         # The link text.
+        [Parameter(Position = 2)]
+        [string] $Text,
+
+        # The link style.
         [Parameter()]
-        [string] $Text
+        [ValidateSet('solid', 'dotted', 'thick')]
+        [string] $Line = 'solid',
+
+        # The head style to destination direction.
+        [Parameter()]
+        [ValidateSet('arrow', 'open', 'circle', 'cross')]
+        [string] $DestinationHead = 'arrow',
+
+        # The head style to destination direction.
+        [Parameter()]
+        [ValidateSet('arrow', 'open', 'circle', 'cross')]
+        [string] $SourceHead = 'open'
     )
 
     $link = [PSCustomObject]@{
         SourceNode = $Source
+        SourceHead = $SourceHead
         DestinationNode = $Destination
-        Type = $Type
+        DestinationHead = $DestinationHead
+        Line = $Line
     }
 
     if ( $Text ) {

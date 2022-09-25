@@ -299,7 +299,7 @@ flowchart LR
             Context A-link-with-arrow-head {
 
                 BeforeEach {
-                    $diagram | Add-MermaidLink A B arrow
+                    $diagram | Add-MermaidLink A B -DestinationHead arrow
                 }
 
                 It works {
@@ -307,7 +307,7 @@ flowchart LR
                     $output | Should -Not -BeNullOrEmpty
                     $output | Should -Be (@"
 flowchart LR
-    A-->B
+    A --> B
 "@.Replace("`r`n", [Environment]::NewLine))
                 }
             }
@@ -315,7 +315,7 @@ flowchart LR
             Context An-open-link {
 
                 BeforeEach {
-                    $diagram | Add-MermaidLink A B open
+                    $diagram | Add-MermaidLink A B -DestinationHead open
                 }
 
                 It works {
@@ -323,7 +323,7 @@ flowchart LR
                     $output | Should -Not -BeNullOrEmpty
                     $output | Should -Be (@"
 flowchart LR
-    A---B
+    A --- B
 "@.Replace("`r`n", [Environment]::NewLine))
                 }
             }
@@ -331,7 +331,7 @@ flowchart LR
             Context Text-on-links {
 
                 BeforeEach {
-                    $diagram | Add-MermaidLink A B open -Text 'text'
+                    $diagram | Add-MermaidLink A B -Text 'text' -DestinationHead open
                 }
 
                 It works {
@@ -339,7 +339,7 @@ flowchart LR
                     $output | Should -Not -BeNullOrEmpty
                     $output | Should -Be (@"
 flowchart LR
-    A---|text|B
+    A ---|text| B
 "@.Replace("`r`n", [Environment]::NewLine))
                 }
             }
@@ -347,7 +347,7 @@ flowchart LR
             Context A-link-with-arrow-head-and-text {
 
                 BeforeEach {
-                    $diagram | Add-MermaidLink A B arrow -Text 'text'
+                    $diagram | Add-MermaidLink A B -Text 'text'
                 }
 
                 It works {
@@ -355,7 +355,7 @@ flowchart LR
                     $output | Should -Not -BeNullOrEmpty
                     $output | Should -Be (@"
 flowchart LR
-    A-->|text|B
+    A -->|text| B
 "@.Replace("`r`n", [Environment]::NewLine))
                 }
             }
@@ -363,7 +363,7 @@ flowchart LR
             Context Dotted-link {
 
                 BeforeEach {
-                    $diagram | Add-MermaidLink A B dotted
+                    $diagram | Add-MermaidLink A B -Line dotted
                 }
 
                 It works {
@@ -371,7 +371,7 @@ flowchart LR
                     $output | Should -Not -BeNullOrEmpty
                     $output | Should -Be (@"
 flowchart LR
-    A-.->B
+    A -.-> B
 "@.Replace("`r`n", [Environment]::NewLine))
                 }
             }
@@ -379,7 +379,7 @@ flowchart LR
             Context Dotted-link-with-text {
 
                 BeforeEach {
-                    $diagram | Add-MermaidLink A B dotted -Text 'text'
+                    $diagram | Add-MermaidLink A B -Line dotted -Text 'text'
                 }
 
                 It works {
@@ -387,7 +387,7 @@ flowchart LR
                     $output | Should -Not -BeNullOrEmpty
                     $output | Should -Be (@"
 flowchart LR
-    A-.->|text|B
+    A -.->|text| B
 "@.Replace("`r`n", [Environment]::NewLine))
                 }
             }
@@ -395,7 +395,7 @@ flowchart LR
             Context Thick-link {
 
                 BeforeEach {
-                    $diagram | Add-MermaidLink A B thick
+                    $diagram | Add-MermaidLink A B -Line thick
                 }
 
                 It works {
@@ -403,7 +403,7 @@ flowchart LR
                     $output | Should -Not -BeNullOrEmpty
                     $output | Should -Be (@"
 flowchart LR
-    A==>B
+    A ==> B
 "@.Replace("`r`n", [Environment]::NewLine))
                 }
             }
@@ -411,7 +411,7 @@ flowchart LR
             Context Thick-link-with-text {
 
                 BeforeEach {
-                    $diagram | Add-MermaidLink A B thick -Text 'text'
+                    $diagram | Add-MermaidLink A B -Line thick -Text 'text'
                 }
 
                 It works {
@@ -419,7 +419,87 @@ flowchart LR
                     $output | Should -Not -BeNullOrEmpty
                     $output | Should -Be (@"
 flowchart LR
-    A==>|text|B
+    A ==>|text| B
+"@.Replace("`r`n", [Environment]::NewLine))
+                }
+            }
+
+            Context circle-head {
+
+                BeforeEach {
+                    $diagram | Add-MermaidLink A B -DestinationHead circle
+                }
+
+                It works {
+                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                    $output | Should -Not -BeNullOrEmpty
+                    $output | Should -Be (@"
+flowchart LR
+    A --o B
+"@.Replace("`r`n", [Environment]::NewLine))
+                }
+            }
+
+            Context cross-head {
+
+                BeforeEach {
+                    $diagram | Add-MermaidLink A B -DestinationHead cross
+                }
+
+                It works {
+                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                    $output | Should -Not -BeNullOrEmpty
+                    $output | Should -Be (@"
+flowchart LR
+    A --x B
+"@.Replace("`r`n", [Environment]::NewLine))
+                }
+            }
+
+            Context multi-directional-arrow {
+
+                BeforeEach {
+                    $diagram | Add-MermaidLink A B -SourceHead arrow -DestinationHead arrow
+                }
+
+                It works {
+                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                    $output | Should -Not -BeNullOrEmpty
+                    $output | Should -Be (@"
+flowchart LR
+    A <--> B
+"@.Replace("`r`n", [Environment]::NewLine))
+                }
+            }
+
+            Context multi-directional-circle {
+
+                BeforeEach {
+                    $diagram | Add-MermaidLink A B -SourceHead circle -DestinationHead circle
+                }
+
+                It works {
+                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                    $output | Should -Not -BeNullOrEmpty
+                    $output | Should -Be (@"
+flowchart LR
+    A o--o B
+"@.Replace("`r`n", [Environment]::NewLine))
+                }
+            }
+
+            Context multi-directional-cross {
+
+                BeforeEach {
+                    $diagram | Add-MermaidLink A B -SourceHead cross -DestinationHead cross
+                }
+
+                It works {
+                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                    $output | Should -Not -BeNullOrEmpty
+                    $output | Should -Be (@"
+flowchart LR
+    A x--x B
 "@.Replace("`r`n", [Environment]::NewLine))
                 }
             }
