@@ -32,17 +32,33 @@ function New-Diagram {
 
     #>
 
-    [CmdletBinding()]
+    [CmdletBinding( DefaultParameterSetName = 'erDiagram' )]
     param (
         # The mermaid diagram type.
-        [Parameter( Mandatory )]
-        [ValidateSet('erDiagram')]
-        [string] $Type
+        [Parameter( Mandatory, ParameterSetName = 'flowchart', Position = 0 )]
+        [Parameter( Mandatory, ParameterSetName = 'erDiagram', Position = 0 )]
+        [ValidateSet('erDiagram', 'flowchart')]
+        [string] $Type,
+
+        # The diagram orientation.
+        [Parameter( Mandatory, ParameterSetName = 'flowchart', Position = 1 )]
+        [ValidateSet('top-to-bottom', 'top-down', 'bottom-to-top', 'right-to-left', 'left-to-right')]
+        [string] $Orientation
     )
 
     $definition = [PSCustomObject]@{
         Type = $Type
-        Relations = @()
+    }
+
+    switch ( $PSCmdlet.ParameterSetName ) {
+        erDiagram {
+            $definition | Add-Member Relations @()
+        }
+        flowchart {
+            $definition | Add-Member Orientation $Orientation
+            $definition | Add-Member Nodes @()
+            $definition | Add-Member Links @()
+        }
     }
 
     Write-Output $definition

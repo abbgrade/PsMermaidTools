@@ -12,6 +12,12 @@ Converts a mermaid definition to string.
 
 ## SYNTAX
 
+### flowchart
+```
+ConvertTo-MermaidString -Type <String> -Orientation <String> -Nodes <PSObject[]> -Links <PSObject[]>
+ [<CommonParameters>]
+```
+
 ### erDiagram
 ```
 ConvertTo-MermaidString -Type <String> -Relations <PSObject[]> [<CommonParameters>]
@@ -21,6 +27,17 @@ ConvertTo-MermaidString -Type <String> -Relations <PSObject[]> [<CommonParameter
 ```
 ConvertTo-MermaidString -FirstEntity <String> [-Relationship <PSObject>] [-SecondEntity <String>]
  [-Label <String>] [<CommonParameters>]
+```
+
+### flowchartLink
+```
+ConvertTo-MermaidString -SourceNode <String> -SourceHead <String> -DestinationNode <String>
+ -DestinationHead <String> [-Text <String>] -Line <String> [<CommonParameters>]
+```
+
+### flowchartNode
+```
+ConvertTo-MermaidString -Key <String> -Name <String> -Shape <String> [<CommonParameters>]
 ```
 
 ### erRelationship
@@ -52,11 +69,11 @@ Create a erDiagram, add a few relations and convert it to a diagram string.
 ## PARAMETERS
 
 ### -Type
-The diagram type.
+The diagram link type.
 
 ```yaml
 Type: String
-Parameter Sets: erDiagram
+Parameter Sets: flowchart, erDiagram
 Aliases:
 
 Required: True
@@ -72,6 +89,51 @@ Collection of relations.
 ```yaml
 Type: PSObject[]
 Parameter Sets: erDiagram
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Orientation
+Orientation of the flowchart.
+
+```yaml
+Type: String
+Parameter Sets: flowchart
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Nodes
+Collection of nodes for a flowchart.
+
+```yaml
+Type: PSObject[]
+Parameter Sets: flowchart
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Links
+Collection of links for a flowchart.
+
+```yaml
+Type: PSObject[]
+Parameter Sets: flowchart
 Aliases:
 
 Required: True
@@ -135,6 +197,141 @@ Parameter Sets: erRelation
 Aliases:
 
 Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -SourceNode
+Source node of the link.
+
+```yaml
+Type: String
+Parameter Sets: flowchartLink
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -SourceHead
+Source node of the link.
+
+```yaml
+Type: String
+Parameter Sets: flowchartLink
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -DestinationNode
+Destination node of the link.
+
+```yaml
+Type: String
+Parameter Sets: flowchartLink
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -DestinationHead
+Destination node of the link.
+
+```yaml
+Type: String
+Parameter Sets: flowchartLink
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Text
+Link text.
+
+```yaml
+Type: String
+Parameter Sets: flowchartLink
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Line
+{{ Fill Line Description }}
+
+```yaml
+Type: String
+Parameter Sets: flowchartLink
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Key
+Indentifier of the node.
+
+```yaml
+Type: String
+Parameter Sets: flowchartNode
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Name
+Name of the node.
+
+```yaml
+Type: String
+Parameter Sets: flowchartNode
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Shape
+Shape of the node.
+
+```yaml
+Type: String
+Parameter Sets: flowchartNode
+Aliases:
+
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
