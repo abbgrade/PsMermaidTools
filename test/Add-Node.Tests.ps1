@@ -1,11 +1,15 @@
+#Requires -Modules @{ ModuleName='Pester'; ModuleVersion='5.0.0' }
+
 Describe Add-Node {
+
     BeforeAll {
         Import-Module $PSScriptRoot/../src/PsMermaidTools.psd1 -Force
     }
 
     Context flowchart {
+
         BeforeEach {
-            $diagram = New-MermaidDiagram -Type flowchart -Orientation top-down
+            $diagram = New-MermaidDiagram -flowchart -Orientation top-down
         }
 
         It works-by-named-parmeters {

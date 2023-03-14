@@ -1,11 +1,15 @@
+#Requires -Modules @{ ModuleName='Pester'; ModuleVersion='5.0.0' }
+
 Describe Add-Relation {
+
     BeforeAll {
         Import-Module $PSScriptRoot/../src/PsMermaidTools.psd1 -Force
     }
 
     Context erDiagram {
+
         BeforeEach {
-            $diagram = New-MermaidDiagram -Type erDiagram
+            $diagram = New-MermaidDiagram -erDiagram
         }
 
         It works-by-named-parmeters {
