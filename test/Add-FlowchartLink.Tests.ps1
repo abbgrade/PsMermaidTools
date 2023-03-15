@@ -1,15 +1,19 @@
-Describe Add-Link {
+#Requires -Modules @{ ModuleName='Pester'; ModuleVersion='5.0.0' }
+
+Describe Add-FcLink {
+
     BeforeAll {
         Import-Module $PSScriptRoot/../src/PsMermaidTools.psd1 -Force
     }
 
     Context flowchart {
+
         BeforeEach {
-            $diagram = New-MermaidDiagram -Type flowchart -Orientation top-down
+            $diagram = New-MermaidDiagram -Flowchart -Orientation top-down
         }
 
         It works-by-named-parmeters {
-            $diagram | Add-MermaidLink -Source A -Destination B
+            $diagram | Add-MermaidFlowchartLink -Source A -Destination B
             $diagram | Should -Not -BeNullOrEmpty
             $diagram.Links | Should -Not -BeNullOrEmpty
             $diagram.Links.Count | Should -Be 1
@@ -21,7 +25,7 @@ Describe Add-Link {
         }
 
         It works-by-named-parmeters-with-text {
-            $diagram | Add-MermaidLink -Source A -Destination B -Line solid -Text 'text'
+            $diagram | Add-MermaidFlowchartLink -Source A -Destination B -Line solid -Text 'text'
             $diagram | Should -Not -BeNullOrEmpty
             $diagram.Links | Should -Not -BeNullOrEmpty
             $diagram.Links.Count | Should -Be 1
@@ -32,7 +36,7 @@ Describe Add-Link {
         }
 
         It works-by-positions {
-            $diagram | Add-MermaidLink A B solid
+            $diagram | Add-MermaidFlowchartLink A B solid
             $diagram | Should -Not -BeNullOrEmpty
             $diagram.Links | Should -Not -BeNullOrEmpty
             $diagram.Links.Count | Should -Be 1

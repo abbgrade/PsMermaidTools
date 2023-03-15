@@ -1,3 +1,5 @@
+#Requires -Modules @{ ModuleName='Pester'; ModuleVersion='5.0.0' }
+
 Describe New-Diagram {
 
     BeforeAll {
@@ -5,7 +7,7 @@ Describe New-Diagram {
     }
 
     It creates-er-diagram {
-        $diagram = New-MermaidDiagram -Type erDiagram
+        $diagram = New-MermaidDiagram -ErDiagram
         $diagram | Should -Not -BeNullOrEmpty
         $diagram.Type | Should -Be erDiagram
         $diagram.Relations | Should -Be @()
@@ -13,30 +15,20 @@ Describe New-Diagram {
         $diagram.Nodes | Should -BeNull
     }
 
-    It creates-er-diagram-by-position {
-        $diagram = New-MermaidDiagram erDiagram
+    It creates-Flowchart-diagram {
+        $diagram = New-MermaidDiagram -Flowchart -Orientation top-down
         $diagram | Should -Not -BeNullOrEmpty
-        $diagram.Type | Should -Be erDiagram
+        $diagram.Type | Should -Be flowchart
+        $diagram.Relations | Should -BeNull
+        $diagram.Links | Should -Be @()
+        $diagram.Nodes | Should -Be @()
+    }
+
+    It creates-c4-component-diagram {
+        $diagram = New-MermaidDiagram -C4Component
+        $diagram | Should -Not -BeNullOrEmpty
+        $diagram.Type | Should -Be C4Component
+        $diagram.ContainerBoundaries | Should -Be @()
         $diagram.Relations | Should -Be @()
-        $diagram.Links | Should -BeNull
-        $diagram.Nodes | Should -BeNull
-    }
-
-    It creates-flowchart-diagram {
-        $diagram = New-MermaidDiagram -Type flowchart -Orientation top-down
-        $diagram | Should -Not -BeNullOrEmpty
-        $diagram.Type | Should -Be flowchart
-        $diagram.Relations | Should -BeNull
-        $diagram.Links | Should -Be @()
-        $diagram.Nodes | Should -Be @()
-    }
-
-    It creates-flowchart-diagram-by-position {
-        $diagram = New-MermaidDiagram flowchart top-down
-        $diagram | Should -Not -BeNullOrEmpty
-        $diagram.Type | Should -Be flowchart
-        $diagram.Relations | Should -BeNull
-        $diagram.Links | Should -Be @()
-        $diagram.Nodes | Should -Be @()
     }
 }

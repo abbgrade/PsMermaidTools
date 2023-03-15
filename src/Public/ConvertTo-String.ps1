@@ -15,10 +15,10 @@ function ConvertTo-String {
     String.
 
     .EXAMPLE
-    PS C:\> $diagram = New-MermaidDiagram -Type erDiagram
-    PS C:\> $diagram | Add-MermaidRelation Exactly-one Customer places Zero-or-more Order
-    PS C:\> $diagram | Add-MermaidRelation Exactly-one Order contains One-or-more LineItem
-    PS C:\> $diagram | Add-MermaidRelation One-or-more Customer uses One-or-more DeliveryAddress -NonIdentifying
+    PS C:\> $diagram = New-MermaidDiagram -ErDiagram
+    PS C:\> $diagram | Add-MermaidErRelation Exactly-one Customer places Zero-or-more Order
+    PS C:\> $diagram | Add-MermaidErRelation Exactly-one Order contains One-or-more LineItem
+    PS C:\> $diagram | Add-MermaidErRelation One-or-more Customer uses One-or-more DeliveryAddress -NonIdentifying
     PS C:\> $diagram | ConvertTo-MermaidString
     erDiagram
         Customer ||--o{ Order : places
@@ -37,16 +37,20 @@ function ConvertTo-String {
         # The diagram link type.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'erDiagram')]
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4ComponentDiagram')]
         [string] $Type,
+
+        #endregion
 
         #region erDiagram
 
         # Collection of relations.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'erDiagram')]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4ComponentDiagram')]
         [AllowEmptyCollection()]
         [PsObject[]] $Relations,
 
-        #end region
+        #endregion
         #region flowchart
 
         # Orientation of the flowchart.
@@ -63,7 +67,44 @@ function ConvertTo-String {
         [AllowEmptyCollection()]
         [PsObject[]] $Links,
 
-        #end region
+        #endregion
+        #region C4ComponentDiagram
+
+        # Collection of container boundaries for a C4Component diagram.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4ComponentDiagram')]
+        [AllowEmptyCollection()]
+        [PsObject[]] $ContainerBoundaries,
+
+        # Collection of components for a C4Component diagram.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4ContainerBoundary')]
+        [AllowEmptyCollection()]
+        [PSObject[]] $Components,
+
+        #endregion
+        #region C4Relation
+
+        #
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'C4Relation')]
+        [string] $From,
+
+        #
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'C4Relation')]
+        [string] $To,
+
+        #endregion
+
+        #region C4Component
+
+        # The component technology / implementation.
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'C4Component')]
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'C4Relation')]
+        [string] $Technology,
+
+        # Describes the component.
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'C4Component')]
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'C4Relation')]
+        [string] $Description,
+
         #endregion
 
         #region erRelation
@@ -82,9 +123,10 @@ function ConvertTo-String {
 
         # Describes the relation.
         [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'erRelation')]
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'C4Relation')]
         [string] $Label,
 
-        #end region
+        #endregion
 
         #region flowchartLink
 
@@ -115,12 +157,16 @@ function ConvertTo-String {
 
         #region flowchartNode
 
-        # Indentifier of the node.
+        # Indentifier of the node/container/component.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartNode')]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4ContainerBoundary')]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4Component')]
         [string] $Key,
 
-        # Name of the node.
+        # Name of the node/container.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartNode')]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4ContainerBoundary')]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4Component')]
         [string] $Name,
 
         # Shape of the node.
@@ -143,7 +189,7 @@ function ConvertTo-String {
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'erRelationship')]
         [bool] $Identifying
 
-        #end region
+        #endregion
     )
 
     process {
@@ -163,6 +209,11 @@ function ConvertTo-String {
                     }
                     $Nodes | ConvertTo-String | Write-Output
                     $Links | ConvertTo-String | Write-Output
+                }
+                C4ComponentDiagram {
+                    $Type | Write-Output
+                    $ContainerBoundaries | ConvertTo-String | Write-Output
+                    $Relations | ConvertTo-String | Write-Output
                 }
                 erRelation {
                     if ( $SecondEntity ) {
@@ -267,6 +318,17 @@ function ConvertTo-String {
                             Write-Error "'$_' is not supported for Node Shape."
                         }
                     }
+                }
+                C4ContainerBoundary {
+                    Write-Output "Container_Boundary($Key, ""$Name"") {"
+                    $Components | ForEach-Object { Write-Output "    $( $_ | ConvertTo-String )" }
+                    Write-Output '}'
+                }
+                C4Component {
+                    Write-Output "Component($Key, ""$Name""$( if ( $Technology ) { ', "' + $Technology + '"' } )$( if ( $Description ) { ', "' + $Description + '"' } ))"
+                }
+                C4Relation {
+                    Write-Output "Rel($From, $To, ""$Label""$( if ( $Technology ) { ', "' + $Technology + '"' } )$( if ( $Description ) { ', "' + $Description + '"' } ))"
                 }
                 erRelationship {
                     $FirstCardinalityCode = switch ($FirstCardinality) {

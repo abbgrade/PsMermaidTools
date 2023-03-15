@@ -15,10 +15,10 @@ function New-Diagram {
     Mermaid diagram definition object.
 
     .EXAMPLE
-    PS C:\> $diagram = New-MermaidDiagram -Type erDiagram
-    PS C:\> $diagram | Add-MermaidRelation Exactly-one Customer places Zero-or-more Order
-    PS C:\> $diagram | Add-MermaidRelation Exactly-one Order contains One-or-more LineItem
-    PS C:\> $diagram | Add-MermaidRelation One-or-more Customer uses One-or-more DeliveryAddress -NonIdentifying
+    PS C:\> $diagram = New-MermaidDiagram -ErDiagram
+    PS C:\> $diagram | Add-MermaidErRelation Exactly-one Customer places Zero-or-more Order
+    PS C:\> $diagram | Add-MermaidErRelation Exactly-one Order contains One-or-more LineItem
+    PS C:\> $diagram | Add-MermaidErRelation One-or-more Customer uses One-or-more DeliveryAddress -NonIdentifying
     PS C:\> $diagram | ConvertTo-MermaidString
     erDiagram
         Customer ||--o{ Order : places
@@ -36,9 +36,13 @@ function New-Diagram {
     param (
         # The mermaid diagram type.
         [Parameter( Mandatory, ParameterSetName = 'flowchart', Position = 0 )]
+        [switch] $Flowchart,
+
         [Parameter( Mandatory, ParameterSetName = 'erDiagram', Position = 0 )]
-        [ValidateSet('erDiagram', 'flowchart')]
-        [string] $Type,
+        [switch] $ErDiagram,
+
+        [Parameter( Mandatory, ParameterSetName = 'C4Component', Position = 0 )]
+        [switch] $C4Component,
 
         # The diagram orientation.
         [Parameter( Mandatory, ParameterSetName = 'flowchart', Position = 1 )]
@@ -47,10 +51,10 @@ function New-Diagram {
     )
 
     $definition = [PSCustomObject]@{
-        Type = $Type
+        Type = $PSCmdlet.ParameterSetName
     }
 
-    switch ( $PSCmdlet.ParameterSetName ) {
+    switch ( $definition.Type ) {
         erDiagram {
             $definition | Add-Member Relations @()
         }
@@ -58,6 +62,10 @@ function New-Diagram {
             $definition | Add-Member Orientation $Orientation
             $definition | Add-Member Nodes @()
             $definition | Add-Member Links @()
+        }
+        C4Component {
+            $definition | Add-Member ContainerBoundaries @()
+            $definition | Add-Member Relations @()
         }
     }
 

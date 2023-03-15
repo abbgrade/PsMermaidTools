@@ -5,7 +5,7 @@ online version: https://mermaid-js.github.io/mermaid/#/entityRelationshipDiagram
 schema: 2.0.0
 ---
 
-# Add-MermaidRelation
+# Add-MermaidErRelation
 
 ## SYNOPSIS
 Add a relation to a erDiagram.
@@ -14,12 +14,12 @@ Add a relation to a erDiagram.
 
 ### Entity
 ```
-Add-MermaidRelation [-Diagram <Object>] -Entity <String> [<CommonParameters>]
+Add-MermaidErRelation [-Diagram <Object>] -Entity <String> [<CommonParameters>]
 ```
 
 ### Relation
 ```
-Add-MermaidRelation [-Diagram <Object>] [-FirstEntity] <String> [-FirstCardinality] <String>
+Add-MermaidErRelation [-Diagram <Object>] [-FirstEntity] <String> [-FirstCardinality] <String>
  [-SecondEntity] <String> [-SecondCardinality] <String> [-Label] <String> [-NonIdentifying]
  [<CommonParameters>]
 ```
@@ -32,10 +32,10 @@ Used entities do not to be defined before.
 
 ### EXAMPLE 1
 ```
-$diagram = New-MermaidDiagram -Type erDiagram
-PS C:\> $diagram | Add-MermaidRelation Exactly-one Customer places Zero-or-more Order
-PS C:\> $diagram | Add-MermaidRelation Exactly-one Order contains One-or-more LineItem
-PS C:\> $diagram | Add-MermaidRelation One-or-more Customer uses One-or-more DeliveryAddress -NonIdentifying
+$diagram = New-MermaidDiagram -ErDiagram
+PS C:\> $diagram | Add-MermaidErRelation Exactly-one Customer places Zero-or-more Order
+PS C:\> $diagram | Add-MermaidErRelation Exactly-one Order contains One-or-more LineItem
+PS C:\> $diagram | Add-MermaidErRelation One-or-more Customer uses One-or-more DeliveryAddress -NonIdentifying
 PS C:\> $diagram | ConvertTo-MermaidString
 erDiagram
     Customer ||--o{ Order : places

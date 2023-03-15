@@ -5,15 +5,22 @@ online version:
 schema: 2.0.0
 ---
 
-# Add-MermaidNode
+# Add-MermaidC4Component
 
 ## SYNOPSIS
 {{ Fill in the Synopsis }}
 
 ## SYNTAX
 
+### Properties
 ```
-Add-MermaidNode [-Diagram <Object>] [-Key] <String> [-Name] <String> [-Shape] <String> [<CommonParameters>]
+Add-MermaidC4Component -Boundary <Object> -Key <String> -Name <String> [-Technology <String>]
+ [-Description <String>] [<CommonParameters>]
+```
+
+### Object
+```
+Add-MermaidC4Component -Boundary <Object> [-Component] <Object> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -30,18 +37,48 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -Diagram
-{{ Fill Diagram Description }}
+### -Boundary
+{{ Fill Boundary Description }}
 
 ```yaml
 Type: Object
 Parameter Sets: (All)
 Aliases:
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -Component
+{{ Fill Component Description }}
+
+```yaml
+Type: Object
+Parameter Sets: Object
+Aliases:
+
+Required: True
+Position: 0
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Description
+{{ Fill Description Description }}
+
+```yaml
+Type: String
+Parameter Sets: Properties
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -50,11 +87,11 @@ Accept wildcard characters: False
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Properties
 Aliases:
 
 Required: True
-Position: 0
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -65,27 +102,26 @@ Accept wildcard characters: False
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Properties
 Aliases:
 
 Required: True
-Position: 1
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Shape
-{{ Fill Shape Description }}
+### -Technology
+{{ Fill Technology Description }}
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Properties
 Aliases:
-Accepted values: round-edges, stadium, subroutine, cylindrical, circle, asymmetric, rhombus, hexagon, parallelogram, parallelogram-alt, trapezoid, trapezoid-alt, double-circle
 
-Required: True
-Position: 2
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
