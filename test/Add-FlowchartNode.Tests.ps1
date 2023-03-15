@@ -1,6 +1,6 @@
 #Requires -Modules @{ ModuleName='Pester'; ModuleVersion='5.0.0' }
 
-Describe Add-Node {
+Describe Add-FlowchartNode {
 
     BeforeAll {
         Import-Module $PSScriptRoot/../src/PsMermaidTools.psd1 -Force
@@ -13,7 +13,7 @@ Describe Add-Node {
         }
 
         It works-by-named-parmeters {
-            $diagram | Add-MermaidNode -Key A -Name foo -Shape round-edges
+            $diagram | Add-MermaidFlowchartNode -Key A -Name foo -Shape round-edges
             $diagram | Should -Not -BeNullOrEmpty
             $diagram.Nodes | Should -Not -BeNullOrEmpty
             $diagram.Nodes.Count | Should -Be 1
@@ -23,7 +23,7 @@ Describe Add-Node {
         }
 
         It works-by-positions {
-            $diagram | Add-MermaidNode A foo round-edges
+            $diagram | Add-MermaidFlowchartNode A foo round-edges
             $diagram | Should -Not -BeNullOrEmpty
             $diagram.Nodes | Should -Not -BeNullOrEmpty
             $diagram.Nodes.Count | Should -Be 1

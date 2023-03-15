@@ -1,4 +1,4 @@
-function Add-Node {
+function Add-FlowchartNode {
 
     [CmdletBinding()]
     param (
