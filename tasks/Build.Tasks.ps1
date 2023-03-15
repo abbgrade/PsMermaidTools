@@ -1,3 +1,5 @@
+# Copy from original https://github.com/abbgrade/PsBuildTasks/blob/main/Powershell/Build.Tasks.ps1
+
 requires ModuleName
 
 [System.IO.DirectoryInfo] $SourceDirectory = "$PsScriptRoot/../src"
@@ -57,9 +59,12 @@ task Build -Jobs Clean, Doc.Update, PreparePublishDirectory, {
 task Install -Jobs Build, {
     $info = Import-PowerShellDataFile $Global:Manifest
     $version = ([System.Version] $info.ModuleVersion)
-    $defaultModulePath = $env:PsModulePath -split ';' | Select-Object -First 1
-	Write-Verbose "install $ModuleName $version to $defaultModulePath"
-    $installPath = Join-Path $defaultModulePath $ModuleName $version.ToString()
+	$defaultModulePath = $env:PSModulePath -split ';' | Select-Object -First 1
+    if ( -not $defaultModulePath ) {
+        Write-Error "Failed to determine default module path from `$env:PSModulePath='$( $env:PSModulePath )'"
+    }
+	Write-Verbose "install $ModuleName $version to '$defaultModulePath'"
+	$installPath = Join-Path $defaultModulePath $ModuleName $version.ToString()
     New-Item -Type Directory $installPath -Force | Out-Null
     Get-ChildItem $Global:Manifest.Directory | Copy-Item -Destination $installPath -Recurse -Force
 }
