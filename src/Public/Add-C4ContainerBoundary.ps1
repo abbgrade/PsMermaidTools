@@ -1,4 +1,4 @@
-function Add-ContainerBoundary {
+function Add-C4ContainerBoundary {
 
     [CmdletBinding()]
     param (
