@@ -34,7 +34,7 @@ Creates and returns a new diagram definition, that can be populated and later ex
 
 ### EXAMPLE 1
 ```
-$diagram = New-MermaidDiagram -Type erDiagram
+$diagram = New-MermaidDiagram -ErDiagram
 PS C:\> $diagram | Add-MermaidErRelation Exactly-one Customer places Zero-or-more Order
 PS C:\> $diagram | Add-MermaidErRelation Exactly-one Order contains One-or-more LineItem
 PS C:\> $diagram | Add-MermaidErRelation One-or-more Customer uses One-or-more DeliveryAddress -NonIdentifying
