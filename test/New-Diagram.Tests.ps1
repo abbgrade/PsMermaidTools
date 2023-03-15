@@ -7,7 +7,7 @@ Describe New-Diagram {
     }
 
     It creates-er-diagram {
-        $diagram = New-MermaidDiagram -erDiagram
+        $diagram = New-MermaidDiagram -ErDiagram
         $diagram | Should -Not -BeNullOrEmpty
         $diagram.Type | Should -Be erDiagram
         $diagram.Relations | Should -Be @()
@@ -15,8 +15,8 @@ Describe New-Diagram {
         $diagram.Nodes | Should -BeNull
     }
 
-    It creates-flowchart-diagram {
-        $diagram = New-MermaidDiagram -flowchart -Orientation top-down
+    It creates-Flowchart-diagram {
+        $diagram = New-MermaidDiagram -Flowchart -Orientation top-down
         $diagram | Should -Not -BeNullOrEmpty
         $diagram.Type | Should -Be flowchart
         $diagram.Relations | Should -BeNull

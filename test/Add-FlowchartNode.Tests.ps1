@@ -9,7 +9,7 @@ Describe Add-FlowchartNode {
     Context flowchart {
 
         BeforeEach {
-            $diagram = New-MermaidDiagram -flowchart -Orientation top-down
+            $diagram = New-MermaidDiagram -Flowchart -Orientation top-down
         }
 
         It works-by-named-parmeters {

@@ -9,7 +9,7 @@ Describe Add-ErRelation {
     Context erDiagram {
 
         BeforeEach {
-            $diagram = New-MermaidDiagram -erDiagram
+            $diagram = New-MermaidDiagram -ErDiagram
         }
 
         It works-by-named-parmeters {
