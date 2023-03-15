@@ -101,7 +101,7 @@ PrivateData = @{
         LicenseUri = 'https://github.com/abbgrade/PsMermaidTools/blob/develop/LICENSE'
 
         # A URL to the main website for this project.
-        ProjectUri = 'https://github.com/abbgrade/PsMermaidTools'
+        ProjectUri = 'https://abbgrade.github.io/PsMermaidTools/'
 
         # A URL to an icon representing this module.
         # IconUri = ''
