@@ -14,7 +14,8 @@ Converts a mermaid definition to string.
 
 ### C4ComponentDiagram
 ```
-ConvertTo-MermaidString -Type <String> -ContainerBoundaries <PSObject[]> [<CommonParameters>]
+ConvertTo-MermaidString -Type <String> -Relations <PSObject[]> -ContainerBoundaries <PSObject[]>
+ [<CommonParameters>]
 ```
 
 ### flowchart
@@ -31,6 +32,12 @@ ConvertTo-MermaidString -Type <String> -Relations <PSObject[]> [<CommonParameter
 ### C4ContainerBoundary
 ```
 ConvertTo-MermaidString -Components <PSObject[]> -Key <String> -Name <String> [<CommonParameters>]
+```
+
+### C4Relation
+```
+ConvertTo-MermaidString [-From <String>] [-To <String>] [-Technology <String>] [-Description <String>]
+ [-Label <String>] [<CommonParameters>]
 ```
 
 ### C4Component
@@ -104,7 +111,7 @@ Collection of relations.
 
 ```yaml
 Type: PSObject[]
-Parameter Sets: erDiagram
+Parameter Sets: C4ComponentDiagram, erDiagram
 Aliases:
 
 Required: True
@@ -189,12 +196,42 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -From
+{{ Fill From Description }}
+
+```yaml
+Type: String
+Parameter Sets: C4Relation
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -To
+{{ Fill To Description }}
+
+```yaml
+Type: String
+Parameter Sets: C4Relation
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -Technology
 The component technology / implementation.
 
 ```yaml
 Type: String
-Parameter Sets: C4Component
+Parameter Sets: C4Relation, C4Component
 Aliases:
 
 Required: False
@@ -209,7 +246,7 @@ Describes the component.
 
 ```yaml
 Type: String
-Parameter Sets: C4Component
+Parameter Sets: C4Relation, C4Component
 Aliases:
 
 Required: False
@@ -269,7 +306,7 @@ Describes the relation.
 
 ```yaml
 Type: String
-Parameter Sets: erRelation
+Parameter Sets: C4Relation, erRelation
 Aliases:
 
 Required: False

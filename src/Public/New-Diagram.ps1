@@ -65,6 +65,7 @@ function New-Diagram {
         }
         C4Component {
             $definition | Add-Member ContainerBoundaries @()
+            $definition | Add-Member Relations @()
         }
     }
 

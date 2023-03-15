@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - new diagram type C4 component diagram.
 - new command `Add-C4Component`.
 - new command `Add-C4ContainerBoundary`.
+- new command `Add-C4Relation`.
 - new command `New-C4Component`.
 - new command `New-C4ContainerBoundary`.
 

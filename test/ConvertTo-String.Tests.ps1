@@ -572,6 +572,29 @@ Container_Boundary(api, "API Application") {
                 }
             }
 
+            Context Relation {
+
+                BeforeEach {
+                    $componentA = New-MermaidC4Component -Key sign -Name 'Sign In Controller'
+                    $container | Add-MermaidC4Component $componentA
+                    $componentB = New-MermaidC4Component -Key accounts -Name 'Accounts Summary Controller'
+                    $container | Add-MermaidC4Component $componentB
+                    $diagram | Add-MermaidC4Relation -From $componentA.Key -To $componentB.Key -Label Uses
+                }
+
+                It works {
+                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                    $output | Should -Not -BeNullOrEmpty
+                    $output | Should -Be (@"
+C4Component
+Container_Boundary(api, "API Application") {
+    Component(sign, "Sign In Controller")
+    Component(accounts, "Accounts Summary Controller")
+}
+Rel(sign, accounts, "Uses")
+"@.Replace("`r`n", [Environment]::NewLine))
+                }
+            }
         }
     }
 }

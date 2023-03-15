@@ -46,6 +46,7 @@ function ConvertTo-String {
 
         # Collection of relations.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'erDiagram')]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4ComponentDiagram')]
         [AllowEmptyCollection()]
         [PsObject[]] $Relations,
 
@@ -80,15 +81,28 @@ function ConvertTo-String {
         [PSObject[]] $Components,
 
         #endregion
+        #region C4Relation
+
+        #
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'C4Relation')]
+        [string] $From,
+
+        #
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'C4Relation')]
+        [string] $To,
+
+        #endregion
 
         #region C4Component
 
         # The component technology / implementation.
         [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'C4Component')]
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'C4Relation')]
         [string] $Technology,
 
         # Describes the component.
-        [Parameter(ValueFromPipelineByPropertyName,  ParameterSetName = 'C4Component')]
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'C4Component')]
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'C4Relation')]
         [string] $Description,
 
         #endregion
@@ -109,6 +123,7 @@ function ConvertTo-String {
 
         # Describes the relation.
         [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'erRelation')]
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'C4Relation')]
         [string] $Label,
 
         #endregion
@@ -198,6 +213,7 @@ function ConvertTo-String {
                 C4ComponentDiagram {
                     $Type | Write-Output
                     $ContainerBoundaries | ConvertTo-String | Write-Output
+                    $Relations | ConvertTo-String | Write-Output
                 }
                 erRelation {
                     if ( $SecondEntity ) {
@@ -310,6 +326,9 @@ function ConvertTo-String {
                 }
                 C4Component {
                     Write-Output "Component($Key, ""$Name""$( if ( $Technology ) { ', "' + $Technology + '"' } )$( if ( $Description ) { ', "' + $Description + '"' } ))"
+                }
+                C4Relation {
+                    Write-Output "Rel($From, $To, ""$Label""$( if ( $Technology ) { ', "' + $Technology + '"' } )$( if ( $Description ) { ', "' + $Description + '"' } ))"
                 }
                 erRelationship {
                     $FirstCardinalityCode = switch ($FirstCardinality) {

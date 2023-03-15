@@ -29,5 +29,6 @@ Describe New-Diagram {
         $diagram | Should -Not -BeNullOrEmpty
         $diagram.Type | Should -Be C4Component
         $diagram.ContainerBoundaries | Should -Be @()
+        $diagram.Relations | Should -Be @()
     }
 }
