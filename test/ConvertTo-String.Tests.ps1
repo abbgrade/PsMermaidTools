@@ -303,7 +303,7 @@ flowchart LR
             Context A-link-with-arrow-head {
 
                 BeforeEach {
-                    $diagram | Add-MermaidLink A B -DestinationHead arrow
+                    $diagram | Add-MermaidFlowchartLink A B -DestinationHead arrow
                 }
 
                 It works {
@@ -319,7 +319,7 @@ flowchart LR
             Context An-open-link {
 
                 BeforeEach {
-                    $diagram | Add-MermaidLink A B -DestinationHead open
+                    $diagram | Add-MermaidFlowchartLink A B -DestinationHead open
                 }
 
                 It works {
@@ -335,7 +335,7 @@ flowchart LR
             Context Text-on-links {
 
                 BeforeEach {
-                    $diagram | Add-MermaidLink A B -Text 'text' -DestinationHead open
+                    $diagram | Add-MermaidFlowchartLink A B -Text 'text' -DestinationHead open
                 }
 
                 It works {
@@ -351,7 +351,7 @@ flowchart LR
             Context A-link-with-arrow-head-and-text {
 
                 BeforeEach {
-                    $diagram | Add-MermaidLink A B -Text 'text'
+                    $diagram | Add-MermaidFlowchartLink A B -Text 'text'
                 }
 
                 It works {
@@ -367,7 +367,7 @@ flowchart LR
             Context Dotted-link {
 
                 BeforeEach {
-                    $diagram | Add-MermaidLink A B -Line dotted
+                    $diagram | Add-MermaidFlowchartLink A B -Line dotted
                 }
 
                 It works {
@@ -383,7 +383,7 @@ flowchart LR
             Context Dotted-link-with-text {
 
                 BeforeEach {
-                    $diagram | Add-MermaidLink A B -Line dotted -Text 'text'
+                    $diagram | Add-MermaidFlowchartLink A B -Line dotted -Text 'text'
                 }
 
                 It works {
@@ -399,7 +399,7 @@ flowchart LR
             Context Thick-link {
 
                 BeforeEach {
-                    $diagram | Add-MermaidLink A B -Line thick
+                    $diagram | Add-MermaidFlowchartLink A B -Line thick
                 }
 
                 It works {
@@ -415,7 +415,7 @@ flowchart LR
             Context Thick-link-with-text {
 
                 BeforeEach {
-                    $diagram | Add-MermaidLink A B -Line thick -Text 'text'
+                    $diagram | Add-MermaidFlowchartLink A B -Line thick -Text 'text'
                 }
 
                 It works {
@@ -431,7 +431,7 @@ flowchart LR
             Context circle-head {
 
                 BeforeEach {
-                    $diagram | Add-MermaidLink A B -DestinationHead circle
+                    $diagram | Add-MermaidFlowchartLink A B -DestinationHead circle
                 }
 
                 It works {
@@ -447,7 +447,7 @@ flowchart LR
             Context cross-head {
 
                 BeforeEach {
-                    $diagram | Add-MermaidLink A B -DestinationHead cross
+                    $diagram | Add-MermaidFlowchartLink A B -DestinationHead cross
                 }
 
                 It works {
@@ -463,7 +463,7 @@ flowchart LR
             Context multi-directional-arrow {
 
                 BeforeEach {
-                    $diagram | Add-MermaidLink A B -SourceHead arrow -DestinationHead arrow
+                    $diagram | Add-MermaidFlowchartLink A B -SourceHead arrow -DestinationHead arrow
                 }
 
                 It works {
@@ -479,7 +479,7 @@ flowchart LR
             Context multi-directional-circle {
 
                 BeforeEach {
-                    $diagram | Add-MermaidLink A B -SourceHead circle -DestinationHead circle
+                    $diagram | Add-MermaidFlowchartLink A B -SourceHead circle -DestinationHead circle
                 }
 
                 It works {
@@ -495,7 +495,7 @@ flowchart LR
             Context multi-directional-cross {
 
                 BeforeEach {
-                    $diagram | Add-MermaidLink A B -SourceHead cross -DestinationHead cross
+                    $diagram | Add-MermaidFlowchartLink A B -SourceHead cross -DestinationHead cross
                 }
 
                 It works {

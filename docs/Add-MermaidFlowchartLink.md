@@ -5,7 +5,7 @@ online version: https://mermaid-js.github.io/mermaid/#/entityRelationshipDiagram
 schema: 2.0.0
 ---
 
-# Add-MermaidLink
+# Add-MermaidFlowchartLink
 
 ## SYNOPSIS
 {{ Fill in the Synopsis }}
@@ -13,7 +13,7 @@ schema: 2.0.0
 ## SYNTAX
 
 ```
-Add-MermaidLink [-Diagram <Object>] [-Source] <String> [-Destination] <String> [[-Text] <String>]
+Add-MermaidFlowchartLink [-Diagram <Object>] [-Source] <String> [-Destination] <String> [[-Text] <String>]
  [-Line <String>] [-DestinationHead <String>] [-SourceHead <String>] [<CommonParameters>]
 ```
 

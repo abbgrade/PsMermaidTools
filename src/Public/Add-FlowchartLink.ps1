@@ -1,8 +1,8 @@
-function Add-Link {
+function Add-FlowchartLink {
 
     [CmdletBinding()]
     param (
-        # The diagram, that the relation is added to.
+        # The flowchart diagram, that the relation is added to.
         [Parameter(ValueFromPipeline)]
         $Diagram,
 
