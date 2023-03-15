@@ -1,6 +1,6 @@
 #Requires -Modules @{ ModuleName='Pester'; ModuleVersion='5.0.0' }
 
-Describe Add-Relation {
+Describe Add-ErRelation {
 
     BeforeAll {
         Import-Module $PSScriptRoot/../src/PsMermaidTools.psd1 -Force
@@ -13,7 +13,7 @@ Describe Add-Relation {
         }
 
         It works-by-named-parmeters {
-            $diagram | Add-MermaidRelation -FirstEntity First -FirstCardinality Zero-or-one -SecondEntity Second -SecondCardinality Zero-or-more -Label Example
+            $diagram | Add-MermaidErRelation -FirstEntity First -FirstCardinality Zero-or-one -SecondEntity Second -SecondCardinality Zero-or-more -Label Example
             $diagram | Should -Not -BeNullOrEmpty
             $diagram.Relations | Should -Not -BeNullOrEmpty
             $diagram.Relations.Count | Should -Be 1
@@ -27,9 +27,9 @@ Describe Add-Relation {
         }
 
         It works-by-positions {
-            $diagram | Add-MermaidRelation Exactly-one Customer places Zero-or-more Order
-            $diagram | Add-MermaidRelation Exactly-one Order contains One-or-more LineItem
-            $diagram | Add-MermaidRelation One-or-more Customer uses One-or-more DeliveryAddress -NonIdentifying
+            $diagram | Add-MermaidErRelation Exactly-one Customer places Zero-or-more Order
+            $diagram | Add-MermaidErRelation Exactly-one Order contains One-or-more LineItem
+            $diagram | Add-MermaidErRelation One-or-more Customer uses One-or-more DeliveryAddress -NonIdentifying
 
             $diagram | Should -Not -BeNullOrEmpty
             $diagram.Relations | Should -Not -BeNullOrEmpty
@@ -61,7 +61,7 @@ Describe Add-Relation {
         }
 
         It works-without-second-entity {
-            $diagram | Add-MermaidRelation -Entity First
+            $diagram | Add-MermaidErRelation -Entity First
             $diagram | Should -Not -BeNullOrEmpty
             $diagram.Relations | Should -Not -BeNullOrEmpty
             $diagram.Relations.Count | Should -Be 1

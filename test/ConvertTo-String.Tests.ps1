@@ -22,7 +22,7 @@ erDiagram
 
         Context minimum {
             BeforeEach {
-                $diagram | Add-MermaidRelation -Entity Entity
+                $diagram | Add-MermaidErRelation -Entity Entity
             }
 
             It works {
@@ -37,9 +37,9 @@ erDiagram
 
         Context complex {
             BeforeEach {
-                $diagram | Add-MermaidRelation Exactly-one Customer places Zero-or-more Order
-                $diagram | Add-MermaidRelation Exactly-one Order contains One-or-more LineItem
-                $diagram | Add-MermaidRelation One-or-more Customer uses One-or-more DeliveryAddress -NonIdentifying
+                $diagram | Add-MermaidErRelation Exactly-one Customer places Zero-or-more Order
+                $diagram | Add-MermaidErRelation Exactly-one Order contains One-or-more LineItem
+                $diagram | Add-MermaidErRelation One-or-more Customer uses One-or-more DeliveryAddress -NonIdentifying
             }
 
             It works-for-identifying-relationship {

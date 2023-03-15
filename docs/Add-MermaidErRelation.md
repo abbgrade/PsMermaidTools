@@ -5,7 +5,7 @@ online version: https://mermaid-js.github.io/mermaid/#/entityRelationshipDiagram
 schema: 2.0.0
 ---
 
-# Add-MermaidRelation
+# Add-MermaidErRelation
 
 ## SYNOPSIS
 Add a relation to a erDiagram.
@@ -14,12 +14,12 @@ Add a relation to a erDiagram.
 
 ### Entity
 ```
-Add-MermaidRelation [-Diagram <Object>] -Entity <String> [<CommonParameters>]
+Add-MermaidErRelation [-Diagram <Object>] -Entity <String> [<CommonParameters>]
 ```
 
 ### Relation
 ```
-Add-MermaidRelation [-Diagram <Object>] [-FirstEntity] <String> [-FirstCardinality] <String>
+Add-MermaidErRelation [-Diagram <Object>] [-FirstEntity] <String> [-FirstCardinality] <String>
  [-SecondEntity] <String> [-SecondCardinality] <String> [-Label] <String> [-NonIdentifying]
  [<CommonParameters>]
 ```

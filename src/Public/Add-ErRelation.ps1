@@ -1,4 +1,4 @@
-function Add-Relation {
+function Add-ErRelation {
 
     <#
 
