@@ -40,7 +40,7 @@ Describe Add-C4Component {
             Context Component {
 
                 BeforeAll {
-                    $component = New-MermaidComponent -Key B -Name bar -Technology tech -Description desc
+                    $component = New-MermaidC4Component -Key B -Name bar -Technology tech -Description desc
                     $component.Key | Should -Be B
                     $component.Name | Should -Be bar
                     $component.Technology | Should -Be tech

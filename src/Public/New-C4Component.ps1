@@ -1,4 +1,4 @@
-function New-Component {
+function New-C4Component {
 
     [CmdletBinding()]
     param (

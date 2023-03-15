@@ -5,7 +5,7 @@ online version: https://mermaid-js.github.io/mermaid/#/entityRelationshipDiagram
 schema: 2.0.0
 ---
 
-# New-MermaidComponent
+# New-MermaidC4Component
 
 ## SYNOPSIS
 {{ Fill in the Synopsis }}
@@ -13,7 +13,7 @@ schema: 2.0.0
 ## SYNTAX
 
 ```
-New-MermaidComponent [-Key] <String> [-Name] <String> [[-Technology] <String>] [[-Description] <String>]
+New-MermaidC4Component [-Key] <String> [-Name] <String> [[-Technology] <String>] [[-Description] <String>]
  [<CommonParameters>]
 ```
 

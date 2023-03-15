@@ -1,6 +1,6 @@
 #Requires -Modules @{ ModuleName='Pester'; ModuleVersion='5.0.0' }
 
-Describe New-Component {
+Describe New-C4Component {
 
     BeforeAll {
         Import-Module $PSScriptRoot/../src/PsMermaidTools.psd1 -Force
@@ -20,13 +20,13 @@ Describe New-Component {
             }
 
             It works {
-                $component = New-MermaidComponent -Key B -Name bar
+                $component = New-MermaidC4Component -Key B -Name bar
                 $component.Key | Should -Be B
                 $component.Name | Should -Be bar
             }
 
             It works-with-details {
-                $component = New-MermaidComponent -Key B -Name bar -Technology tech -Description desc
+                $component = New-MermaidC4Component -Key B -Name bar -Technology tech -Description desc
                 $component.Key | Should -Be B
                 $component.Name | Should -Be bar
                 $component.Technology | Should -Be tech
