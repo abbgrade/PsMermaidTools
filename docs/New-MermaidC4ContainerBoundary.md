@@ -5,7 +5,7 @@ online version: https://mermaid-js.github.io/mermaid/#/entityRelationshipDiagram
 schema: 2.0.0
 ---
 
-# New-MermaidContainerBoundary
+# New-MermaidC4ContainerBoundary
 
 ## SYNOPSIS
 {{ Fill in the Synopsis }}
@@ -13,7 +13,7 @@ schema: 2.0.0
 ## SYNTAX
 
 ```
-New-MermaidContainerBoundary [-Key] <String> [-Name] <String> [<CommonParameters>]
+New-MermaidC4ContainerBoundary [-Key] <String> [-Name] <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION

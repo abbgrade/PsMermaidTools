@@ -23,7 +23,7 @@ function Add-C4ContainerBoundary {
 
     switch ( $PSCmdlet.ParameterSetName ) {
         Properties {
-            $ContainerBoundary = New-ContainerBoundary `
+            $ContainerBoundary = New-C4ContainerBoundary `
                 -Key $Key `
                 -Name $Name
         }

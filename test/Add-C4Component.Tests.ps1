@@ -15,7 +15,7 @@ Describe Add-C4Component {
         Context ContainerBoundary {
 
             BeforeEach {
-                $container = New-MermaidContainerBoundary -Key A -Name foo
+                $container = New-MermaidC4ContainerBoundary -Key A -Name foo
                 $diagram | Add-MermaidC4ContainerBoundary $container
             }
 

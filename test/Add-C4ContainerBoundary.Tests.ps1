@@ -23,7 +23,7 @@ Describe Add-C4ContainerBoundary {
         Context ContainerBoundary {
 
             BeforeAll {
-                $boundary = New-MermaidContainerBoundary -Key A -Name foo
+                $boundary = New-MermaidC4ContainerBoundary -Key A -Name foo
             }
 
             It works {
