@@ -1,6 +1,6 @@
 #Requires -Modules @{ ModuleName='Pester'; ModuleVersion='5.0.0' }
 
-Describe Add-ContainerBoundary {
+Describe Add-C4ContainerBoundary {
 
     BeforeAll {
         Import-Module $PSScriptRoot/../src/PsMermaidTools.psd1 -Force
@@ -13,7 +13,7 @@ Describe Add-ContainerBoundary {
         }
 
         It works {
-            $diagram | Add-MermaidContainerBoundary -Key A -Name foo
+            $diagram | Add-MermaidC4ContainerBoundary -Key A -Name foo
             $diagram.ContainerBoundaries | Should -Not -BeNullOrEmpty
             $diagram.ContainerBoundaries.Count | Should -Be 1
             $diagram.ContainerBoundaries[0].Key | Should -Be A
@@ -27,7 +27,7 @@ Describe Add-ContainerBoundary {
             }
 
             It works {
-                $diagram | Add-MermaidContainerBoundary $boundary
+                $diagram | Add-MermaidC4ContainerBoundary $boundary
                 $diagram.ContainerBoundaries | Should -Not -BeNullOrEmpty
                 $diagram.ContainerBoundaries.Count | Should -Be 1
                 $diagram.ContainerBoundaries[0].Key | Should -Be A

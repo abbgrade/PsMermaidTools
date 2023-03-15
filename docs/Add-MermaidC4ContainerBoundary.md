@@ -5,7 +5,7 @@ online version:
 schema: 2.0.0
 ---
 
-# Add-MermaidContainerBoundary
+# Add-MermaidC4ContainerBoundary
 
 ## SYNOPSIS
 {{ Fill in the Synopsis }}
@@ -14,12 +14,12 @@ schema: 2.0.0
 
 ### Properties
 ```
-Add-MermaidContainerBoundary -Diagram <Object> -Key <String> -Name <String> [<CommonParameters>]
+Add-MermaidC4ContainerBoundary -Diagram <Object> -Key <String> -Name <String> [<CommonParameters>]
 ```
 
 ### Object
 ```
-Add-MermaidContainerBoundary -Diagram <Object> [-ContainerBoundary] <Object> [<CommonParameters>]
+Add-MermaidC4ContainerBoundary -Diagram <Object> [-ContainerBoundary] <Object> [<CommonParameters>]
 ```
 
 ## DESCRIPTION

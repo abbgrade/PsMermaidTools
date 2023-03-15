@@ -527,7 +527,7 @@ C4Component
 
             BeforeEach {
                 $container = New-MermaidContainerBoundary -Key api -Name 'API Application'
-                $diagram | Add-MermaidContainerBoundary $container
+                $diagram | Add-MermaidC4ContainerBoundary $container
             }
 
             Context MinmumContainer {

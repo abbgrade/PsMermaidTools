@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - new diagram type flowcharts.
 - new command `Add-MermaidComponent`.
+- new command `Add-MermaidC4ContainerBoundary`.
 
 ### Changed
 
