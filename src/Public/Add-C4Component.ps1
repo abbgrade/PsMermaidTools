@@ -5,7 +5,7 @@ function Add-C4Component {
         # The boundary, that the component is added to.
         [Parameter( Mandatory, ValueFromPipeline, ParameterSetName = 'Object' )]
         [Parameter( Mandatory, ValueFromPipeline, ParameterSetName = 'Properties' )]
-        [ValidateNotNull]
+        [ValidateNotNull()]
         $Boundary,
 
         [Parameter( Mandatory, Position = 0, ParameterSetName = 'Object' )]
