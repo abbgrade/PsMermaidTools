@@ -36,6 +36,7 @@ function Add-ErRelation {
     param (
         # The diagram, that the relation is added to.
         [Parameter(ValueFromPipeline)]
+        [ValidateNotNull()]
         $Diagram,
 
         # The first entity of the relation.

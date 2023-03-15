@@ -4,10 +4,12 @@ function New-C4Component {
     param (
         # The identifier of the component.
         [Parameter( Mandatory )]
+        [ValidateNotNullOrEmpty()]
         [string] $Key,
 
         # The component name.
         [Parameter( Mandatory )]
+        [ValidateNotNullOrEmpty()]
         [string] $Name,
 
         # The component technology / implementation.

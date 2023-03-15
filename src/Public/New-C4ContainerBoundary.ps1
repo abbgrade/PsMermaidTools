@@ -4,13 +4,13 @@ function New-C4ContainerBoundary {
     param (
         # The identifier of the container.
         [Parameter( Mandatory )]
-        [string]
-        $Key,
+        [ValidateNotNullOrEmpty()]
+        [string] $Key,
 
         # The container name.
         [Parameter( Mandatory )]
-        [string]
-        $Name
+        [ValidateNotNullOrEmpty()]
+        [string] $Name
     )
 
     [PSCustomObject] @{

@@ -4,6 +4,7 @@ function Add-FlowchartNode {
     param (
         # The diagram, that the relation is added to.
         [Parameter(ValueFromPipeline)]
+        [ValidateNotNull()]
         $Diagram,
 
         # The identifier of the node.

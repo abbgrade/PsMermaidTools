@@ -4,6 +4,7 @@ function Add-FlowchartLink {
     param (
         # The flowchart diagram, that the relation is added to.
         [Parameter(ValueFromPipeline)]
+        [ValidateNotNull()]
         $Diagram,
 
         # The source node of the link.

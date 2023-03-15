@@ -5,6 +5,7 @@ function Add-C4ContainerBoundary {
         # The diagram, that the container is added to.
         [Parameter( Mandatory, ValueFromPipeline, ParameterSetName = 'Object' )]
         [Parameter( Mandatory, ValueFromPipeline, ParameterSetName = 'Properties' )]
+        [ValidateNotNull()]
         $Diagram,
 
         [Parameter( Mandatory, Position = 0, ParameterSetName = 'Object' )]
