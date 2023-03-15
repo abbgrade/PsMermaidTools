@@ -36,9 +36,13 @@ function New-Diagram {
     param (
         # The mermaid diagram type.
         [Parameter( Mandatory, ParameterSetName = 'flowchart', Position = 0 )]
+        [switch] $Flowchart,
+
         [Parameter( Mandatory, ParameterSetName = 'erDiagram', Position = 0 )]
-        [ValidateSet('erDiagram', 'flowchart')]
-        [string] $Type,
+        [switch] $ErDiagram,
+
+        [Parameter( Mandatory, ParameterSetName = 'C4Component', Position = 0 )]
+        [switch] $C4Component,
 
         # The diagram orientation.
         [Parameter( Mandatory, ParameterSetName = 'flowchart', Position = 1 )]
@@ -47,10 +51,10 @@ function New-Diagram {
     )
 
     $definition = [PSCustomObject]@{
-        Type = $Type
+        Type = $PSCmdlet.ParameterSetName
     }
 
-    switch ( $PSCmdlet.ParameterSetName ) {
+    switch ( $definition.Type ) {
         erDiagram {
             $definition | Add-Member Relations @()
         }
@@ -58,6 +62,9 @@ function New-Diagram {
             $definition | Add-Member Orientation $Orientation
             $definition | Add-Member Nodes @()
             $definition | Add-Member Links @()
+        }
+        C4Component {
+            $definition | Add-Member ContainerBoundaries @()
         }
     }
 

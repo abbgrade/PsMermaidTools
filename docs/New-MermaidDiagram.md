@@ -14,12 +14,17 @@ Creates a new mermaid diagram.
 
 ### erDiagram (Default)
 ```
-New-MermaidDiagram [-Type] <String> [<CommonParameters>]
+New-MermaidDiagram [-ErDiagram] [<CommonParameters>]
 ```
 
 ### flowchart
 ```
-New-MermaidDiagram [-Type] <String> [-Orientation] <String> [<CommonParameters>]
+New-MermaidDiagram [-Flowchart] [-Orientation] <String> [<CommonParameters>]
+```
+
+### C4Component
+```
+New-MermaidDiagram [-C4Component] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -44,17 +49,47 @@ Create a erDiagram, add a few relations and convert it to a diagram string.
 
 ## PARAMETERS
 
-### -Type
+### -Flowchart
 The mermaid diagram type.
 
 ```yaml
-Type: String
-Parameter Sets: (All)
+Type: SwitchParameter
+Parameter Sets: flowchart
 Aliases:
 
 Required: True
 Position: 1
-Default value: None
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ErDiagram
+{{ Fill ErDiagram Description }}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: erDiagram
+Aliases:
+
+Required: True
+Position: 1
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -C4Component
+{{ Fill C4Component Description }}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: C4Component
+Aliases:
+
+Required: True
+Position: 1
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

@@ -12,6 +12,11 @@ Converts a mermaid definition to string.
 
 ## SYNTAX
 
+### C4ComponentDiagram
+```
+ConvertTo-MermaidString -Type <String> -ContainerBoundaries <PSObject[]> [<CommonParameters>]
+```
+
 ### flowchart
 ```
 ConvertTo-MermaidString -Type <String> -Orientation <String> -Nodes <PSObject[]> -Links <PSObject[]>
@@ -21,6 +26,17 @@ ConvertTo-MermaidString -Type <String> -Orientation <String> -Nodes <PSObject[]>
 ### erDiagram
 ```
 ConvertTo-MermaidString -Type <String> -Relations <PSObject[]> [<CommonParameters>]
+```
+
+### C4ContainerBoundary
+```
+ConvertTo-MermaidString -Components <PSObject[]> -Key <String> -Name <String> [<CommonParameters>]
+```
+
+### C4Component
+```
+ConvertTo-MermaidString [-Technology <String>] [-Description <String>] -Key <String> -Name <String>
+ [<CommonParameters>]
 ```
 
 ### erRelation
@@ -73,7 +89,7 @@ The diagram link type.
 
 ```yaml
 Type: String
-Parameter Sets: flowchart, erDiagram
+Parameter Sets: C4ComponentDiagram, flowchart, erDiagram
 Aliases:
 
 Required: True
@@ -137,6 +153,66 @@ Parameter Sets: flowchart
 Aliases:
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -ContainerBoundaries
+Collection of container boundaries for a C4Component diagram.
+
+```yaml
+Type: PSObject[]
+Parameter Sets: C4ComponentDiagram
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Components
+Collection of components for a C4Component diagram.
+
+```yaml
+Type: PSObject[]
+Parameter Sets: C4ContainerBoundary
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Technology
+The component technology / implementation.
+
+```yaml
+Type: String
+Parameter Sets: C4Component
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Description
+Describes the component.
+
+```yaml
+Type: String
+Parameter Sets: C4Component
+Aliases:
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
@@ -294,11 +370,11 @@ Accept wildcard characters: False
 ```
 
 ### -Key
-Indentifier of the node.
+Indentifier of the node/container/component.
 
 ```yaml
 Type: String
-Parameter Sets: flowchartNode
+Parameter Sets: C4ContainerBoundary, C4Component, flowchartNode
 Aliases:
 
 Required: True
@@ -309,11 +385,11 @@ Accept wildcard characters: False
 ```
 
 ### -Name
-Name of the node.
+Name of the node/container.
 
 ```yaml
 Type: String
-Parameter Sets: flowchartNode
+Parameter Sets: C4ContainerBoundary, C4Component, flowchartNode
 Aliases:
 
 Required: True
@@ -370,7 +446,7 @@ Accept wildcard characters: False
 
 ### -Identifying
 Flags if one entity may exist without the other.
-end region
+endregion
 
 ```yaml
 Type: Boolean

@@ -1,11 +1,15 @@
+#Requires -Modules @{ ModuleName='Pester'; ModuleVersion='5.0.0' }
+
 Describe ConvertTo-String {
+
     BeforeAll {
         Import-Module $PSScriptRoot/../src/PsMermaidTools.psd1 -Force
     }
 
     Context erDiagram {
+
         BeforeEach {
-            $diagram = New-MermaidDiagram -Type erDiagram
+            $diagram = New-MermaidDiagram -erDiagram
         }
 
         It works-empty {
@@ -71,7 +75,7 @@ erDiagram
 
     Context flowchart {
         BeforeEach {
-            $diagram = New-MermaidDiagram -Type flowchart -Orientation left-to-right
+            $diagram = New-MermaidDiagram -flowchart -Orientation left-to-right
         }
 
         It works-empty {
@@ -86,7 +90,7 @@ flowchart LR
 
             Context round-edges {
                 BeforeEach {
-                    $diagram = New-MermaidDiagram -Type flowchart -Orientation left-to-right
+                    $diagram = New-MermaidDiagram -flowchart -Orientation left-to-right
                     $diagram | Add-MermaidNode A node round-edges
                 }
 
@@ -102,7 +106,7 @@ flowchart LR
 
             Context stadium-shape {
                 BeforeEach {
-                    $diagram = New-MermaidDiagram -Type flowchart -Orientation left-to-right
+                    $diagram = New-MermaidDiagram -flowchart -Orientation left-to-right
                     $diagram | Add-MermaidNode A node stadium
                 }
 
@@ -118,7 +122,7 @@ flowchart LR
 
             Context subroutine {
                 BeforeEach {
-                    $diagram = New-MermaidDiagram -Type flowchart -Orientation left-to-right
+                    $diagram = New-MermaidDiagram -flowchart -Orientation left-to-right
                     $diagram | Add-MermaidNode A node subroutine
                 }
 
@@ -134,7 +138,7 @@ flowchart LR
 
             Context cylindrical-shape {
                 BeforeEach {
-                    $diagram = New-MermaidDiagram -Type flowchart -Orientation left-to-right
+                    $diagram = New-MermaidDiagram -flowchart -Orientation left-to-right
                     $diagram | Add-MermaidNode A node cylindrical
                 }
 
@@ -150,7 +154,7 @@ flowchart LR
 
             Context circle {
                 BeforeEach {
-                    $diagram = New-MermaidDiagram -Type flowchart -Orientation left-to-right
+                    $diagram = New-MermaidDiagram -flowchart -Orientation left-to-right
                     $diagram | Add-MermaidNode A node circle
                 }
 
@@ -166,7 +170,7 @@ flowchart LR
 
             Context asymmetric-shape {
                 BeforeEach {
-                    $diagram = New-MermaidDiagram -Type flowchart -Orientation left-to-right
+                    $diagram = New-MermaidDiagram -flowchart -Orientation left-to-right
                     $diagram | Add-MermaidNode A node asymmetric
                 }
 
@@ -182,7 +186,7 @@ flowchart LR
 
             Context rhombus {
                 BeforeEach {
-                    $diagram = New-MermaidDiagram -Type flowchart -Orientation left-to-right
+                    $diagram = New-MermaidDiagram -flowchart -Orientation left-to-right
                     $diagram | Add-MermaidNode A node rhombus
                 }
 
@@ -198,7 +202,7 @@ flowchart LR
 
             Context hexagon {
                 BeforeEach {
-                    $diagram = New-MermaidDiagram -Type flowchart -Orientation left-to-right
+                    $diagram = New-MermaidDiagram -flowchart -Orientation left-to-right
                     $diagram | Add-MermaidNode A node hexagon
                 }
 
@@ -214,7 +218,7 @@ flowchart LR
 
             Context parallelogram {
                 BeforeEach {
-                    $diagram = New-MermaidDiagram -Type flowchart -Orientation left-to-right
+                    $diagram = New-MermaidDiagram -flowchart -Orientation left-to-right
                     $diagram | Add-MermaidNode A node parallelogram
                 }
 
@@ -230,7 +234,7 @@ flowchart LR
 
             Context alt-parallelogram {
                 BeforeEach {
-                    $diagram = New-MermaidDiagram -Type flowchart -Orientation left-to-right
+                    $diagram = New-MermaidDiagram -flowchart -Orientation left-to-right
                     $diagram | Add-MermaidNode A node parallelogram-alt
                 }
 
@@ -246,7 +250,7 @@ flowchart LR
 
             Context trapezoid {
                 BeforeEach {
-                    $diagram = New-MermaidDiagram -Type flowchart -Orientation left-to-right
+                    $diagram = New-MermaidDiagram -flowchart -Orientation left-to-right
                     $diagram | Add-MermaidNode A node trapezoid
                 }
 
@@ -262,7 +266,7 @@ flowchart LR
 
             Context alt-trapezoid {
                 BeforeEach {
-                    $diagram = New-MermaidDiagram -Type flowchart -Orientation left-to-right
+                    $diagram = New-MermaidDiagram -flowchart -Orientation left-to-right
                     $diagram | Add-MermaidNode A node trapezoid-alt
                 }
 
@@ -278,7 +282,7 @@ flowchart LR
 
             Context double-circle {
                 BeforeEach {
-                    $diagram = New-MermaidDiagram -Type flowchart -Orientation left-to-right
+                    $diagram = New-MermaidDiagram -flowchart -Orientation left-to-right
                     $diagram | Add-MermaidNode A node double-circle
                 }
 
@@ -503,6 +507,71 @@ flowchart LR
 "@.Replace("`r`n", [Environment]::NewLine))
                 }
             }
+        }
+    }
+
+    Context C4Component {
+        BeforeEach {
+            $diagram = New-MermaidDiagram -C4Component
+        }
+
+        It works-empty {
+            $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+            $output | Should -Not -BeNullOrEmpty
+            $output | Should -Be (@"
+C4Component
+"@.Replace("`r`n", [Environment]::NewLine))
+        }
+
+        Context ContainerBoundary {
+
+            BeforeEach {
+                $container = New-MermaidContainerBoundary -Key api -Name 'API Application'
+                $diagram | Add-MermaidContainerBoundary $container
+            }
+
+            Context MinmumContainer {
+
+                BeforeEach {
+                    $container | Add-MermaidComponent `
+                        -Key sign `
+                        -Name 'Sign In Controller'
+                }
+
+                It works {
+                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                    $output | Should -Not -BeNullOrEmpty
+                    $output | Should -Be (@"
+C4Component
+Container_Boundary(api, "API Application") {
+    Component(sign, "Sign In Controller")
+}
+"@.Replace("`r`n", [Environment]::NewLine))
+                }
+            }
+
+            Context MaximumContainer {
+
+                BeforeEach {
+                    $container | Add-MermaidComponent `
+                        -Key sign `
+                        -Name 'Sign In Controller' `
+                        -Technology 'MVC Rest Controller' `
+                        -Description 'Allows users to sign in to the internet banking system'
+                }
+
+                It works {
+                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                    $output | Should -Not -BeNullOrEmpty
+                    $output | Should -Be (@"
+C4Component
+Container_Boundary(api, "API Application") {
+    Component(sign, "Sign In Controller", "MVC Rest Controller", "Allows users to sign in to the internet banking system")
+}
+"@.Replace("`r`n", [Environment]::NewLine))
+                }
+            }
+
         }
     }
 }
