@@ -20,9 +20,7 @@ Invoke-Build Install
 
 ## Usage
 
-## Commands
-
-See the [docs](https://abbgrade.github.io/PsMermaidTools/).
+See [the command reference](./docs/) for descriptions and examples.
 
 ## Changelog
 
