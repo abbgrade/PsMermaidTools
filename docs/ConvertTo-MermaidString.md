@@ -70,9 +70,9 @@ Generates mermaid syntax for definitions created with this module.
 ### EXAMPLE 1
 ```
 $diagram = New-MermaidDiagram -Type erDiagram
-PS C:\> $diagram | Add-MermaidRelation Exactly-one Customer places Zero-or-more Order
-PS C:\> $diagram | Add-MermaidRelation Exactly-one Order contains One-or-more LineItem
-PS C:\> $diagram | Add-MermaidRelation One-or-more Customer uses One-or-more DeliveryAddress -NonIdentifying
+PS C:\> $diagram | Add-MermaidErRelation Exactly-one Customer places Zero-or-more Order
+PS C:\> $diagram | Add-MermaidErRelation Exactly-one Order contains One-or-more LineItem
+PS C:\> $diagram | Add-MermaidErRelation One-or-more Customer uses One-or-more DeliveryAddress -NonIdentifying
 PS C:\> $diagram | ConvertTo-MermaidString
 erDiagram
     Customer ||--o{ Order : places
