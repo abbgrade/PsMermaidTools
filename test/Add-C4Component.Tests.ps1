@@ -1,6 +1,6 @@
 #Requires -Modules @{ ModuleName='Pester'; ModuleVersion='5.0.0' }
 
-Describe Add-Component {
+Describe Add-C4Component {
 
     BeforeAll {
         Import-Module $PSScriptRoot/../src/PsMermaidTools.psd1 -Force
@@ -20,7 +20,7 @@ Describe Add-Component {
             }
 
             It works {
-                $container | Add-MermaidComponent -Key B -Name bar
+                $container | Add-MermaidC4Component -Key B -Name bar
                 $container.Components | Should -Not -BeNullOrEmpty
                 $container.Components.Count | Should -Be 1
                 $container.Components[0].Key | Should -Be B
@@ -28,7 +28,7 @@ Describe Add-Component {
             }
 
             It works-with-details {
-                $container | Add-MermaidComponent -Key B -Name bar -Technology tech -Description desc
+                $container | Add-MermaidC4Component -Key B -Name bar -Technology tech -Description desc
                 $container.Components | Should -Not -BeNullOrEmpty
                 $container.Components.Count | Should -Be 1
                 $container.Components[0].Key | Should -Be B
@@ -48,7 +48,7 @@ Describe Add-Component {
                 }
 
                 It works {
-                    $container | Add-MermaidComponent $component
+                    $container | Add-MermaidC4Component $component
                     $container.Components | Should -Not -BeNullOrEmpty
                     $container.Components.Count | Should -Be 1
                     $container.Components[0].Key | Should -Be B

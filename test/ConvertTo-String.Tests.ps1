@@ -533,7 +533,7 @@ C4Component
             Context MinmumContainer {
 
                 BeforeEach {
-                    $container | Add-MermaidComponent `
+                    $container | Add-MermaidC4Component `
                         -Key sign `
                         -Name 'Sign In Controller'
                 }
@@ -553,7 +553,7 @@ Container_Boundary(api, "API Application") {
             Context MaximumContainer {
 
                 BeforeEach {
-                    $container | Add-MermaidComponent `
+                    $container | Add-MermaidC4Component `
                         -Key sign `
                         -Name 'Sign In Controller' `
                         -Technology 'MVC Rest Controller' `

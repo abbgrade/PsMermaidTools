@@ -5,7 +5,7 @@ online version:
 schema: 2.0.0
 ---
 
-# Add-MermaidComponent
+# Add-MermaidC4Component
 
 ## SYNOPSIS
 {{ Fill in the Synopsis }}
@@ -14,13 +14,13 @@ schema: 2.0.0
 
 ### Properties
 ```
-Add-MermaidComponent -Boundary <Object> -Key <String> -Name <String> [-Technology <String>]
+Add-MermaidC4Component -Boundary <Object> -Key <String> -Name <String> [-Technology <String>]
  [-Description <String>] [<CommonParameters>]
 ```
 
 ### Object
 ```
-Add-MermaidComponent -Boundary <Object> [-Component] <Object> [<CommonParameters>]
+Add-MermaidC4Component -Boundary <Object> [-Component] <Object> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
