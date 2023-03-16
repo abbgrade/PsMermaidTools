@@ -1,5 +1,27 @@
 function Add-C4ContainerBoundary {
 
+    <#
+
+    .SYNOPSIS
+    Add a container boundary to a diagram.
+
+    .DESCRIPTION
+    Add or create a container boundary and add it to an C4 diagram.
+
+    .INPUTS
+    C4Container diagram object.
+
+    .OUTPUTS
+    None.
+
+    .LINK
+    https://abbgrade.github.io/PsMermaidTools/docs/Add-MermaidC4ContainerBoundary.html
+
+    .LINK
+    https://mermaid.js.org/syntax/c4c.html#c4-component-diagram-c4component
+
+    #>
+
     [CmdletBinding()]
     param (
         # The diagram, that the container is added to.

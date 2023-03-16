@@ -1,14 +1,14 @@
 ---
 external help file: PsMermaidTools-help.xml
 Module Name: PsMermaidTools
-online version:
+online version: https://abbgrade.github.io/PsMermaidTools/docs/Add-MermaidC4ContainerBoundary.html
 schema: 2.0.0
 ---
 
 # Add-MermaidC4ContainerBoundary
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Add a container boundary to a diagram.
 
 ## SYNTAX
 
@@ -23,7 +23,7 @@ Add-MermaidC4ContainerBoundary -Diagram <Object> [-ContainerBoundary] <Object> [
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Add or create a container boundary and add it to an C4 diagram.
 
 ## EXAMPLES
 
@@ -36,23 +36,8 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -ContainerBoundary
-{{ Fill ContainerBoundary Description }}
-
-```yaml
-Type: Object
-Parameter Sets: Object
-Aliases:
-
-Required: True
-Position: 0
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Diagram
-{{ Fill Diagram Description }}
+The diagram, that the container is added to.
 
 ```yaml
 Type: Object
@@ -66,8 +51,23 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
+### -ContainerBoundary
+{{ Fill ContainerBoundary Description }}
+
+```yaml
+Type: Object
+Parameter Sets: Object
+Aliases:
+
+Required: True
+Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Key
-{{ Fill Key Description }}
+The identifier of the container.
 
 ```yaml
 Type: String
@@ -82,7 +82,7 @@ Accept wildcard characters: False
 ```
 
 ### -Name
-{{ Fill Name Description }}
+The container name.
 
 ```yaml
 Type: String
@@ -101,11 +101,15 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### System.Object
-
+### C4Container diagram object.
 ## OUTPUTS
 
-### System.Object
+### None.
 ## NOTES
 
 ## RELATED LINKS
+
+[https://abbgrade.github.io/PsMermaidTools/docs/Add-MermaidC4ContainerBoundary.html](https://abbgrade.github.io/PsMermaidTools/docs/Add-MermaidC4ContainerBoundary.html)
+
+[https://mermaid.js.org/syntax/c4c.html#c4-component-diagram-c4component](https://mermaid.js.org/syntax/c4c.html#c4-component-diagram-c4component)
+
