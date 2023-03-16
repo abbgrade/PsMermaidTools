@@ -1,14 +1,14 @@
 ---
 external help file: PsMermaidTools-help.xml
 Module Name: PsMermaidTools
-online version: https://mermaid-js.github.io/mermaid/#/entityRelationshipDiagram?id=entities-and-relationships
+online version: https://abbgrade.github.io/PsMermaidTools/docs/New-MermaidC4Component.html
 schema: 2.0.0
 ---
 
 # New-MermaidC4Component
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Create a component.
 
 ## SYNTAX
 
@@ -18,7 +18,8 @@ New-MermaidC4Component [-Key] <String> [-Name] <String> [[-Technology] <String>]
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Create a component for a C4 diagram.
+It can be edited and referenced.
 
 ## EXAMPLES
 
@@ -31,38 +32,8 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -Description
-{{ Fill Description Description }}
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 3
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Key
-{{ Fill Key Description }}
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 0
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Name
-{{ Fill Name Description }}
+The identifier of the component.
 
 ```yaml
 Type: String
@@ -76,8 +47,23 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Name
+The component name.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Technology
-{{ Fill Technology Description }}
+The component technology / implementation.
 
 ```yaml
 Type: String
@@ -85,7 +71,22 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 2
+Position: 3
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Description
+Describes the component.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -96,11 +97,14 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### None
-
 ## OUTPUTS
 
-### System.Object
+### None.
 ## NOTES
 
 ## RELATED LINKS
+
+[https://abbgrade.github.io/PsMermaidTools/docs/New-MermaidC4Component.html](https://abbgrade.github.io/PsMermaidTools/docs/New-MermaidC4Component.html)
+
+[https://mermaid.js.org/syntax/c4c.html#c4-component-diagram-c4component](https://mermaid.js.org/syntax/c4c.html#c4-component-diagram-c4component)
+
