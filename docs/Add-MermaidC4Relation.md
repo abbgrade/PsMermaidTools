@@ -1,14 +1,14 @@
 ---
 external help file: PsMermaidTools-help.xml
 Module Name: PsMermaidTools
-online version:
+online version: https://abbgrade.github.io/PsMermaidTools/docs/Add-MermaidC4Relation.html
 schema: 2.0.0
 ---
 
 # Add-MermaidC4Relation
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Add a relation to a diagram.
 
 ## SYNTAX
 
@@ -18,7 +18,7 @@ Add-MermaidC4Relation -Diagram <Object> [-From] <String> [-To] <String> [-Label]
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Create a relation between two components and add it to an C4 diagram.
 
 ## EXAMPLES
 
@@ -31,23 +31,8 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -Description
-{{ Fill Description Description }}
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Diagram
-{{ Fill Diagram Description }}
+The diagram, that the relation is added to.
 
 ```yaml
 Type: Object
@@ -62,52 +47,7 @@ Accept wildcard characters: False
 ```
 
 ### -From
-{{ Fill From Description }}
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 0
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Label
-{{ Fill Label Description }}
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Technology
-{{ Fill Technology Description }}
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -To
-{{ Fill To Description }}
+The first entity of the relation.
 
 ```yaml
 Type: String
@@ -121,16 +61,80 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -To
+The second entity of the relation.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Label
+Describes the relationship.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 3
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Technology
+The relation technology / implementation.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Description
+Describes the relation.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
-### System.Object
-
+### C4 diagram object.
 ## OUTPUTS
 
-### System.Object
+### None.
 ## NOTES
 
 ## RELATED LINKS
+
+[https://abbgrade.github.io/PsMermaidTools/docs/Add-MermaidC4Relation.html](https://abbgrade.github.io/PsMermaidTools/docs/Add-MermaidC4Relation.html)
+
+[https://mermaid.js.org/syntax/c4c.html#c4-component-diagram-c4component](https://mermaid.js.org/syntax/c4c.html#c4-component-diagram-c4component)
+

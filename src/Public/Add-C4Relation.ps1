@@ -1,5 +1,27 @@
 function Add-C4Relation {
 
+    <#
+
+    .SYNOPSIS
+    Add a relation to a diagram.
+
+    .DESCRIPTION
+    Create a relation between two components and add it to an C4 diagram.
+
+    .INPUTS
+    C4 diagram object.
+
+    .OUTPUTS
+    None.
+
+    .LINK
+    https://abbgrade.github.io/PsMermaidTools/docs/Add-MermaidC4Relation.html
+
+    .LINK
+    https://mermaid.js.org/syntax/c4c.html#c4-component-diagram-c4component
+
+    #>
+
     [CmdletBinding()]
     param (
         # The diagram, that the relation is added to.
@@ -21,11 +43,11 @@ function Add-C4Relation {
         [Parameter(Mandatory, Position = 2)]
         [string] $Label,
 
-        # The component technology / implementation.
+        # The relation technology / implementation.
         [Parameter()]
         [string] $Technology,
 
-        # Describes the component.
+        # Describes the relation.
         [Parameter()]
         [string] $Description
     )
