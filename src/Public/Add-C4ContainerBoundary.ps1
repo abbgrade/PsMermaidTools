@@ -9,7 +9,7 @@ function Add-C4ContainerBoundary {
     Add or create a container boundary and add it to an C4 diagram.
 
     .INPUTS
-    C4Container diagram object.
+    C4Component diagram object.
 
     .OUTPUTS
     None.

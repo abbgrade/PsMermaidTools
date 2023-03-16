@@ -1,14 +1,14 @@
 ---
 external help file: PsMermaidTools-help.xml
 Module Name: PsMermaidTools
-online version:
+online version: https://abbgrade.github.io/PsMermaidTools/docs/Add-MermaidC4Component.html
 schema: 2.0.0
 ---
 
 # Add-MermaidC4Component
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Add a component to a container boundary.
 
 ## SYNTAX
 
@@ -24,7 +24,7 @@ Add-MermaidC4Component -Boundary <Object> [-Component] <Object> [<CommonParamete
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Add or create a component and add it to an C4 container boundary.
 
 ## EXAMPLES
 
@@ -38,7 +38,7 @@ PS C:\> {{ Add example code here }}
 ## PARAMETERS
 
 ### -Boundary
-{{ Fill Boundary Description }}
+The boundary, that the component is added to.
 
 ```yaml
 Type: Object
@@ -61,29 +61,14 @@ Parameter Sets: Object
 Aliases:
 
 Required: True
-Position: 0
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Description
-{{ Fill Description Description }}
-
-```yaml
-Type: String
-Parameter Sets: Properties
-Aliases:
-
-Required: False
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Key
-{{ Fill Key Description }}
+The identifier of the component.
 
 ```yaml
 Type: String
@@ -98,7 +83,7 @@ Accept wildcard characters: False
 ```
 
 ### -Name
-{{ Fill Name Description }}
+The component name.
 
 ```yaml
 Type: String
@@ -113,7 +98,22 @@ Accept wildcard characters: False
 ```
 
 ### -Technology
-{{ Fill Technology Description }}
+The component technology / implementation.
+
+```yaml
+Type: String
+Parameter Sets: Properties
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Description
+Describes the component.
 
 ```yaml
 Type: String
@@ -132,11 +132,15 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### System.Object
-
+### C4ContainerBoundary object.
 ## OUTPUTS
 
-### System.Object
+### None.
 ## NOTES
 
 ## RELATED LINKS
+
+[https://abbgrade.github.io/PsMermaidTools/docs/Add-MermaidC4Component.html](https://abbgrade.github.io/PsMermaidTools/docs/Add-MermaidC4Component.html)
+
+[https://mermaid.js.org/syntax/c4c.html#c4-component-diagram-c4component](https://mermaid.js.org/syntax/c4c.html#c4-component-diagram-c4component)
+

@@ -101,7 +101,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### C4Container diagram object.
+### C4Component diagram object.
 ## OUTPUTS
 
 ### None.
