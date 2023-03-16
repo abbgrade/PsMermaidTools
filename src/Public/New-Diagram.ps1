@@ -15,10 +15,10 @@ function New-Diagram {
     Mermaid diagram definition object.
 
     .EXAMPLE
-    PS C:\> $diagram = New-MermaidDiagram -Type erDiagram
-    PS C:\> $diagram | Add-MermaidRelation Exactly-one Customer places Zero-or-more Order
-    PS C:\> $diagram | Add-MermaidRelation Exactly-one Order contains One-or-more LineItem
-    PS C:\> $diagram | Add-MermaidRelation One-or-more Customer uses One-or-more DeliveryAddress -NonIdentifying
+    PS C:\> $diagram = New-MermaidDiagram -ErDiagram
+    PS C:\> $diagram | Add-MermaidErRelation Exactly-one Customer places Zero-or-more Order
+    PS C:\> $diagram | Add-MermaidErRelation Exactly-one Order contains One-or-more LineItem
+    PS C:\> $diagram | Add-MermaidErRelation One-or-more Customer uses One-or-more DeliveryAddress -NonIdentifying
     PS C:\> $diagram | ConvertTo-MermaidString
     erDiagram
         Customer ||--o{ Order : places
@@ -32,17 +32,41 @@ function New-Diagram {
 
     #>
 
-    [CmdletBinding()]
+    [CmdletBinding( DefaultParameterSetName = 'erDiagram' )]
     param (
         # The mermaid diagram type.
-        [Parameter( Mandatory )]
-        [ValidateSet('erDiagram')]
-        [string] $Type
+        [Parameter( Mandatory, ParameterSetName = 'flowchart', Position = 0 )]
+        [switch] $Flowchart,
+
+        [Parameter( Mandatory, ParameterSetName = 'erDiagram', Position = 0 )]
+        [switch] $ErDiagram,
+
+        [Parameter( Mandatory, ParameterSetName = 'C4Component', Position = 0 )]
+        [switch] $C4Component,
+
+        # The diagram orientation.
+        [Parameter( Mandatory, ParameterSetName = 'flowchart', Position = 1 )]
+        [ValidateSet('top-to-bottom', 'top-down', 'bottom-to-top', 'right-to-left', 'left-to-right')]
+        [string] $Orientation
     )
 
     $definition = [PSCustomObject]@{
-        Type = $Type
-        Relations = @()
+        Type = $PSCmdlet.ParameterSetName
+    }
+
+    switch ( $definition.Type ) {
+        erDiagram {
+            $definition | Add-Member Relations @()
+        }
+        flowchart {
+            $definition | Add-Member Orientation $Orientation
+            $definition | Add-Member Nodes @()
+            $definition | Add-Member Links @()
+        }
+        C4Component {
+            $definition | Add-Member ContainerBoundaries @()
+            $definition | Add-Member Relations @()
+        }
     }
 
     Write-Output $definition

@@ -15,10 +15,10 @@ function ConvertTo-String {
     String.
 
     .EXAMPLE
-    PS C:\> $diagram = New-MermaidDiagram -Type erDiagram
-    PS C:\> $diagram | Add-MermaidRelation Exactly-one Customer places Zero-or-more Order
-    PS C:\> $diagram | Add-MermaidRelation Exactly-one Order contains One-or-more LineItem
-    PS C:\> $diagram | Add-MermaidRelation One-or-more Customer uses One-or-more DeliveryAddress -NonIdentifying
+    PS C:\> $diagram = New-MermaidDiagram -ErDiagram
+    PS C:\> $diagram | Add-MermaidErRelation Exactly-one Customer places Zero-or-more Order
+    PS C:\> $diagram | Add-MermaidErRelation Exactly-one Order contains One-or-more LineItem
+    PS C:\> $diagram | Add-MermaidErRelation One-or-more Customer uses One-or-more DeliveryAddress -NonIdentifying
     PS C:\> $diagram | ConvertTo-MermaidString
     erDiagram
         Customer ||--o{ Order : places
@@ -31,17 +31,81 @@ function ConvertTo-String {
 
     [CmdletBinding()]
     param (
-        #region erDiagram
 
-        # The diagram type.
+        #region diagram
+
+        # The diagram link type.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'erDiagram')]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4ComponentDiagram')]
         [string] $Type,
+
+        #endregion
+
+        #region erDiagram
 
         # Collection of relations.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'erDiagram')]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4ComponentDiagram')]
+        [AllowEmptyCollection()]
         [PsObject[]] $Relations,
 
-        #end region
+        #endregion
+        #region flowchart
+
+        # Orientation of the flowchart.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
+        [string] $Orientation,
+
+        # Collection of nodes for a flowchart.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
+        [AllowEmptyCollection()]
+        [PsObject[]] $Nodes,
+
+        # Collection of links for a flowchart.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
+        [AllowEmptyCollection()]
+        [PsObject[]] $Links,
+
+        #endregion
+        #region C4ComponentDiagram
+
+        # Collection of container boundaries for a C4Component diagram.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4ComponentDiagram')]
+        [AllowEmptyCollection()]
+        [PsObject[]] $ContainerBoundaries,
+
+        # Collection of components for a C4Component diagram.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4ContainerBoundary')]
+        [AllowEmptyCollection()]
+        [PSObject[]] $Components,
+
+        #endregion
+        #region C4Relation
+
+        #
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'C4Relation')]
+        [string] $From,
+
+        #
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'C4Relation')]
+        [string] $To,
+
+        #endregion
+
+        #region C4Component
+
+        # The component technology / implementation.
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'C4Component')]
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'C4Relation')]
+        [string] $Technology,
+
+        # Describes the component.
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'C4Component')]
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'C4Relation')]
+        [string] $Description,
+
+        #endregion
 
         #region erRelation
 
@@ -59,9 +123,57 @@ function ConvertTo-String {
 
         # Describes the relation.
         [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'erRelation')]
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'C4Relation')]
         [string] $Label,
 
-        #end region
+        #endregion
+
+        #region flowchartLink
+
+        # Source node of the link.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartLink')]
+        [string] $SourceNode,
+
+        # Source node of the link.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartLink')]
+        [string] $SourceHead,
+
+        # Destination node of the link.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartLink')]
+        [string] $DestinationNode,
+
+        # Destination node of the link.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartLink')]
+        [string] $DestinationHead,
+
+        # Link text.
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartLink')]
+        [string] $Text,
+
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartLink')]
+        [string] $Line,
+
+        #endregion
+
+        #region flowchartNode
+
+        # Indentifier of the node/container/component.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartNode')]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4ContainerBoundary')]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4Component')]
+        [string] $Key,
+
+        # Name of the node/container.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartNode')]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4ContainerBoundary')]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4Component')]
+        [string] $Name,
+
+        # Shape of the node.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartNode')]
+        [string] $Shape,
+
+        #endregion
 
         #region erRelationship
 
@@ -77,7 +189,7 @@ function ConvertTo-String {
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'erRelationship')]
         [bool] $Identifying
 
-        #end region
+        #endregion
     )
 
     process {
@@ -87,6 +199,22 @@ function ConvertTo-String {
                     $Type | Write-Output
                     $Relations | ConvertTo-String | Write-Output
                 }
+                flowchart {
+                    switch ( $Orientation ) {
+                        top-to-bottom { "$Type TB" | Write-Output }
+                        top-down { "$Type TD" | Write-Output }
+                        bottom-to-top { "$Type BT" | Write-Output }
+                        right-to-left { "$Type RL" | Write-Output }
+                        left-to-right { "$Type LR" | Write-Output }
+                    }
+                    $Nodes | ConvertTo-String | Write-Output
+                    $Links | ConvertTo-String | Write-Output
+                }
+                C4ComponentDiagram {
+                    $Type | Write-Output
+                    $ContainerBoundaries | ConvertTo-String | Write-Output
+                    $Relations | ConvertTo-String | Write-Output
+                }
                 erRelation {
                     if ( $SecondEntity ) {
                         Write-Output "    $FirstEntity $( $Relationship | ConvertTo-String ) $SecondEntity$( if ( $Label ) {" : $Label" })"
@@ -94,6 +222,113 @@ function ConvertTo-String {
                     else {
                         Write-Output "    $FirstEntity"
                     }
+                }
+                flowchartLink {
+                    Write-Output "    $SourceNode $(
+                        switch ( $Line ) {
+                            solid { "$(
+                                switch ( $SourceHead ) {
+                                    open { '-' }
+                                    arrow { '<' }
+                                    circle { 'o' }
+                                    cross { 'x' }
+                                    Default {
+                                        Write-Error "convert $_ is not supported."
+                                    }
+                                }
+                            )$(
+                                if ( $SourceHead -ne 'open' ) { '-'}
+                             )-$(
+                                switch ( $DestinationHead ) {
+                                    open { '-' }
+                                    arrow { '>' }
+                                    circle { 'o' }
+                                    cross { 'x' }
+                                    Default {
+                                        Write-Error "convert $_ is not supported."
+                                    }
+                                }
+                            )" }
+                            dotted { "$(
+                                switch ( $SourceHead ) {
+                                    open { '' }
+                                    arrow { '>' }
+                                    circle { 'o' }
+                                    cross { 'x' }
+                                    Default {
+                                        Write-Error "convert $_ is not supported."
+                                    }
+                                }
+                            )-.-$(
+                                switch ( $DestinationHead ) {
+                                    open { '' }
+                                    arrow { '>' }
+                                    circle { 'o' }
+                                    cross { 'x' }
+                                    Default {
+                                        Write-Error "convert $_ is not supported."
+                                    }
+                                }
+                            )" }
+                            thick { "$(
+                                switch ( $SourceHead ) {
+                                    open { '=' }
+                                    arrow { '<' }
+                                    circle { 'o' }
+                                    cross { 'x' }
+                                    Default {
+                                        Write-Error "convert $_ is not supported."
+                                    }
+                                }
+                            )=$(
+                                if ( $SourceHead -ne 'open' ) { '=' }
+                             )$(
+                                switch ( $DestinationHead ) {
+                                    open { '=' }
+                                    arrow { '>' }
+                                    circle { 'o' }
+                                    cross { 'x' }
+                                    Default {
+                                        Write-Error "convert $_ is not supported."
+                                    }
+                                }
+                            )" }
+                            Default {
+                                Write-Error "convert $_ is not supported."
+                            }
+                        }
+                    )$( if ( $Text ) { "|$Text|" } ) $DestinationNode"
+                }
+                flowchartNode {
+                    switch ( $Shape ) {
+                        round-edges { Write-Output "    $Key($Name)" }
+                        stadium { Write-Output "    $Key([$Name])" }
+                        subroutine { Write-Output "    $Key[[$Name]]" }
+                        cylindrical { Write-Output "    $Key[($Name)]" }
+                        circle { Write-Output "    $Key(($Name))" }
+                        asymmetric { Write-Output "    $Key>$Name]" }
+                        rhombus { Write-Output "    $Key{$Name}" }
+                        hexagon { Write-Output "    $Key{{$Name}}" }
+                        parallelogram { Write-Output "    $Key[/$Name/]" }
+                        parallelogram-alt { Write-Output "    $Key[\$Name\]" }
+                        trapezoid { Write-Output "    $Key[/$Name\]" }
+                        trapezoid-alt { Write-Output "    $Key[\$Name/]" }
+                        double-circle { Write-Output "    $Key((($Name)))" }
+                        Default {
+                            Write-Error "'$_' is not supported for Node Shape."
+                        }
+                    }
+                }
+                C4ContainerBoundary {
+                    Write-Output "Container_Boundary($Key, ""$Name"") {"
+                    $Components | ForEach-Object { Write-Output "    $( $_ | ConvertTo-String )" }
+                    Write-Output '}'
+                }
+                C4Component {
+                    Write-Output "Component($Key, ""$Name""$( if ( $Technology ) { ', "' + $Technology + '"' } )$( if ( $Description ) { ', "' + $Description + '"' } ))"
+                }
+                C4Relation {
+                    Write-Output "Rel($From, $To, ""$Label""$( if ( $Technology ) { ', "' + $Technology + '"' } )$( if ( $Description ) { ', "' + $Description + '"' } ))"
                 }
                 erRelationship {
                     $FirstCardinalityCode = switch ($FirstCardinality) {
