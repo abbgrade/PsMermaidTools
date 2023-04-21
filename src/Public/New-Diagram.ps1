@@ -47,7 +47,12 @@ function New-Diagram {
         # The diagram orientation.
         [Parameter( Mandatory, ParameterSetName = 'flowchart', Position = 1 )]
         [ValidateSet('top-to-bottom', 'top-down', 'bottom-to-top', 'right-to-left', 'left-to-right')]
-        [string] $Orientation
+        [string] $Orientation,
+
+        # The diagram title.
+        [Parameter( ParameterSetName = 'flowchart')]
+        [Parameter( ParameterSetName = 'erDiagram')]
+        [string] $Title
     )
 
     $definition = [PSCustomObject]@{
@@ -56,9 +61,11 @@ function New-Diagram {
 
     switch ( $definition.Type ) {
         erDiagram {
+            $definition | Add-Member Title $Title
             $definition | Add-Member Relations @()
         }
         flowchart {
+            $definition | Add-Member Title $Title
             $definition | Add-Member Orientation $Orientation
             $definition | Add-Member Nodes @()
             $definition | Add-Member Links @()

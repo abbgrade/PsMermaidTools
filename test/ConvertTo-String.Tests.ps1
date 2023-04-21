@@ -20,6 +20,24 @@ erDiagram
 "@.Replace("`r`n", [Environment]::NewLine))
         }
 
+        Context with-title {
+
+            BeforeEach {
+                $diagram = New-MermaidDiagram -ErDiagram -Title 'Test Diagram'
+            }
+
+            It works-empty {
+                $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                $output | Should -Not -BeNullOrEmpty
+                $output | Should -Be (@"
+---
+title: Test Diagram
+---
+erDiagram
+"@.Replace("`r`n", [Environment]::NewLine))
+            }
+        }
+
         Context minimum {
             BeforeEach {
                 $diagram | Add-MermaidErRelation -Entity Entity
@@ -74,6 +92,7 @@ erDiagram
     }
 
     Context flowchart {
+
         BeforeEach {
             $diagram = New-MermaidDiagram -Flowchart -Orientation left-to-right
         }
@@ -86,11 +105,28 @@ flowchart LR
 "@.Replace("`r`n", [Environment]::NewLine))
         }
 
+        Context with-title {
+
+            BeforeEach {
+                $diagram = New-MermaidDiagram -Flowchart -Orientation left-to-right -Title 'Test Diagram'
+            }
+
+            It works-empty {
+                $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                $output | Should -Not -BeNullOrEmpty
+                $output | Should -Be (@"
+---
+title: Test Diagram
+---
+flowchart LR
+"@.Replace("`r`n", [Environment]::NewLine))
+            }
+        }
+
         Context shapes {
 
             Context round-edges {
                 BeforeEach {
-                    $diagram = New-MermaidDiagram -Flowchart -Orientation left-to-right
                     $diagram | Add-MermaidFlowchartNode A node round-edges
                 }
 
@@ -106,7 +142,6 @@ flowchart LR
 
             Context stadium-shape {
                 BeforeEach {
-                    $diagram = New-MermaidDiagram -Flowchart -Orientation left-to-right
                     $diagram | Add-MermaidFlowchartNode A node stadium
                 }
 
@@ -122,7 +157,6 @@ flowchart LR
 
             Context subroutine {
                 BeforeEach {
-                    $diagram = New-MermaidDiagram -Flowchart -Orientation left-to-right
                     $diagram | Add-MermaidFlowchartNode A node subroutine
                 }
 
@@ -138,7 +172,6 @@ flowchart LR
 
             Context cylindrical-shape {
                 BeforeEach {
-                    $diagram = New-MermaidDiagram -Flowchart -Orientation left-to-right
                     $diagram | Add-MermaidFlowchartNode A node cylindrical
                 }
 
@@ -154,7 +187,6 @@ flowchart LR
 
             Context circle {
                 BeforeEach {
-                    $diagram = New-MermaidDiagram -Flowchart -Orientation left-to-right
                     $diagram | Add-MermaidFlowchartNode A node circle
                 }
 
@@ -170,7 +202,6 @@ flowchart LR
 
             Context asymmetric-shape {
                 BeforeEach {
-                    $diagram = New-MermaidDiagram -Flowchart -Orientation left-to-right
                     $diagram | Add-MermaidFlowchartNode A node asymmetric
                 }
 
@@ -186,7 +217,6 @@ flowchart LR
 
             Context rhombus {
                 BeforeEach {
-                    $diagram = New-MermaidDiagram -Flowchart -Orientation left-to-right
                     $diagram | Add-MermaidFlowchartNode A node rhombus
                 }
 
@@ -202,7 +232,6 @@ flowchart LR
 
             Context hexagon {
                 BeforeEach {
-                    $diagram = New-MermaidDiagram -Flowchart -Orientation left-to-right
                     $diagram | Add-MermaidFlowchartNode A node hexagon
                 }
 
@@ -218,7 +247,6 @@ flowchart LR
 
             Context parallelogram {
                 BeforeEach {
-                    $diagram = New-MermaidDiagram -Flowchart -Orientation left-to-right
                     $diagram | Add-MermaidFlowchartNode A node parallelogram
                 }
 
@@ -234,7 +262,6 @@ flowchart LR
 
             Context alt-parallelogram {
                 BeforeEach {
-                    $diagram = New-MermaidDiagram -Flowchart -Orientation left-to-right
                     $diagram | Add-MermaidFlowchartNode A node parallelogram-alt
                 }
 
@@ -250,7 +277,6 @@ flowchart LR
 
             Context trapezoid {
                 BeforeEach {
-                    $diagram = New-MermaidDiagram -Flowchart -Orientation left-to-right
                     $diagram | Add-MermaidFlowchartNode A node trapezoid
                 }
 
@@ -266,7 +292,6 @@ flowchart LR
 
             Context alt-trapezoid {
                 BeforeEach {
-                    $diagram = New-MermaidDiagram -Flowchart -Orientation left-to-right
                     $diagram | Add-MermaidFlowchartNode A node trapezoid-alt
                 }
 
@@ -282,7 +307,6 @@ flowchart LR
 
             Context double-circle {
                 BeforeEach {
-                    $diagram = New-MermaidDiagram -Flowchart -Orientation left-to-right
                     $diagram | Add-MermaidFlowchartNode A node double-circle
                 }
 

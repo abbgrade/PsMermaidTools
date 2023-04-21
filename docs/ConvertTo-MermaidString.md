@@ -20,13 +20,13 @@ ConvertTo-MermaidString -Type <String> -Relations <PSObject[]> -ContainerBoundar
 
 ### flowchart
 ```
-ConvertTo-MermaidString -Type <String> -Orientation <String> -Nodes <PSObject[]> -Links <PSObject[]>
- [<CommonParameters>]
+ConvertTo-MermaidString -Type <String> [-Title <String>] -Orientation <String> -Nodes <PSObject[]>
+ -Links <PSObject[]> [<CommonParameters>]
 ```
 
 ### erDiagram
 ```
-ConvertTo-MermaidString -Type <String> -Relations <PSObject[]> [<CommonParameters>]
+ConvertTo-MermaidString -Type <String> [-Title <String>] -Relations <PSObject[]> [<CommonParameters>]
 ```
 
 ### C4ContainerBoundary
@@ -100,6 +100,21 @@ Parameter Sets: C4ComponentDiagram, flowchart, erDiagram
 Aliases:
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Title
+Title of the diagram.
+
+```yaml
+Type: String
+Parameter Sets: flowchart, erDiagram
+Aliases:
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
@@ -407,7 +422,7 @@ Accept wildcard characters: False
 ```
 
 ### -Key
-Indentifier of the node/container/component.
+Identifier of the node/container/component.
 
 ```yaml
 Type: String
