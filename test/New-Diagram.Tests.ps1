@@ -15,9 +15,29 @@ Describe New-Diagram {
         $diagram.Nodes | Should -BeNull
     }
 
+    It creates-er-diagram-with-title {
+        $diagram = New-MermaidDiagram -ErDiagram -Title Test
+        $diagram | Should -Not -BeNullOrEmpty
+        $diagram.Title | Should -Be Test
+        $diagram.Type | Should -Be erDiagram
+        $diagram.Relations | Should -Be @()
+        $diagram.Links | Should -BeNull
+        $diagram.Nodes | Should -BeNull
+    }
+
     It creates-Flowchart-diagram {
         $diagram = New-MermaidDiagram -Flowchart -Orientation top-down
         $diagram | Should -Not -BeNullOrEmpty
+        $diagram.Type | Should -Be flowchart
+        $diagram.Relations | Should -BeNull
+        $diagram.Links | Should -Be @()
+        $diagram.Nodes | Should -Be @()
+    }
+
+    It creates-Flowchart-diagram-with-title {
+        $diagram = New-MermaidDiagram -Flowchart -Orientation top-down -Title Test
+        $diagram | Should -Not -BeNullOrEmpty
+        $diagram.Title | Should -Be Test
         $diagram.Type | Should -Be flowchart
         $diagram.Relations | Should -BeNull
         $diagram.Links | Should -Be @()

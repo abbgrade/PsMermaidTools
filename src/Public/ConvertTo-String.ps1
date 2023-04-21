@@ -40,6 +40,11 @@ function ConvertTo-String {
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4ComponentDiagram')]
         [string] $Type,
 
+        # Title of the diagram.
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'erDiagram')]
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
+        [string] $Title,
+
         #endregion
 
         #region erDiagram
@@ -157,7 +162,7 @@ function ConvertTo-String {
 
         #region flowchartNode
 
-        # Indentifier of the node/container/component.
+        # Identifier of the node/container/component.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartNode')]
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4ContainerBoundary')]
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4Component')]
@@ -196,10 +201,20 @@ function ConvertTo-String {
         @(
             switch ($PSCmdlet.ParameterSetName) {
                 erDiagram {
+                    if ( $Title ) {
+                        '---' | Write-Output
+                        "title: $Title" | Write-Output
+                        '---' | Write-Output
+                    }
                     $Type | Write-Output
                     $Relations | ConvertTo-String | Write-Output
                 }
                 flowchart {
+                    if ( $Title ) {
+                        '---' | Write-Output
+                        "title: $Title" | Write-Output
+                        '---' | Write-Output
+                    }
                     switch ( $Orientation ) {
                         top-to-bottom { "$Type TB" | Write-Output }
                         top-down { "$Type TD" | Write-Output }
