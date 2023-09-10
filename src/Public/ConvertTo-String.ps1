@@ -377,7 +377,12 @@ function ConvertTo-String {
                 }
                 flowchartNode {
                     if ( $Class ) {
-                        Write-Output "    $Key:::$Class"
+                        if ( $Name ) {
+                            Write-Output "    $Key[$Name]:::$Class"
+                        }
+                        else {
+                            Write-Output "    $Key:::$Class"
+                        }
                     }
                     else {
                         switch ( $Shape ) {
