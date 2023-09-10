@@ -19,7 +19,7 @@ New-MermaidDiagram [-ErDiagram] [-Title <String>] [<CommonParameters>]
 
 ### flowchart
 ```
-New-MermaidDiagram [-Flowchart] [-Orientation] <String> [-Title <String>] [<CommonParameters>]
+New-MermaidDiagram [-Flowchart] [[-Orientation] <String>] [-Title <String>] [<CommonParameters>]
 ```
 
 ### C4Component
@@ -102,7 +102,7 @@ Type: String
 Parameter Sets: flowchart
 Aliases:
 
-Required: True
+Required: False
 Position: 2
 Default value: None
 Accept pipeline input: False

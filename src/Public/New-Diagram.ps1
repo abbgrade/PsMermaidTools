@@ -45,7 +45,7 @@ function New-Diagram {
         [switch] $C4Component,
 
         # The diagram orientation.
-        [Parameter( Mandatory, ParameterSetName = 'flowchart', Position = 1 )]
+        [Parameter( ParameterSetName = 'flowchart', Position = 1 )]
         [ValidateSet('top-to-bottom', 'top-down', 'bottom-to-top', 'right-to-left', 'left-to-right')]
         [string] $Orientation,
 

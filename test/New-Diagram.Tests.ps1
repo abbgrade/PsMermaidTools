@@ -26,12 +26,13 @@ Describe New-Diagram {
     }
 
     It creates-Flowchart-diagram {
-        $diagram = New-MermaidDiagram -Flowchart -Orientation top-down
+        $diagram = New-MermaidDiagram -Flowchart
         $diagram | Should -Not -BeNullOrEmpty
         $diagram.Type | Should -Be flowchart
         $diagram.Relations | Should -BeNull
         $diagram.Links | Should -Be @()
         $diagram.Nodes | Should -Be @()
+        $diagram.Orientation | Should -BeNull
     }
 
     It creates-Flowchart-diagram-with-title {
@@ -42,6 +43,7 @@ Describe New-Diagram {
         $diagram.Relations | Should -BeNull
         $diagram.Links | Should -Be @()
         $diagram.Nodes | Should -Be @()
+        $diagram.Orientation | Should -Be top-down
     }
 
     It creates-c4-component-diagram {
