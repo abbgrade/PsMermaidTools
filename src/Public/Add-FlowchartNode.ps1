@@ -12,9 +12,10 @@ function Add-FlowchartNode {
         [ValidateNotNullOrEmpty()]
         [string] $Key,
 
-        # The node name.
+        # The node text.
         [Parameter(Position = 1)]
-        [string] $Name,
+        [Alias('Name')]
+        [string] $Text,
 
         # The node shape.
         [Parameter(Position = 2)]
@@ -46,8 +47,8 @@ function Add-FlowchartNode {
             Key   = $Key
         }
 
-        if ( $Name ) {
-            $node | Add-Member Name $Name
+        if ( $Text ) {
+            $node | Add-Member Text $Text
         }
 
         if ( $Shape ) {

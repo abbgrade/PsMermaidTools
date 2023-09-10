@@ -13,7 +13,7 @@ schema: 2.0.0
 ## SYNTAX
 
 ```
-Add-MermaidFlowchartNode [-Diagram <Object>] [-Key] <String> [[-Name] <String>] [[-Shape] <String>]
+Add-MermaidFlowchartNode [-Diagram <Object>] [-Key] <String> [[-Text] <String>] [[-Shape] <String>]
  [-Class <String>] [<CommonParameters>]
 ```
 
@@ -76,21 +76,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Name
-{{ Fill Name Description }}
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Shape
 {{ Fill Shape Description }}
 
@@ -102,6 +87,21 @@ Accepted values: rectangle, round-edges, stadium, subroutine, cylindrical, circl
 
 Required: False
 Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Text
+{{ Fill Text Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: Name
+
+Required: False
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

@@ -60,13 +60,13 @@ ConvertTo-MermaidString [-FromFlowchartLink] -SourceNode <String> -SourceHead <S
 
 ### flowchartNode
 ```
-ConvertTo-MermaidString [-FromFlowchartNode] -Key <String> [-Name <String>] [-Shape <String>] [-Class <String>]
+ConvertTo-MermaidString [-Text <String>] [-FromFlowchartNode] -Key <String> [-Shape <String>] [-Class <String>]
  [<CommonParameters>]
 ```
 
 ### flowchartClass
 ```
-ConvertTo-MermaidString -Name <String> [-FromFlowchartClass] -Style <String> [<CommonParameters>]
+ConvertTo-MermaidString [-FromFlowchartClass] -Name <String> -Style <String> [<CommonParameters>]
 ```
 
 ### flowchartClick
@@ -453,7 +453,7 @@ Link text.
 
 ```yaml
 Type: String
-Parameter Sets: flowchartLink
+Parameter Sets: flowchartLink, flowchartNode
 Aliases:
 
 Required: False
@@ -508,33 +508,6 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -Name
-Name of the node/container.
-
-```yaml
-Type: String
-Parameter Sets: C4ContainerBoundary, C4Component, flowchartClass
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-```yaml
-Type: String
-Parameter Sets: flowchartNode
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
 ### -Shape
 Shape of the node.
 
@@ -577,6 +550,21 @@ Required: False
 Position: Named
 Default value: False
 Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Name
+Name of the class/container.
+
+```yaml
+Type: String
+Parameter Sets: C4ContainerBoundary, C4Component, flowchartClass
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 

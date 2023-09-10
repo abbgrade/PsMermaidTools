@@ -169,6 +169,7 @@ function ConvertTo-String {
 
         # Link text.
         [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartLink')]
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartNode')]
         [string] $Text,
 
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartLink')]
@@ -187,13 +188,6 @@ function ConvertTo-String {
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4Component')]
         [string] $Key,
 
-        # Name of the node/container.
-        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartNode')]
-        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartClass')]
-        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4ContainerBoundary')]
-        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4Component')]
-        [string] $Name,
-
         # Shape of the node.
         [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartNode')]
         [string] $Shape,
@@ -208,6 +202,12 @@ function ConvertTo-String {
 
         [Parameter(ParameterSetName = 'flowchartClass')]
         [switch] $FromFlowchartClass,
+
+        # Name of the class/container.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartClass')]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4ContainerBoundary')]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4Component')]
+        [string] $Name,
 
         # Style of the class.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartClass')]
@@ -377,8 +377,8 @@ function ConvertTo-String {
                 }
                 flowchartNode {
                     if ( $Class ) {
-                        if ( $Name ) {
-                            Write-Output "    $Key[$Name]:::$Class"
+                        if ( $Text ) {
+                            Write-Output "    $Key[$Text]:::$Class"
                         }
                         else {
                             Write-Output "    $Key:::$Class"
@@ -387,27 +387,27 @@ function ConvertTo-String {
                     else {
                         switch ( $Shape ) {
                             '' {
-                                if ( $Name ) {
-                                    Write-Output "    $Key[$Name]"
+                                if ( $Text ) {
+                                    Write-Output "    $Key[$Text]"
                                 }
                                 else {
                                     Write-Output "    $Key"
                                 }
                             }
-                            rectangle { Write-Output "    $Key[$Name]" }
-                            round-edges { Write-Output "    $Key($Name)" }
-                            stadium { Write-Output "    $Key([$Name])" }
-                            subroutine { Write-Output "    $Key[[$Name]]" }
-                            cylindrical { Write-Output "    $Key[($Name)]" }
-                            circle { Write-Output "    $Key(($Name))" }
-                            asymmetric { Write-Output "    $Key>$Name]" }
-                            rhombus { Write-Output "    $Key{$Name}" }
-                            hexagon { Write-Output "    $Key{{$Name}}" }
-                            parallelogram { Write-Output "    $Key[/$Name/]" }
-                            parallelogram-alt { Write-Output "    $Key[\$Name\]" }
-                            trapezoid { Write-Output "    $Key[/$Name\]" }
-                            trapezoid-alt { Write-Output "    $Key[\$Name/]" }
-                            double-circle { Write-Output "    $Key((($Name)))" }
+                            rectangle { Write-Output "    $Key[$Text]" }
+                            round-edges { Write-Output "    $Key($Text)" }
+                            stadium { Write-Output "    $Key([$Text])" }
+                            subroutine { Write-Output "    $Key[[$Text]]" }
+                            cylindrical { Write-Output "    $Key[($Text)]" }
+                            circle { Write-Output "    $Key(($Text))" }
+                            asymmetric { Write-Output "    $Key>$Text]" }
+                            rhombus { Write-Output "    $Key{$Text}" }
+                            hexagon { Write-Output "    $Key{{$Text}}" }
+                            parallelogram { Write-Output "    $Key[/$Text/]" }
+                            parallelogram-alt { Write-Output "    $Key[\$Text\]" }
+                            trapezoid { Write-Output "    $Key[/$Text\]" }
+                            trapezoid-alt { Write-Output "    $Key[\$Text/]" }
+                            double-circle { Write-Output "    $Key((($Text)))" }
                             Default {
                                 Write-Error "'$_' is not supported for Node Shape."
                             }
