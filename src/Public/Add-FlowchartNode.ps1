@@ -34,7 +34,11 @@ function Add-FlowchartNode {
             'trapezoid-alt',
             'double-circle'
         )]
-        [string] $Shape
+        [string] $Shape,
+
+        # The class of the node.
+        [Parameter()]
+        [string] $Class
     )
 
     process {
@@ -48,6 +52,10 @@ function Add-FlowchartNode {
 
         if ( $Shape ) {
             $node | Add-Member Shape $Shape
+        }
+
+        if ( $Class ) {
+            $node | Add-Member Class $Class
         }
 
         $Diagram.Nodes += $node

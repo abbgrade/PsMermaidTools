@@ -56,10 +56,11 @@ function ConvertTo-String {
         [PSCustomObject[]] $Relations,
 
         #endregion
+
         #region flowchart
 
         # Orientation of the flowchart.
-        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
         [string] $Orientation,
 
         # Collection of nodes for a flowchart.
@@ -72,7 +73,13 @@ function ConvertTo-String {
         [AllowEmptyCollection()]
         [PSCustomObject[]] $Links,
 
+        # Collection of classes for a flowchart.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
+        [AllowEmptyCollection()]
+        [PSCustomObject[]] $Classes,
+
         #endregion
+
         #region C4ComponentDiagram
 
         # Collection of container boundaries for a C4Component diagram.
@@ -86,6 +93,7 @@ function ConvertTo-String {
         [PSCustomObject[]] $Components,
 
         #endregion
+
         #region C4Relation
 
         #
@@ -176,6 +184,7 @@ function ConvertTo-String {
 
         # Name of the node/container.
         [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartNode')]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartClass')]
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4ContainerBoundary')]
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4Component')]
         [string] $Name,
@@ -183,6 +192,21 @@ function ConvertTo-String {
         # Shape of the node.
         [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartNode')]
         [string] $Shape,
+
+        # Class of the node.
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartNode')]
+        [string] $Class,
+
+        #endregion
+
+        #region flowchartClass
+
+        [Parameter(ParameterSetName = 'flowchartClass')]
+        [switch] $FromFlowchartClass,
+
+        # Style of the class.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartClass')]
+        [string] $Style,
 
         #endregion
 
@@ -227,9 +251,11 @@ function ConvertTo-String {
                         bottom-to-top { "$Type BT" | Write-Output }
                         right-to-left { "$Type RL" | Write-Output }
                         left-to-right { "$Type LR" | Write-Output }
+                        default { $Type | Write-Output }
                     }
                     $Nodes | ConvertTo-String -FromFlowchartNode | Write-Output
                     $Links | ConvertTo-String -FromFlowchartLink | Write-Output
+                    $Classes | ConvertTo-String -FromFlowchartClass | Write-Output
                 }
                 C4ComponentDiagram {
                     $Type | Write-Output
@@ -321,32 +347,41 @@ function ConvertTo-String {
                     )$( if ( $Text ) { "|$Text|" } ) $DestinationNode"
                 }
                 flowchartNode {
-                    switch ( $Shape ) {
-                        '' {
-                            if ( $Name ) {
-                                Write-Output "    $Key[$Name]"
-                            } else {
-                                Write-Output "    $Key"
+                    if ( $Class ) {
+                        Write-Output "    $Key:::$Class"
+                    }
+                    else {
+                        switch ( $Shape ) {
+                            '' {
+                                if ( $Name ) {
+                                    Write-Output "    $Key[$Name]"
+                                }
+                                else {
+                                    Write-Output "    $Key"
+                                }
+                            }
+                            rectangle { Write-Output "    $Key[$Name]" }
+                            round-edges { Write-Output "    $Key($Name)" }
+                            stadium { Write-Output "    $Key([$Name])" }
+                            subroutine { Write-Output "    $Key[[$Name]]" }
+                            cylindrical { Write-Output "    $Key[($Name)]" }
+                            circle { Write-Output "    $Key(($Name))" }
+                            asymmetric { Write-Output "    $Key>$Name]" }
+                            rhombus { Write-Output "    $Key{$Name}" }
+                            hexagon { Write-Output "    $Key{{$Name}}" }
+                            parallelogram { Write-Output "    $Key[/$Name/]" }
+                            parallelogram-alt { Write-Output "    $Key[\$Name\]" }
+                            trapezoid { Write-Output "    $Key[/$Name\]" }
+                            trapezoid-alt { Write-Output "    $Key[\$Name/]" }
+                            double-circle { Write-Output "    $Key((($Name)))" }
+                            Default {
+                                Write-Error "'$_' is not supported for Node Shape."
                             }
                         }
-                        rectangle { Write-Output "    $Key[$Name]" }
-                        round-edges { Write-Output "    $Key($Name)" }
-                        stadium { Write-Output "    $Key([$Name])" }
-                        subroutine { Write-Output "    $Key[[$Name]]" }
-                        cylindrical { Write-Output "    $Key[($Name)]" }
-                        circle { Write-Output "    $Key(($Name))" }
-                        asymmetric { Write-Output "    $Key>$Name]" }
-                        rhombus { Write-Output "    $Key{$Name}" }
-                        hexagon { Write-Output "    $Key{{$Name}}" }
-                        parallelogram { Write-Output "    $Key[/$Name/]" }
-                        parallelogram-alt { Write-Output "    $Key[\$Name\]" }
-                        trapezoid { Write-Output "    $Key[/$Name\]" }
-                        trapezoid-alt { Write-Output "    $Key[\$Name/]" }
-                        double-circle { Write-Output "    $Key((($Name)))" }
-                        Default {
-                            Write-Error "'$_' is not supported for Node Shape."
-                        }
                     }
+                }
+                flowchartClass {
+                    Write-Output "    classDef $Name $Style"
                 }
                 C4ContainerBoundary {
                     Write-Output "Container_Boundary($Key, ""$Name"") {"

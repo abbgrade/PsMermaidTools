@@ -20,8 +20,8 @@ ConvertTo-MermaidString -Type <String> -Relations <PSObject[]> -ContainerBoundar
 
 ### flowchart
 ```
-ConvertTo-MermaidString -Type <String> [-Title <String>] -Orientation <String> -Nodes <PSObject[]>
- -Links <PSObject[]> [<CommonParameters>]
+ConvertTo-MermaidString -Type <String> [-Title <String>] [-Orientation <String>] -Nodes <PSObject[]>
+ -Links <PSObject[]> -Classes <PSObject[]> [<CommonParameters>]
 ```
 
 ### erDiagram
@@ -60,8 +60,13 @@ ConvertTo-MermaidString [-FromFlowchartLink] -SourceNode <String> -SourceHead <S
 
 ### flowchartNode
 ```
-ConvertTo-MermaidString [-FromFlowchartNode] -Key <String> [-Name <String>] [-Shape <String>]
+ConvertTo-MermaidString [-FromFlowchartNode] -Key <String> [-Name <String>] [-Shape <String>] [-Class <String>]
  [<CommonParameters>]
+```
+
+### flowchartClass
+```
+ConvertTo-MermaidString -Name <String> [-FromFlowchartClass] -Style <String> [<CommonParameters>]
 ```
 
 ### erRelationship
@@ -145,7 +150,7 @@ Type: String
 Parameter Sets: flowchart
 Aliases:
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
@@ -169,6 +174,21 @@ Accept wildcard characters: False
 
 ### -Links
 Collection of links for a flowchart.
+
+```yaml
+Type: PSObject[]
+Parameter Sets: flowchart
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Classes
+Collection of classes for a flowchart.
 
 ```yaml
 Type: PSObject[]
@@ -472,7 +492,7 @@ Name of the node/container.
 
 ```yaml
 Type: String
-Parameter Sets: C4ContainerBoundary, C4Component
+Parameter Sets: C4ContainerBoundary, C4Component, flowchartClass
 Aliases:
 
 Required: True
@@ -503,6 +523,51 @@ Parameter Sets: flowchartNode
 Aliases:
 
 Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Class
+Class of the node.
+
+```yaml
+Type: String
+Parameter Sets: flowchartNode
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -FromFlowchartClass
+region flowchartClass
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: flowchartClass
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Style
+Style of the class.
+
+```yaml
+Type: String
+Parameter Sets: flowchartClass
+Aliases:
+
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)

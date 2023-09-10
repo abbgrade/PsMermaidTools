@@ -20,6 +20,7 @@ Describe Add-FlowchartNode {
             $diagram.Nodes[0].Key | Should -Be A
             $diagram.Nodes[0].Name | Should -BeNullOrEmpty
             $diagram.Nodes[0].Shape | Should -BeNullOrEmpty
+            $diagram.Nodes[0].Class | Should -BeNull
         }
 
         It works-by-positions-minimum {
@@ -30,6 +31,7 @@ Describe Add-FlowchartNode {
             $diagram.Nodes[0].Key | Should -Be A
             $diagram.Nodes[0].Name | Should -BeNullOrEmpty
             $diagram.Nodes[0].Shape | Should -BeNullOrEmpty
+            $diagram.Nodes[0].Class | Should -BeNull
         }
 
         It works-by-named-parmeters {
@@ -40,6 +42,7 @@ Describe Add-FlowchartNode {
             $diagram.Nodes[0].Key | Should -Be A
             $diagram.Nodes[0].Name | Should -Be foo
             $diagram.Nodes[0].Shape | Should -Be round-edges
+            $diagram.Nodes[0].Class | Should -BeNull
         }
 
         It works-by-positions {
@@ -50,7 +53,36 @@ Describe Add-FlowchartNode {
             $diagram.Nodes[0].Key | Should -Be A
             $diagram.Nodes[0].Name | Should -Be foo
             $diagram.Nodes[0].Shape | Should -Be round-edges
+            $diagram.Nodes[0].Class | Should -BeNull
+        }
+
+        Context class {
+
+            BeforeEach {
+                $diagram | Add-MermaidFlowchartClass foobar 'solid:#ffffff'
+            }
+
+            It works-by-named-parmeters-with-class {
+                $diagram | Add-MermaidFlowchartNode -Key A -Name foo -Class foobar
+                $diagram | Should -Not -BeNullOrEmpty
+                $diagram.Nodes | Should -Not -BeNullOrEmpty
+                $diagram.Nodes.Count | Should -Be 1
+                $diagram.Nodes[0].Key | Should -Be A
+                $diagram.Nodes[0].Name | Should -Be foo
+                $diagram.Nodes[0].Shape | Should -BeNull
+                $diagram.Nodes[0].Class | Should -Be foobar
+            }
+
+            It works-by-positions-with-class {
+                $diagram | Add-MermaidFlowchartNode A foo -Class foobar
+                $diagram | Should -Not -BeNullOrEmpty
+                $diagram.Nodes | Should -Not -BeNullOrEmpty
+                $diagram.Nodes.Count | Should -Be 1
+                $diagram.Nodes[0].Key | Should -Be A
+                $diagram.Nodes[0].Name | Should -Be foo
+                $diagram.Nodes[0].Shape | Should -BeNull
+                $diagram.Nodes[0].Class | Should -Be foobar
+            }
         }
     }
-
 }

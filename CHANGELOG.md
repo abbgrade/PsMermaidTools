@@ -9,7 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Parameter title for ER and flow diagrams.
+- new parameter title for ER and flow diagrams.
+- new command `Add-FlowchartClass`.
+- new parameter class for `Add-FlowchartNode`.
 
 ### Changed
 

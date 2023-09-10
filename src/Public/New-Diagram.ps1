@@ -65,10 +65,17 @@ function New-Diagram {
             $definition | Add-Member Relations @()
         }
         flowchart {
-            $definition | Add-Member Title $Title
-            $definition | Add-Member Orientation $Orientation
+            if ( $Title ) {
+                $definition | Add-Member Title $Title
+            }
+
+            if ( $Orientation ) {
+                $definition | Add-Member Orientation $Orientation
+            }
+
             $definition | Add-Member Nodes @()
             $definition | Add-Member Links @()
+            $definition | Add-Member Classes @()
         }
         C4Component {
             $definition | Add-Member ContainerBoundaries @()
