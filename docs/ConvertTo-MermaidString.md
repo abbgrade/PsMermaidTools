@@ -54,13 +54,14 @@ ConvertTo-MermaidString -FirstEntity <String> [-Relationship <PSObject>] [-Secon
 
 ### flowchartLink
 ```
-ConvertTo-MermaidString -SourceNode <String> -SourceHead <String> -DestinationNode <String>
- -DestinationHead <String> [-Text <String>] -Line <String> [<CommonParameters>]
+ConvertTo-MermaidString [-FromFlowchartLink] -SourceNode <String> -SourceHead <String>
+ -DestinationNode <String> -DestinationHead <String> [-Text <String>] -Line <String> [<CommonParameters>]
 ```
 
 ### flowchartNode
 ```
-ConvertTo-MermaidString -Key <String> -Name <String> -Shape <String> [<CommonParameters>]
+ConvertTo-MermaidString [-FromFlowchartNode] -Key <String> [-Name <String>] [-Shape <String>]
+ [<CommonParameters>]
 ```
 
 ### erRelationship
@@ -331,6 +332,21 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -FromFlowchartLink
+region flowchartLink
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: flowchartLink
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -SourceNode
 Source node of the link.
 
@@ -421,6 +437,21 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -FromFlowchartNode
+region flowchartNode
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: flowchartNode
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Key
 Identifier of the node/container/component.
 
@@ -441,10 +472,22 @@ Name of the node/container.
 
 ```yaml
 Type: String
-Parameter Sets: C4ContainerBoundary, C4Component, flowchartNode
+Parameter Sets: C4ContainerBoundary, C4Component
 Aliases:
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+```yaml
+Type: String
+Parameter Sets: flowchartNode
+Aliases:
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
@@ -459,7 +502,7 @@ Type: String
 Parameter Sets: flowchartNode
 Aliases:
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)

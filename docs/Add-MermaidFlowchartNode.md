@@ -13,7 +13,7 @@ schema: 2.0.0
 ## SYNTAX
 
 ```
-Add-MermaidFlowchartNode [-Diagram <Object>] [-Key] <String> [-Name] <String> [-Shape] <String>
+Add-MermaidFlowchartNode [-Diagram <Object>] [-Key] <String> [[-Name] <String>] [[-Shape] <String>]
  [<CommonParameters>]
 ```
 
@@ -69,7 +69,7 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: 1
 Default value: None
 Accept pipeline input: False
@@ -83,9 +83,9 @@ Accept wildcard characters: False
 Type: String
 Parameter Sets: (All)
 Aliases:
-Accepted values: round-edges, stadium, subroutine, cylindrical, circle, asymmetric, rhombus, hexagon, parallelogram, parallelogram-alt, trapezoid, trapezoid-alt, double-circle
+Accepted values: rectangle, round-edges, stadium, subroutine, cylindrical, circle, asymmetric, rhombus, hexagon, parallelogram, parallelogram-alt, trapezoid, trapezoid-alt, double-circle
 
-Required: True
+Required: False
 Position: 2
 Default value: None
 Accept pipeline input: False

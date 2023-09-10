@@ -53,7 +53,7 @@ function ConvertTo-String {
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'erDiagram')]
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4ComponentDiagram')]
         [AllowEmptyCollection()]
-        [PsObject[]] $Relations,
+        [PSCustomObject[]] $Relations,
 
         #endregion
         #region flowchart
@@ -65,12 +65,12 @@ function ConvertTo-String {
         # Collection of nodes for a flowchart.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
         [AllowEmptyCollection()]
-        [PsObject[]] $Nodes,
+        [PSCustomObject[]] $Nodes,
 
         # Collection of links for a flowchart.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
         [AllowEmptyCollection()]
-        [PsObject[]] $Links,
+        [PSCustomObject[]] $Links,
 
         #endregion
         #region C4ComponentDiagram
@@ -78,12 +78,12 @@ function ConvertTo-String {
         # Collection of container boundaries for a C4Component diagram.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4ComponentDiagram')]
         [AllowEmptyCollection()]
-        [PsObject[]] $ContainerBoundaries,
+        [PSCustomObject[]] $ContainerBoundaries,
 
         # Collection of components for a C4Component diagram.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4ContainerBoundary')]
         [AllowEmptyCollection()]
-        [PSObject[]] $Components,
+        [PSCustomObject[]] $Components,
 
         #endregion
         #region C4Relation
@@ -120,7 +120,7 @@ function ConvertTo-String {
 
         # Relationship of the relation.
         [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'erRelation')]
-        [PSObject] $Relationship,
+        [PSCustomObject] $Relationship,
 
         # First second of the relation.
         [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'erRelation')]
@@ -134,6 +134,9 @@ function ConvertTo-String {
         #endregion
 
         #region flowchartLink
+
+        [Parameter(ParameterSetName = 'flowchartLink')]
+        [switch] $FromFlowchartLink,
 
         # Source node of the link.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartLink')]
@@ -162,6 +165,9 @@ function ConvertTo-String {
 
         #region flowchartNode
 
+        [Parameter(ParameterSetName = 'flowchartNode')]
+        [switch] $FromFlowchartNode,
+
         # Identifier of the node/container/component.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartNode')]
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4ContainerBoundary')]
@@ -169,13 +175,13 @@ function ConvertTo-String {
         [string] $Key,
 
         # Name of the node/container.
-        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartNode')]
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartNode')]
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4ContainerBoundary')]
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4Component')]
         [string] $Name,
 
         # Shape of the node.
-        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartNode')]
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartNode')]
         [string] $Shape,
 
         #endregion
@@ -222,8 +228,8 @@ function ConvertTo-String {
                         right-to-left { "$Type RL" | Write-Output }
                         left-to-right { "$Type LR" | Write-Output }
                     }
-                    $Nodes | ConvertTo-String | Write-Output
-                    $Links | ConvertTo-String | Write-Output
+                    $Nodes | ConvertTo-String -FromFlowchartNode | Write-Output
+                    $Links | ConvertTo-String -FromFlowchartLink | Write-Output
                 }
                 C4ComponentDiagram {
                     $Type | Write-Output
@@ -316,6 +322,14 @@ function ConvertTo-String {
                 }
                 flowchartNode {
                     switch ( $Shape ) {
+                        '' {
+                            if ( $Name ) {
+                                Write-Output "    $Key[$Name]"
+                            } else {
+                                Write-Output "    $Key"
+                            }
+                        }
+                        rectangle { Write-Output "    $Key[$Name]" }
                         round-edges { Write-Output "    $Key($Name)" }
                         stadium { Write-Output "    $Key([$Name])" }
                         subroutine { Write-Output "    $Key[[$Name]]" }

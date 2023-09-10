@@ -123,7 +123,54 @@ flowchart LR
             }
         }
 
-        Context shapes {
+        Context nodes {
+
+            Context no-text {
+                BeforeEach {
+                    $diagram | Add-MermaidFlowchartNode A
+                }
+
+                It works {
+                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                    $output | Should -Not -BeNullOrEmpty
+                    $output | Should -Be (@"
+flowchart LR
+    A
+"@.Replace("`r`n", [Environment]::NewLine))
+                }
+
+            }
+
+            Context no-shape {
+                BeforeEach {
+                    $diagram | Add-MermaidFlowchartNode A node
+                }
+
+                It works {
+                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                    $output | Should -Not -BeNullOrEmpty
+                    $output | Should -Be (@"
+flowchart LR
+    A[node]
+"@.Replace("`r`n", [Environment]::NewLine))
+                }
+
+            }
+
+            Context round-edges {
+                BeforeEach {
+                    $diagram | Add-MermaidFlowchartNode A node rectangle
+                }
+
+                It works {
+                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                    $output | Should -Not -BeNullOrEmpty
+                    $output | Should -Be (@"
+flowchart LR
+    A[node]
+"@.Replace("`r`n", [Environment]::NewLine))
+                }
+            }
 
             Context round-edges {
                 BeforeEach {

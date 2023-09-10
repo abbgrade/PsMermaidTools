@@ -13,13 +13,13 @@ function Add-FlowchartNode {
         [string] $Key,
 
         # The node name.
-        [Parameter(Mandatory, Position = 1)]
-        [ValidateNotNullOrEmpty()]
+        [Parameter(Position = 1)]
         [string] $Name,
 
         # The node shape.
-        [Parameter(Mandatory, Position = 2)]
+        [Parameter(Position = 2)]
         [ValidateSet(
+            'rectangle',
             'round-edges',
             'stadium',
             'subroutine',
@@ -37,10 +37,20 @@ function Add-FlowchartNode {
         [string] $Shape
     )
 
-    $Diagram.Nodes += [PSCustomObject]@{
-        Key = $Key
-        Name = $Name
-        Shape = $Shape
+    process {
+        $node = [PSCustomObject]@{
+            Key   = $Key
+        }
+
+        if ( $Name ) {
+            $node | Add-Member Name $Name
+        }
+
+        if ( $Shape ) {
+            $node | Add-Member Shape $Shape
+        }
+
+        $Diagram.Nodes += $node
     }
 
 }

@@ -12,6 +12,26 @@ Describe Add-FlowchartNode {
             $diagram = New-MermaidDiagram -Flowchart -Orientation top-down
         }
 
+        It works-by-named-parmeters-minimum {
+            $diagram | Add-MermaidFlowchartNode -Key A
+            $diagram | Should -Not -BeNullOrEmpty
+            $diagram.Nodes | Should -Not -BeNullOrEmpty
+            $diagram.Nodes.Count | Should -Be 1
+            $diagram.Nodes[0].Key | Should -Be A
+            $diagram.Nodes[0].Name | Should -BeNullOrEmpty
+            $diagram.Nodes[0].Shape | Should -BeNullOrEmpty
+        }
+
+        It works-by-positions-minimum {
+            $diagram | Add-MermaidFlowchartNode A
+            $diagram | Should -Not -BeNullOrEmpty
+            $diagram.Nodes | Should -Not -BeNullOrEmpty
+            $diagram.Nodes.Count | Should -Be 1
+            $diagram.Nodes[0].Key | Should -Be A
+            $diagram.Nodes[0].Name | Should -BeNullOrEmpty
+            $diagram.Nodes[0].Shape | Should -BeNullOrEmpty
+        }
+
         It works-by-named-parmeters {
             $diagram | Add-MermaidFlowchartNode -Key A -Name foo -Shape round-edges
             $diagram | Should -Not -BeNullOrEmpty

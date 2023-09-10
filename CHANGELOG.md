@@ -9,7 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Parameter title for er and flow diagrams.
+- Parameter title for ER and flow diagrams.
+
+### Changed
+
+- Diagram orientation is now optional.
+- Name and shape are now optional for flow diagram nodes.
 
 ## [0.3.0] - 2023-03-15
 
