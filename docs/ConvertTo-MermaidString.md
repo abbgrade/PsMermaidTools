@@ -21,7 +21,7 @@ ConvertTo-MermaidString -Type <String> -Relations <PSObject[]> -ContainerBoundar
 ### flowchart
 ```
 ConvertTo-MermaidString -Type <String> [-Title <String>] [-Orientation <String>] -Nodes <PSObject[]>
- -Links <PSObject[]> -Classes <PSObject[]> [<CommonParameters>]
+ -Links <PSObject[]> -Classes <PSObject[]> -Clicks <PSObject[]> [<CommonParameters>]
 ```
 
 ### erDiagram
@@ -67,6 +67,12 @@ ConvertTo-MermaidString [-FromFlowchartNode] -Key <String> [-Name <String>] [-Sh
 ### flowchartClass
 ```
 ConvertTo-MermaidString -Name <String> [-FromFlowchartClass] -Style <String> [<CommonParameters>]
+```
+
+### flowchartClick
+```
+ConvertTo-MermaidString [-FromFlowchartClick] -Node <String> -Url <String> [-Tooltip <String>]
+ [-Target <String>] [<CommonParameters>]
 ```
 
 ### erRelationship
@@ -189,6 +195,21 @@ Accept wildcard characters: False
 
 ### -Classes
 Collection of classes for a flowchart.
+
+```yaml
+Type: PSObject[]
+Parameter Sets: flowchart
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Clicks
+Collection of clicks for a flowchart.
 
 ```yaml
 Type: PSObject[]
@@ -568,6 +589,81 @@ Parameter Sets: flowchartClass
 Aliases:
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -FromFlowchartClick
+region flowchartClick
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: flowchartClick
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Node
+Node of the click.
+
+```yaml
+Type: String
+Parameter Sets: flowchartClick
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Url
+Url of the click.
+
+```yaml
+Type: String
+Parameter Sets: flowchartClick
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Tooltip
+Url of the click.
+
+```yaml
+Type: String
+Parameter Sets: flowchartClick
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Target
+Target of the click.
+
+```yaml
+Type: String
+Parameter Sets: flowchartClick
+Aliases:
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)

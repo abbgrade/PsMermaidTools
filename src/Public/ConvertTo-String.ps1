@@ -78,6 +78,11 @@ function ConvertTo-String {
         [AllowEmptyCollection()]
         [PSCustomObject[]] $Classes,
 
+        # Collection of clicks for a flowchart.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
+        [AllowEmptyCollection()]
+        [PSCustomObject[]] $Clicks,
+
         #endregion
 
         #region C4ComponentDiagram
@@ -210,6 +215,29 @@ function ConvertTo-String {
 
         #endregion
 
+        #region flowchartClick
+
+        [Parameter(ParameterSetName = 'flowchartClick')]
+        [switch] $FromFlowchartClick,
+
+        # Node of the click.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartClick')]
+        [string] $Node,
+
+        # Url of the click.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartClick')]
+        [string] $Url,
+
+        # Url of the click.
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartClick')]
+        [string] $Tooltip,
+
+        # Target of the click.
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartClick')]
+        [string] $Target,
+
+        #endregion
+
         #region erRelationship
 
         # Cardinality of the first entity.
@@ -253,9 +281,10 @@ function ConvertTo-String {
                         left-to-right { "$Type LR" | Write-Output }
                         default { $Type | Write-Output }
                     }
-                    $Nodes | ConvertTo-String -FromFlowchartNode | Write-Output
-                    $Links | ConvertTo-String -FromFlowchartLink | Write-Output
                     $Classes | ConvertTo-String -FromFlowchartClass | Write-Output
+                    $Nodes | ConvertTo-String -FromFlowchartNode | Write-Output
+                    $Clicks | ConvertTo-String -FromFlowchartClick | Write-Output
+                    $Links | ConvertTo-String -FromFlowchartLink | Write-Output
                 }
                 C4ComponentDiagram {
                     $Type | Write-Output
@@ -382,6 +411,9 @@ function ConvertTo-String {
                 }
                 flowchartClass {
                     Write-Output "    classDef $Name $Style"
+                }
+                flowchartClick {
+                    Write-Output "    click $Node ""$Url""$( if ( $Tooltip ) {  ' "' + $Tooltip + '"' } )$( if ( $Target ) { " _$Target" } )"
                 }
                 C4ContainerBoundary {
                     Write-Output "Container_Boundary($Key, ""$Name"") {"

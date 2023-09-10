@@ -624,11 +624,46 @@ flowchart LR
                             $output | Should -Not -BeNullOrEmpty
                             $output | Should -Be (@"
 flowchart LR
-    A:::foo
     classDef foo fill:#ffffff
+    A:::foo
 "@.Replace("`r`n", [Environment]::NewLine))
                         }
 
+                    }
+                }
+            }
+
+            Context clicks {
+
+                Context with-tooltip {
+
+                    BeforeEach {
+                        $diagram | Add-MermaidFlowchartClick foo 'http://localhost' -Tooltip 'home sweet home' -Target blank
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
+flowchart LR
+    click foo "http://localhost" "home sweet home" _blank
+"@.Replace("`r`n", [Environment]::NewLine))
+                    }
+                }
+
+                Context without-tooltip {
+
+                    BeforeEach {
+                        $diagram | Add-MermaidFlowchartClick foo 'http://localhost' -Target blank
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
+flowchart LR
+    click foo "http://localhost" _blank
+"@.Replace("`r`n", [Environment]::NewLine))
                     }
                 }
             }

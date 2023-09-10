@@ -2,7 +2,7 @@ function Add-FlowchartClass {
 
     [CmdletBinding()]
     param (
-        # The diagram, that the relation is added to.
+        # The diagram, that the class is added to.
         [Parameter(ValueFromPipeline)]
         [ValidateNotNull()]
         $Diagram,
