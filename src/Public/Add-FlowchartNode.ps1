@@ -12,14 +12,15 @@ function Add-FlowchartNode {
         [ValidateNotNullOrEmpty()]
         [string] $Key,
 
-        # The node name.
-        [Parameter(Mandatory, Position = 1)]
-        [ValidateNotNullOrEmpty()]
-        [string] $Name,
+        # The node text.
+        [Parameter(Position = 1)]
+        [Alias('Name')]
+        [string] $Text,
 
         # The node shape.
-        [Parameter(Mandatory, Position = 2)]
+        [Parameter(Position = 2)]
         [ValidateSet(
+            'rectangle',
             'round-edges',
             'stadium',
             'subroutine',
@@ -34,13 +35,31 @@ function Add-FlowchartNode {
             'trapezoid-alt',
             'double-circle'
         )]
-        [string] $Shape
+        [string] $Shape,
+
+        # The class of the node.
+        [Parameter()]
+        [string] $Class
     )
 
-    $Diagram.Nodes += [PSCustomObject]@{
-        Key = $Key
-        Name = $Name
-        Shape = $Shape
+    process {
+        $node = [PSCustomObject]@{
+            Key   = $Key
+        }
+
+        if ( $Text ) {
+            $node | Add-Member Text $Text
+        }
+
+        if ( $Shape ) {
+            $node | Add-Member Shape $Shape
+        }
+
+        if ( $Class ) {
+            $node | Add-Member Class $Class
+        }
+
+        $Diagram.Nodes += $node
     }
 
 }

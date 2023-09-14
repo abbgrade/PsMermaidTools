@@ -40,6 +40,11 @@ function ConvertTo-String {
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4ComponentDiagram')]
         [string] $Type,
 
+        # Title of the diagram.
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'erDiagram')]
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
+        [string] $Title,
+
         #endregion
 
         #region erDiagram
@@ -48,39 +53,52 @@ function ConvertTo-String {
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'erDiagram')]
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4ComponentDiagram')]
         [AllowEmptyCollection()]
-        [PsObject[]] $Relations,
+        [PSCustomObject[]] $Relations,
 
         #endregion
+
         #region flowchart
 
         # Orientation of the flowchart.
-        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
         [string] $Orientation,
 
         # Collection of nodes for a flowchart.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
         [AllowEmptyCollection()]
-        [PsObject[]] $Nodes,
+        [PSCustomObject[]] $Nodes,
 
         # Collection of links for a flowchart.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
         [AllowEmptyCollection()]
-        [PsObject[]] $Links,
+        [PSCustomObject[]] $Links,
+
+        # Collection of classes for a flowchart.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
+        [AllowEmptyCollection()]
+        [PSCustomObject[]] $Classes,
+
+        # Collection of clicks for a flowchart.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
+        [AllowEmptyCollection()]
+        [PSCustomObject[]] $Clicks,
 
         #endregion
+
         #region C4ComponentDiagram
 
         # Collection of container boundaries for a C4Component diagram.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4ComponentDiagram')]
         [AllowEmptyCollection()]
-        [PsObject[]] $ContainerBoundaries,
+        [PSCustomObject[]] $ContainerBoundaries,
 
         # Collection of components for a C4Component diagram.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4ContainerBoundary')]
         [AllowEmptyCollection()]
-        [PSObject[]] $Components,
+        [PSCustomObject[]] $Components,
 
         #endregion
+
         #region C4Relation
 
         #
@@ -115,7 +133,7 @@ function ConvertTo-String {
 
         # Relationship of the relation.
         [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'erRelation')]
-        [PSObject] $Relationship,
+        [PSCustomObject] $Relationship,
 
         # First second of the relation.
         [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'erRelation')]
@@ -129,6 +147,9 @@ function ConvertTo-String {
         #endregion
 
         #region flowchartLink
+
+        [Parameter(ParameterSetName = 'flowchartLink')]
+        [switch] $FromFlowchartLink,
 
         # Source node of the link.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartLink')]
@@ -148,6 +169,7 @@ function ConvertTo-String {
 
         # Link text.
         [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartLink')]
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartNode')]
         [string] $Text,
 
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartLink')]
@@ -157,21 +179,62 @@ function ConvertTo-String {
 
         #region flowchartNode
 
-        # Indentifier of the node/container/component.
+        [Parameter(ParameterSetName = 'flowchartNode')]
+        [switch] $FromFlowchartNode,
+
+        # Identifier of the node/container/component.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartNode')]
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4ContainerBoundary')]
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4Component')]
         [string] $Key,
 
-        # Name of the node/container.
-        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartNode')]
+        # Shape of the node.
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartNode')]
+        [string] $Shape,
+
+        # Class of the node.
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartNode')]
+        [string] $Class,
+
+        #endregion
+
+        #region flowchartClass
+
+        [Parameter(ParameterSetName = 'flowchartClass')]
+        [switch] $FromFlowchartClass,
+
+        # Name of the class/container.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartClass')]
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4ContainerBoundary')]
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4Component')]
         [string] $Name,
 
-        # Shape of the node.
-        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartNode')]
-        [string] $Shape,
+        # Style of the class.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartClass')]
+        [string] $Style,
+
+        #endregion
+
+        #region flowchartClick
+
+        [Parameter(ParameterSetName = 'flowchartClick')]
+        [switch] $FromFlowchartClick,
+
+        # Node of the click.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartClick')]
+        [string] $Node,
+
+        # Url of the click.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartClick')]
+        [string] $Url,
+
+        # Url of the click.
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartClick')]
+        [string] $Tooltip,
+
+        # Target of the click.
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartClick')]
+        [string] $Target,
 
         #endregion
 
@@ -196,19 +259,32 @@ function ConvertTo-String {
         @(
             switch ($PSCmdlet.ParameterSetName) {
                 erDiagram {
+                    if ( $Title ) {
+                        '---' | Write-Output
+                        "title: $Title" | Write-Output
+                        '---' | Write-Output
+                    }
                     $Type | Write-Output
                     $Relations | ConvertTo-String | Write-Output
                 }
                 flowchart {
+                    if ( $Title ) {
+                        '---' | Write-Output
+                        "title: $Title" | Write-Output
+                        '---' | Write-Output
+                    }
                     switch ( $Orientation ) {
                         top-to-bottom { "$Type TB" | Write-Output }
                         top-down { "$Type TD" | Write-Output }
                         bottom-to-top { "$Type BT" | Write-Output }
                         right-to-left { "$Type RL" | Write-Output }
                         left-to-right { "$Type LR" | Write-Output }
+                        default { $Type | Write-Output }
                     }
-                    $Nodes | ConvertTo-String | Write-Output
-                    $Links | ConvertTo-String | Write-Output
+                    $Classes | ConvertTo-String -FromFlowchartClass | Write-Output
+                    $Nodes | ConvertTo-String -FromFlowchartNode | Write-Output
+                    $Clicks | ConvertTo-String -FromFlowchartClick | Write-Output
+                    $Links | ConvertTo-String -FromFlowchartLink | Write-Output
                 }
                 C4ComponentDiagram {
                     $Type | Write-Output
@@ -300,24 +376,49 @@ function ConvertTo-String {
                     )$( if ( $Text ) { "|$Text|" } ) $DestinationNode"
                 }
                 flowchartNode {
-                    switch ( $Shape ) {
-                        round-edges { Write-Output "    $Key($Name)" }
-                        stadium { Write-Output "    $Key([$Name])" }
-                        subroutine { Write-Output "    $Key[[$Name]]" }
-                        cylindrical { Write-Output "    $Key[($Name)]" }
-                        circle { Write-Output "    $Key(($Name))" }
-                        asymmetric { Write-Output "    $Key>$Name]" }
-                        rhombus { Write-Output "    $Key{$Name}" }
-                        hexagon { Write-Output "    $Key{{$Name}}" }
-                        parallelogram { Write-Output "    $Key[/$Name/]" }
-                        parallelogram-alt { Write-Output "    $Key[\$Name\]" }
-                        trapezoid { Write-Output "    $Key[/$Name\]" }
-                        trapezoid-alt { Write-Output "    $Key[\$Name/]" }
-                        double-circle { Write-Output "    $Key((($Name)))" }
-                        Default {
-                            Write-Error "'$_' is not supported for Node Shape."
+                    if ( $Class ) {
+                        if ( $Text ) {
+                            Write-Output "    $Key[$Text]:::$Class"
+                        }
+                        else {
+                            Write-Output "    $Key:::$Class"
                         }
                     }
+                    else {
+                        switch ( $Shape ) {
+                            '' {
+                                if ( $Text ) {
+                                    Write-Output "    $Key[$Text]"
+                                }
+                                else {
+                                    Write-Output "    $Key"
+                                }
+                            }
+                            rectangle { Write-Output "    $Key[$Text]" }
+                            round-edges { Write-Output "    $Key($Text)" }
+                            stadium { Write-Output "    $Key([$Text])" }
+                            subroutine { Write-Output "    $Key[[$Text]]" }
+                            cylindrical { Write-Output "    $Key[($Text)]" }
+                            circle { Write-Output "    $Key(($Text))" }
+                            asymmetric { Write-Output "    $Key>$Text]" }
+                            rhombus { Write-Output "    $Key{$Text}" }
+                            hexagon { Write-Output "    $Key{{$Text}}" }
+                            parallelogram { Write-Output "    $Key[/$Text/]" }
+                            parallelogram-alt { Write-Output "    $Key[\$Text\]" }
+                            trapezoid { Write-Output "    $Key[/$Text\]" }
+                            trapezoid-alt { Write-Output "    $Key[\$Text/]" }
+                            double-circle { Write-Output "    $Key((($Text)))" }
+                            Default {
+                                Write-Error "'$_' is not supported for Node Shape."
+                            }
+                        }
+                    }
+                }
+                flowchartClass {
+                    Write-Output "    classDef $Name $Style"
+                }
+                flowchartClick {
+                    Write-Output "    click $Node ""$Url""$( if ( $Tooltip ) {  ' "' + $Tooltip + '"' } )$( if ( $Target ) { " _$Target" } )"
                 }
                 C4ContainerBoundary {
                     Write-Output "Container_Boundary($Key, ""$Name"") {"

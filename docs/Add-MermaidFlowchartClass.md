@@ -5,7 +5,7 @@ online version: https://mermaid-js.github.io/mermaid/#/entityRelationshipDiagram
 schema: 2.0.0
 ---
 
-# Add-MermaidFlowchartNode
+# Add-MermaidFlowchartClass
 
 ## SYNOPSIS
 {{ Fill in the Synopsis }}
@@ -13,8 +13,7 @@ schema: 2.0.0
 ## SYNTAX
 
 ```
-Add-MermaidFlowchartNode [-Diagram <Object>] [-Key] <String> [[-Text] <String>] [[-Shape] <String>]
- [-Class <String>] [<CommonParameters>]
+Add-MermaidFlowchartClass [-Diagram <Object>] [-Name] <String> [-Style] <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -31,21 +30,6 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -Class
-{{ Fill Class Description }}
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Diagram
 {{ Fill Diagram Description }}
 
@@ -61,8 +45,8 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -Key
-{{ Fill Key Description }}
+### -Name
+{{ Fill Name Description }}
 
 ```yaml
 Type: String
@@ -76,31 +60,15 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Shape
-{{ Fill Shape Description }}
+### -Style
+{{ Fill Style Description }}
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 Aliases:
-Accepted values: rectangle, round-edges, stadium, subroutine, cylindrical, circle, asymmetric, rhombus, hexagon, parallelogram, parallelogram-alt, trapezoid, trapezoid-alt, double-circle
 
-Required: False
-Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Text
-{{ Fill Text Description }}
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases: Name
-
-Required: False
+Required: True
 Position: 1
 Default value: None
 Accept pipeline input: False

@@ -45,9 +45,14 @@ function New-Diagram {
         [switch] $C4Component,
 
         # The diagram orientation.
-        [Parameter( Mandatory, ParameterSetName = 'flowchart', Position = 1 )]
+        [Parameter( ParameterSetName = 'flowchart', Position = 1 )]
         [ValidateSet('top-to-bottom', 'top-down', 'bottom-to-top', 'right-to-left', 'left-to-right')]
-        [string] $Orientation
+        [string] $Orientation,
+
+        # The diagram title.
+        [Parameter( ParameterSetName = 'flowchart')]
+        [Parameter( ParameterSetName = 'erDiagram')]
+        [string] $Title
     )
 
     $definition = [PSCustomObject]@{
@@ -56,12 +61,22 @@ function New-Diagram {
 
     switch ( $definition.Type ) {
         erDiagram {
+            $definition | Add-Member Title $Title
             $definition | Add-Member Relations @()
         }
         flowchart {
-            $definition | Add-Member Orientation $Orientation
+            if ( $Title ) {
+                $definition | Add-Member Title $Title
+            }
+
+            if ( $Orientation ) {
+                $definition | Add-Member Orientation $Orientation
+            }
+
             $definition | Add-Member Nodes @()
             $definition | Add-Member Links @()
+            $definition | Add-Member Classes @()
+            $definition | Add-Member Clicks @()
         }
         C4Component {
             $definition | Add-Member ContainerBoundaries @()

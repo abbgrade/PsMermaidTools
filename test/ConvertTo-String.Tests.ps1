@@ -20,6 +20,24 @@ erDiagram
 "@.Replace("`r`n", [Environment]::NewLine))
         }
 
+        Context with-title {
+
+            BeforeEach {
+                $diagram = New-MermaidDiagram -ErDiagram -Title 'Test Diagram'
+            }
+
+            It works-empty {
+                $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                $output | Should -Not -BeNullOrEmpty
+                $output | Should -Be (@"
+---
+title: Test Diagram
+---
+erDiagram
+"@.Replace("`r`n", [Environment]::NewLine))
+            }
+        }
+
         Context minimum {
             BeforeEach {
                 $diagram | Add-MermaidErRelation -Entity Entity
@@ -74,437 +92,596 @@ erDiagram
     }
 
     Context flowchart {
-        BeforeEach {
-            $diagram = New-MermaidDiagram -Flowchart -Orientation left-to-right
+
+        Context minimum {
+
+            BeforeEach {
+                $diagram = New-MermaidDiagram -Flowchart
+            }
+
+            It works-empty {
+                $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                $output | Should -Not -BeNullOrEmpty
+                $output | Should -Be (@"
+flowchart
+"@.Replace("`r`n", [Environment]::NewLine))
+            }
         }
 
-        It works-empty {
-            $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
-            $output | Should -Not -BeNullOrEmpty
-            $output | Should -Be (@"
+        Context with-orientation {
+
+            BeforeEach {
+                $diagram = New-MermaidDiagram -Flowchart -Orientation left-to-right
+            }
+
+            It works-empty {
+                $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                $output | Should -Not -BeNullOrEmpty
+                $output | Should -Be (@"
 flowchart LR
 "@.Replace("`r`n", [Environment]::NewLine))
-        }
+            }
 
-        Context shapes {
+            Context with-title {
 
-            Context round-edges {
                 BeforeEach {
-                    $diagram = New-MermaidDiagram -Flowchart -Orientation left-to-right
-                    $diagram | Add-MermaidFlowchartNode A node round-edges
+                    $diagram = New-MermaidDiagram -Flowchart -Orientation left-to-right -Title 'Test Diagram'
                 }
 
-                It works {
+                It works-empty {
                     $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
                     $output | Should -Not -BeNullOrEmpty
                     $output | Should -Be (@"
+---
+title: Test Diagram
+---
+flowchart LR
+"@.Replace("`r`n", [Environment]::NewLine))
+                }
+            }
+
+            Context nodes {
+
+                Context no-text {
+                    BeforeEach {
+                        $diagram | Add-MermaidFlowchartNode A
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
+flowchart LR
+    A
+"@.Replace("`r`n", [Environment]::NewLine))
+                    }
+
+                }
+
+                Context no-shape {
+                    BeforeEach {
+                        $diagram | Add-MermaidFlowchartNode A node
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
+flowchart LR
+    A[node]
+"@.Replace("`r`n", [Environment]::NewLine))
+                    }
+
+                }
+
+                Context round-edges {
+                    BeforeEach {
+                        $diagram | Add-MermaidFlowchartNode A node rectangle
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
+flowchart LR
+    A[node]
+"@.Replace("`r`n", [Environment]::NewLine))
+                    }
+                }
+
+                Context round-edges {
+                    BeforeEach {
+                        $diagram | Add-MermaidFlowchartNode A node round-edges
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
 flowchart LR
     A(node)
 "@.Replace("`r`n", [Environment]::NewLine))
-                }
-            }
-
-            Context stadium-shape {
-                BeforeEach {
-                    $diagram = New-MermaidDiagram -Flowchart -Orientation left-to-right
-                    $diagram | Add-MermaidFlowchartNode A node stadium
+                    }
                 }
 
-                It works {
-                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
-                    $output | Should -Not -BeNullOrEmpty
-                    $output | Should -Be (@"
+                Context stadium-shape {
+                    BeforeEach {
+                        $diagram | Add-MermaidFlowchartNode A node stadium
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
 flowchart LR
     A([node])
 "@.Replace("`r`n", [Environment]::NewLine))
-                }
-            }
-
-            Context subroutine {
-                BeforeEach {
-                    $diagram = New-MermaidDiagram -Flowchart -Orientation left-to-right
-                    $diagram | Add-MermaidFlowchartNode A node subroutine
+                    }
                 }
 
-                It works {
-                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
-                    $output | Should -Not -BeNullOrEmpty
-                    $output | Should -Be (@"
+                Context subroutine {
+                    BeforeEach {
+                        $diagram | Add-MermaidFlowchartNode A node subroutine
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
 flowchart LR
     A[[node]]
 "@.Replace("`r`n", [Environment]::NewLine))
-                }
-            }
-
-            Context cylindrical-shape {
-                BeforeEach {
-                    $diagram = New-MermaidDiagram -Flowchart -Orientation left-to-right
-                    $diagram | Add-MermaidFlowchartNode A node cylindrical
+                    }
                 }
 
-                It works {
-                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
-                    $output | Should -Not -BeNullOrEmpty
-                    $output | Should -Be (@"
+                Context cylindrical-shape {
+                    BeforeEach {
+                        $diagram | Add-MermaidFlowchartNode A node cylindrical
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
 flowchart LR
     A[(node)]
 "@.Replace("`r`n", [Environment]::NewLine))
-                }
-            }
-
-            Context circle {
-                BeforeEach {
-                    $diagram = New-MermaidDiagram -Flowchart -Orientation left-to-right
-                    $diagram | Add-MermaidFlowchartNode A node circle
+                    }
                 }
 
-                It works {
-                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
-                    $output | Should -Not -BeNullOrEmpty
-                    $output | Should -Be (@"
+                Context circle {
+                    BeforeEach {
+                        $diagram | Add-MermaidFlowchartNode A node circle
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
 flowchart LR
     A((node))
 "@.Replace("`r`n", [Environment]::NewLine))
-                }
-            }
-
-            Context asymmetric-shape {
-                BeforeEach {
-                    $diagram = New-MermaidDiagram -Flowchart -Orientation left-to-right
-                    $diagram | Add-MermaidFlowchartNode A node asymmetric
+                    }
                 }
 
-                It works {
-                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
-                    $output | Should -Not -BeNullOrEmpty
-                    $output | Should -Be (@"
+                Context asymmetric-shape {
+                    BeforeEach {
+                        $diagram | Add-MermaidFlowchartNode A node asymmetric
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
 flowchart LR
     A>node]
 "@.Replace("`r`n", [Environment]::NewLine))
-                }
-            }
-
-            Context rhombus {
-                BeforeEach {
-                    $diagram = New-MermaidDiagram -Flowchart -Orientation left-to-right
-                    $diagram | Add-MermaidFlowchartNode A node rhombus
+                    }
                 }
 
-                It works {
-                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
-                    $output | Should -Not -BeNullOrEmpty
-                    $output | Should -Be (@"
+                Context rhombus {
+                    BeforeEach {
+                        $diagram | Add-MermaidFlowchartNode A node rhombus
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
 flowchart LR
     A{node}
 "@.Replace("`r`n", [Environment]::NewLine))
-                }
-            }
-
-            Context hexagon {
-                BeforeEach {
-                    $diagram = New-MermaidDiagram -Flowchart -Orientation left-to-right
-                    $diagram | Add-MermaidFlowchartNode A node hexagon
+                    }
                 }
 
-                It works {
-                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
-                    $output | Should -Not -BeNullOrEmpty
-                    $output | Should -Be (@"
+                Context hexagon {
+                    BeforeEach {
+                        $diagram | Add-MermaidFlowchartNode A node hexagon
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
 flowchart LR
     A{{node}}
 "@.Replace("`r`n", [Environment]::NewLine))
-                }
-            }
-
-            Context parallelogram {
-                BeforeEach {
-                    $diagram = New-MermaidDiagram -Flowchart -Orientation left-to-right
-                    $diagram | Add-MermaidFlowchartNode A node parallelogram
+                    }
                 }
 
-                It works {
-                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
-                    $output | Should -Not -BeNullOrEmpty
-                    $output | Should -Be (@"
+                Context parallelogram {
+                    BeforeEach {
+                        $diagram | Add-MermaidFlowchartNode A node parallelogram
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
 flowchart LR
     A[/node/]
 "@.Replace("`r`n", [Environment]::NewLine))
-                }
-            }
-
-            Context alt-parallelogram {
-                BeforeEach {
-                    $diagram = New-MermaidDiagram -Flowchart -Orientation left-to-right
-                    $diagram | Add-MermaidFlowchartNode A node parallelogram-alt
+                    }
                 }
 
-                It works {
-                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
-                    $output | Should -Not -BeNullOrEmpty
-                    $output | Should -Be (@"
+                Context alt-parallelogram {
+                    BeforeEach {
+                        $diagram | Add-MermaidFlowchartNode A node parallelogram-alt
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
 flowchart LR
     A[\node\]
 "@.Replace("`r`n", [Environment]::NewLine))
-                }
-            }
-
-            Context trapezoid {
-                BeforeEach {
-                    $diagram = New-MermaidDiagram -Flowchart -Orientation left-to-right
-                    $diagram | Add-MermaidFlowchartNode A node trapezoid
+                    }
                 }
 
-                It works {
-                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
-                    $output | Should -Not -BeNullOrEmpty
-                    $output | Should -Be (@"
+                Context trapezoid {
+                    BeforeEach {
+                        $diagram | Add-MermaidFlowchartNode A node trapezoid
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
 flowchart LR
     A[/node\]
 "@.Replace("`r`n", [Environment]::NewLine))
-                }
-            }
-
-            Context alt-trapezoid {
-                BeforeEach {
-                    $diagram = New-MermaidDiagram -Flowchart -Orientation left-to-right
-                    $diagram | Add-MermaidFlowchartNode A node trapezoid-alt
+                    }
                 }
 
-                It works {
-                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
-                    $output | Should -Not -BeNullOrEmpty
-                    $output | Should -Be (@"
+                Context alt-trapezoid {
+                    BeforeEach {
+                        $diagram | Add-MermaidFlowchartNode A node trapezoid-alt
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
 flowchart LR
     A[\node/]
 "@.Replace("`r`n", [Environment]::NewLine))
-                }
-            }
-
-            Context double-circle {
-                BeforeEach {
-                    $diagram = New-MermaidDiagram -Flowchart -Orientation left-to-right
-                    $diagram | Add-MermaidFlowchartNode A node double-circle
+                    }
                 }
 
-                It works {
-                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
-                    $output | Should -Not -BeNullOrEmpty
-                    $output | Should -Be (@"
+                Context double-circle {
+                    BeforeEach {
+                        $diagram | Add-MermaidFlowchartNode A node double-circle
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
 flowchart LR
     A(((node)))
 "@.Replace("`r`n", [Environment]::NewLine))
+                    }
                 }
+
             }
 
-        }
+            Context links {
 
-        Context links {
+                Context A-link-with-arrow-head {
 
-            Context A-link-with-arrow-head {
+                    BeforeEach {
+                        $diagram | Add-MermaidFlowchartLink A B -DestinationHead arrow
+                    }
 
-                BeforeEach {
-                    $diagram | Add-MermaidFlowchartLink A B -DestinationHead arrow
-                }
-
-                It works {
-                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
-                    $output | Should -Not -BeNullOrEmpty
-                    $output | Should -Be (@"
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
 flowchart LR
     A --> B
 "@.Replace("`r`n", [Environment]::NewLine))
-                }
-            }
-
-            Context An-open-link {
-
-                BeforeEach {
-                    $diagram | Add-MermaidFlowchartLink A B -DestinationHead open
+                    }
                 }
 
-                It works {
-                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
-                    $output | Should -Not -BeNullOrEmpty
-                    $output | Should -Be (@"
+                Context An-open-link {
+
+                    BeforeEach {
+                        $diagram | Add-MermaidFlowchartLink A B -DestinationHead open
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
 flowchart LR
     A --- B
 "@.Replace("`r`n", [Environment]::NewLine))
-                }
-            }
-
-            Context Text-on-links {
-
-                BeforeEach {
-                    $diagram | Add-MermaidFlowchartLink A B -Text 'text' -DestinationHead open
+                    }
                 }
 
-                It works {
-                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
-                    $output | Should -Not -BeNullOrEmpty
-                    $output | Should -Be (@"
+                Context Text-on-links {
+
+                    BeforeEach {
+                        $diagram | Add-MermaidFlowchartLink A B -Text 'text' -DestinationHead open
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
 flowchart LR
     A ---|text| B
 "@.Replace("`r`n", [Environment]::NewLine))
-                }
-            }
-
-            Context A-link-with-arrow-head-and-text {
-
-                BeforeEach {
-                    $diagram | Add-MermaidFlowchartLink A B -Text 'text'
+                    }
                 }
 
-                It works {
-                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
-                    $output | Should -Not -BeNullOrEmpty
-                    $output | Should -Be (@"
+                Context A-link-with-arrow-head-and-text {
+
+                    BeforeEach {
+                        $diagram | Add-MermaidFlowchartLink A B -Text 'text'
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
 flowchart LR
     A -->|text| B
 "@.Replace("`r`n", [Environment]::NewLine))
-                }
-            }
-
-            Context Dotted-link {
-
-                BeforeEach {
-                    $diagram | Add-MermaidFlowchartLink A B -Line dotted
+                    }
                 }
 
-                It works {
-                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
-                    $output | Should -Not -BeNullOrEmpty
-                    $output | Should -Be (@"
+                Context Dotted-link {
+
+                    BeforeEach {
+                        $diagram | Add-MermaidFlowchartLink A B -Line dotted
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
 flowchart LR
     A -.-> B
 "@.Replace("`r`n", [Environment]::NewLine))
-                }
-            }
-
-            Context Dotted-link-with-text {
-
-                BeforeEach {
-                    $diagram | Add-MermaidFlowchartLink A B -Line dotted -Text 'text'
+                    }
                 }
 
-                It works {
-                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
-                    $output | Should -Not -BeNullOrEmpty
-                    $output | Should -Be (@"
+                Context Dotted-link-with-text {
+
+                    BeforeEach {
+                        $diagram | Add-MermaidFlowchartLink A B -Line dotted -Text 'text'
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
 flowchart LR
     A -.->|text| B
 "@.Replace("`r`n", [Environment]::NewLine))
-                }
-            }
-
-            Context Thick-link {
-
-                BeforeEach {
-                    $diagram | Add-MermaidFlowchartLink A B -Line thick
+                    }
                 }
 
-                It works {
-                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
-                    $output | Should -Not -BeNullOrEmpty
-                    $output | Should -Be (@"
+                Context Thick-link {
+
+                    BeforeEach {
+                        $diagram | Add-MermaidFlowchartLink A B -Line thick
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
 flowchart LR
     A ==> B
 "@.Replace("`r`n", [Environment]::NewLine))
-                }
-            }
-
-            Context Thick-link-with-text {
-
-                BeforeEach {
-                    $diagram | Add-MermaidFlowchartLink A B -Line thick -Text 'text'
+                    }
                 }
 
-                It works {
-                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
-                    $output | Should -Not -BeNullOrEmpty
-                    $output | Should -Be (@"
+                Context Thick-link-with-text {
+
+                    BeforeEach {
+                        $diagram | Add-MermaidFlowchartLink A B -Line thick -Text 'text'
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
 flowchart LR
     A ==>|text| B
 "@.Replace("`r`n", [Environment]::NewLine))
-                }
-            }
-
-            Context circle-head {
-
-                BeforeEach {
-                    $diagram | Add-MermaidFlowchartLink A B -DestinationHead circle
+                    }
                 }
 
-                It works {
-                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
-                    $output | Should -Not -BeNullOrEmpty
-                    $output | Should -Be (@"
+                Context circle-head {
+
+                    BeforeEach {
+                        $diagram | Add-MermaidFlowchartLink A B -DestinationHead circle
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
 flowchart LR
     A --o B
 "@.Replace("`r`n", [Environment]::NewLine))
-                }
-            }
-
-            Context cross-head {
-
-                BeforeEach {
-                    $diagram | Add-MermaidFlowchartLink A B -DestinationHead cross
+                    }
                 }
 
-                It works {
-                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
-                    $output | Should -Not -BeNullOrEmpty
-                    $output | Should -Be (@"
+                Context cross-head {
+
+                    BeforeEach {
+                        $diagram | Add-MermaidFlowchartLink A B -DestinationHead cross
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
 flowchart LR
     A --x B
 "@.Replace("`r`n", [Environment]::NewLine))
-                }
-            }
-
-            Context multi-directional-arrow {
-
-                BeforeEach {
-                    $diagram | Add-MermaidFlowchartLink A B -SourceHead arrow -DestinationHead arrow
+                    }
                 }
 
-                It works {
-                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
-                    $output | Should -Not -BeNullOrEmpty
-                    $output | Should -Be (@"
+                Context multi-directional-arrow {
+
+                    BeforeEach {
+                        $diagram | Add-MermaidFlowchartLink A B -SourceHead arrow -DestinationHead arrow
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
 flowchart LR
     A <--> B
 "@.Replace("`r`n", [Environment]::NewLine))
-                }
-            }
-
-            Context multi-directional-circle {
-
-                BeforeEach {
-                    $diagram | Add-MermaidFlowchartLink A B -SourceHead circle -DestinationHead circle
+                    }
                 }
 
-                It works {
-                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
-                    $output | Should -Not -BeNullOrEmpty
-                    $output | Should -Be (@"
+                Context multi-directional-circle {
+
+                    BeforeEach {
+                        $diagram | Add-MermaidFlowchartLink A B -SourceHead circle -DestinationHead circle
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
 flowchart LR
     A o--o B
 "@.Replace("`r`n", [Environment]::NewLine))
-                }
-            }
-
-            Context multi-directional-cross {
-
-                BeforeEach {
-                    $diagram | Add-MermaidFlowchartLink A B -SourceHead cross -DestinationHead cross
+                    }
                 }
 
-                It works {
-                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
-                    $output | Should -Not -BeNullOrEmpty
-                    $output | Should -Be (@"
+                Context multi-directional-cross {
+
+                    BeforeEach {
+                        $diagram | Add-MermaidFlowchartLink A B -SourceHead cross -DestinationHead cross
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
 flowchart LR
     A x--x B
 "@.Replace("`r`n", [Environment]::NewLine))
+                    }
+                }
+            }
+
+            Context classes {
+
+                Context simple-class {
+
+                    BeforeEach {
+                        $diagram | Add-MermaidFlowchartClass foo 'fill:#ffffff'
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
+flowchart LR
+    classDef foo fill:#ffffff
+"@.Replace("`r`n", [Environment]::NewLine))
+                    }
+
+                    Context without-text {
+                        BeforeEach {
+                            $diagram | Add-MermaidFlowchartNode A -Class foo
+                        }
+
+                        It works {
+                            $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                            $output | Should -Not -BeNullOrEmpty
+                            $output | Should -Be (@"
+flowchart LR
+    classDef foo fill:#ffffff
+    A:::foo
+"@.Replace("`r`n", [Environment]::NewLine))
+                        }
+
+                    }
+
+                    Context with-text {
+                        BeforeEach {
+                            $diagram | Add-MermaidFlowchartNode A bar -Class foo
+                        }
+
+                        It works {
+                            $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                            $output | Should -Not -BeNullOrEmpty
+                            $output | Should -Be (@"
+flowchart LR
+    classDef foo fill:#ffffff
+    A[bar]:::foo
+"@.Replace("`r`n", [Environment]::NewLine))
+                        }
+
+                    }
+                }
+            }
+
+            Context clicks {
+
+                Context with-tooltip {
+
+                    BeforeEach {
+                        $diagram | Add-MermaidFlowchartClick foo 'http://localhost' -Tooltip 'home sweet home' -Target blank
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
+flowchart LR
+    click foo "http://localhost" "home sweet home" _blank
+"@.Replace("`r`n", [Environment]::NewLine))
+                    }
+                }
+
+                Context without-tooltip {
+
+                    BeforeEach {
+                        $diagram | Add-MermaidFlowchartClick foo 'http://localhost' -Target blank
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
+flowchart LR
+    click foo "http://localhost" _blank
+"@.Replace("`r`n", [Environment]::NewLine))
+                    }
                 }
             }
         }
