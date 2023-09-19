@@ -19,5 +19,13 @@ Describe FlowchartSubgraph {
             $diagram.Subgraphs.Count | Should -Be 1
             $diagram.Subgraphs[0].Key | Should -Be A
         }
+
+        It works-by-position {
+            $diagram | Add-MermaidFlowchartSubgraph A
+            $diagram | Should -Not -BeNullOrEmpty
+            $diagram.Subgraphs | Should -Not -BeNullOrEmpty
+            $diagram.Subgraphs.Count | Should -Be 1
+            $diagram.Subgraphs[0].Key | Should -Be A
+        }
     }
 }

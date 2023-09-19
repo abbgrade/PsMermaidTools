@@ -684,6 +684,23 @@ flowchart LR
                     }
                 }
             }
+
+            Context subgraphs {
+
+                BeforeEach {
+                    $diagram | Add-MermaidFlowchartSubgraph foo
+                }
+
+                It works {
+                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                    $output | Should -Not -BeNullOrEmpty
+                    $output | Should -Be (@"
+flowchart LR
+    subgraph foo
+    end
+"@.Replace("`r`n", [Environment]::NewLine))
+                }
+            }
         }
     }
 

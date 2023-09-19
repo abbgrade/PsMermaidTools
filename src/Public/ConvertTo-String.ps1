@@ -83,6 +83,11 @@ function ConvertTo-String {
         [AllowEmptyCollection()]
         [PSCustomObject[]] $Clicks,
 
+        # Collection of subgraphs for a flowchart.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
+        [AllowEmptyCollection()]
+        [PSCustomObject[]] $Subgraphs,
+
         #endregion
 
         #region C4ComponentDiagram
@@ -184,6 +189,7 @@ function ConvertTo-String {
 
         # Identifier of the node/container/component.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartNode')]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartSubgraph')]
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4ContainerBoundary')]
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4Component')]
         [string] $Key,
@@ -238,6 +244,13 @@ function ConvertTo-String {
 
         #endregion
 
+        #region flowchartSubgraph
+
+        [Parameter(ParameterSetName = 'flowchartSubgraph')]
+        [switch] $FromFlowchartSubgraph,
+
+        #endregion
+
         #region erRelationship
 
         # Cardinality of the first entity.
@@ -285,6 +298,7 @@ function ConvertTo-String {
                     $Nodes | ConvertTo-String -FromFlowchartNode | Write-Output
                     $Clicks | ConvertTo-String -FromFlowchartClick | Write-Output
                     $Links | ConvertTo-String -FromFlowchartLink | Write-Output
+                    $Subgraphs | ConvertTo-String -FromFlowchartSubgraph | Write-Output
                 }
                 C4ComponentDiagram {
                     $Type | Write-Output
@@ -419,6 +433,10 @@ function ConvertTo-String {
                 }
                 flowchartClick {
                     Write-Output "    click $Node ""$Url""$( if ( $Tooltip ) {  ' "' + $Tooltip + '"' } )$( if ( $Target ) { " _$Target" } )"
+                }
+                flowchartSubgraph {
+                    Write-Output "    subgraph $Key"
+                    Write-Output "    end"
                 }
                 C4ContainerBoundary {
                     Write-Output "Container_Boundary($Key, ""$Name"") {"
