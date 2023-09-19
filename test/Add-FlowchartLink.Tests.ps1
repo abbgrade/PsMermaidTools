@@ -1,6 +1,6 @@
 #Requires -Modules @{ ModuleName='Pester'; ModuleVersion='5.0.0' }
 
-Describe Add-FcLink {
+Describe Add-FlowchartLink {
 
     BeforeAll {
         Import-Module $PSScriptRoot/../src/PsMermaidTools.psd1 -Force
