@@ -12,7 +12,7 @@ Describe Add-ErRelation {
             $diagram = New-MermaidDiagram -ErDiagram
         }
 
-        It works-by-named-parmeters {
+        It works-by-named-parameters {
             $diagram | Add-MermaidErRelation -FirstEntity First -FirstCardinality Zero-or-one -SecondEntity Second -SecondCardinality Zero-or-more -Label Example
             $diagram | Should -Not -BeNullOrEmpty
             $diagram.Relations | Should -Not -BeNullOrEmpty
