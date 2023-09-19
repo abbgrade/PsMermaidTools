@@ -77,6 +77,7 @@ function New-Diagram {
             $definition | Add-Member Links @()
             $definition | Add-Member Classes @()
             $definition | Add-Member Clicks @()
+            $definition | Add-Member Subgraphs @()
         }
         C4Component {
             $definition | Add-Member ContainerBoundaries @()
