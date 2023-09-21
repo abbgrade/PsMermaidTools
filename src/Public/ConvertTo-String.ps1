@@ -416,20 +416,20 @@ function ConvertTo-String {
                                     Write-Output "$Key"
                                 }
                             }
-                            rectangle { Write-Output "$Key[$Text]" }
-                            round-edges { Write-Output "$Key($Text)" }
-                            stadium { Write-Output "$Key([$Text])" }
-                            subroutine { Write-Output "$Key[[$Text]]" }
-                            cylindrical { Write-Output "$Key[($Text)]" }
-                            circle { Write-Output "$Key(($Text))" }
-                            asymmetric { Write-Output "$Key>$Text]" }
-                            rhombus { Write-Output "$Key{$Text}" }
-                            hexagon { Write-Output "$Key{{$Text}}" }
-                            parallelogram { Write-Output "$Key[/$Text/]" }
-                            parallelogram-alt { Write-Output "$Key[\$Text\]" }
-                            trapezoid { Write-Output "$Key[/$Text\]" }
-                            trapezoid-alt { Write-Output "$Key[\$Text/]" }
-                            double-circle { Write-Output "$Key((($Text)))" }
+                            rectangle { Write-Output "$Key[$( $Text ? $Text : $Key )]" }
+                            round-edges { Write-Output "$Key($( $Text ? $Text : $Key ))" }
+                            stadium { Write-Output "$Key([$( $Text ? $Text : $Key )])" }
+                            subroutine { Write-Output "$Key[[$( $Text ? $Text : $Key )]]" }
+                            cylindrical { Write-Output "$Key[($( $Text ? $Text : $Key ))]" }
+                            circle { Write-Output "$Key(($( $Text ? $Text : $Key )))" }
+                            asymmetric { Write-Output "$Key>$( $Text ? $Text : $Key )]" }
+                            rhombus { Write-Output "$Key{$( $Text ? $Text : $Key )}" }
+                            hexagon { Write-Output "$Key{{$( $Text ? $Text : $Key )}}" }
+                            parallelogram { Write-Output "$Key[/$( $Text ? $Text : $Key )/]" }
+                            parallelogram-alt { Write-Output "$Key[\$( $Text ? $Text : $Key )\]" }
+                            trapezoid { Write-Output "$Key[/$( $Text ? $Text : $Key )\]" }
+                            trapezoid-alt { Write-Output "$Key[\$( $Text ? $Text : $Key )/]" }
+                            double-circle { Write-Output "$Key((($( $Text ? $Text : $Key ))))" }
                             Default {
                                 Write-Error "'$_' is not supported for Node Shape."
                             }

@@ -174,7 +174,7 @@ flowchart LR
 
                 }
 
-                Context round-edges {
+                Context rectangle-shape {
                     BeforeEach {
                         $diagram | Add-MermaidFlowchartNode A node rectangle
                     }
@@ -185,6 +185,23 @@ flowchart LR
                         $output | Should -Be (@"
 flowchart LR
     A[node]
+"@.Replace("`r`n", [Environment]::NewLine))
+                    }
+                }
+
+                Context rectangle-shape-without-text {
+                    BeforeEach {
+                        $diagram | Add-MermaidFlowchartNode -Key A -Shape rectangle
+                        $diagram | Add-MermaidFlowchartNode -Key B -Shape rectangle
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
+flowchart LR
+    A[A]
+    B[B]
 "@.Replace("`r`n", [Environment]::NewLine))
                     }
                 }
