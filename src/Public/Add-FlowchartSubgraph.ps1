@@ -2,7 +2,7 @@ function Add-FlowchartSubgraph {
 
     [CmdletBinding()]
     param (
-        # The diagram, that the subgraph is added to.
+        # The diagram or parent subgraph, that the subgraph is added to.
         [Parameter(ValueFromPipeline)]
         [ValidateNotNull()]
         $Diagram,
@@ -10,15 +10,27 @@ function Add-FlowchartSubgraph {
         # The identifier of the subgraph.
         [Parameter(Mandatory, Position = 0)]
         [ValidateNotNullOrEmpty()]
-        [string] $Key
+        [string] $Key,
+
+        # Return the created subgraph object.
+        [Parameter()]
+        [switch] $PassThru
     )
 
     process {
         $subgraph = [PSCustomObject]@{
-            Key   = $Key
+            Key       = $Key
+            Nodes     = @()
+            Links     = @()
+            Clicks    = @()
+            Subgraphs = @()
         }
 
         $Diagram.Subgraphs += $subgraph
+
+        if ( $PassThru.IsPresent ) {
+            Write-Output $subgraph
+        }
     }
 
 }

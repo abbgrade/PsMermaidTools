@@ -65,11 +65,13 @@ function ConvertTo-String {
 
         # Collection of nodes for a flowchart.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartSubgraph')]
         [AllowEmptyCollection()]
         [PSCustomObject[]] $Nodes,
 
         # Collection of links for a flowchart.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartSubgraph')]
         [AllowEmptyCollection()]
         [PSCustomObject[]] $Links,
 
@@ -80,11 +82,13 @@ function ConvertTo-String {
 
         # Collection of clicks for a flowchart.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartSubgraph')]
         [AllowEmptyCollection()]
         [PSCustomObject[]] $Clicks,
 
         # Collection of subgraphs for a flowchart.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartSubgraph')]
         [AllowEmptyCollection()]
         [PSCustomObject[]] $Subgraphs,
 
@@ -294,11 +298,13 @@ function ConvertTo-String {
                         left-to-right { "$Type LR" | Write-Output }
                         default { $Type | Write-Output }
                     }
-                    $Classes | ConvertTo-String -FromFlowchartClass | Write-Output
-                    $Nodes | ConvertTo-String -FromFlowchartNode | Write-Output
-                    $Clicks | ConvertTo-String -FromFlowchartClick | Write-Output
-                    $Links | ConvertTo-String -FromFlowchartLink | Write-Output
-                    $Subgraphs | ConvertTo-String -FromFlowchartSubgraph | Write-Output
+                    $(
+                        $Classes | ConvertTo-String -FromFlowchartClass | Write-Output
+                        $Nodes | ConvertTo-String -FromFlowchartNode | Write-Output
+                        $Clicks | ConvertTo-String -FromFlowchartClick | Write-Output
+                        $Links | ConvertTo-String -FromFlowchartLink | Write-Output
+                        ( $Subgraphs | ConvertTo-String -FromFlowchartSubgraph ) -split [Environment]::NewLine | Write-Output
+                    ) | ForEach-Object { "    $_" | Write-Output }
                 }
                 C4ComponentDiagram {
                     $Type | Write-Output
@@ -306,15 +312,17 @@ function ConvertTo-String {
                     $Relations | ConvertTo-String | Write-Output
                 }
                 erRelation {
-                    if ( $SecondEntity ) {
-                        Write-Output "    $FirstEntity $( $Relationship | ConvertTo-String ) $SecondEntity$( if ( $Label ) {" : $Label" })"
-                    }
-                    else {
-                        Write-Output "    $FirstEntity"
-                    }
+                    $(
+                        if ( $SecondEntity ) {
+                            Write-Output "$FirstEntity $( $Relationship | ConvertTo-String ) $SecondEntity$( if ( $Label ) {" : $Label" })"
+                        }
+                        else {
+                            Write-Output "$FirstEntity"
+                        }
+                    ) | ForEach-Object { "    $_" | Write-Output }
                 }
                 flowchartLink {
-                    Write-Output "    $SourceNode $(
+                    Write-Output "$SourceNode $(
                         switch ( $Line ) {
                             solid { "$(
                                 switch ( $SourceHead ) {
@@ -392,36 +400,36 @@ function ConvertTo-String {
                 flowchartNode {
                     if ( $Class ) {
                         if ( $Text ) {
-                            Write-Output "    $Key[$Text]:::$Class"
+                            Write-Output "$Key[$Text]:::$Class"
                         }
                         else {
-                            Write-Output "    $Key:::$Class"
+                            Write-Output "$Key:::$Class"
                         }
                     }
                     else {
                         switch ( $Shape ) {
                             '' {
                                 if ( $Text ) {
-                                    Write-Output "    $Key[$Text]"
+                                    Write-Output "$Key[$Text]"
                                 }
                                 else {
-                                    Write-Output "    $Key"
+                                    Write-Output "$Key"
                                 }
                             }
-                            rectangle { Write-Output "    $Key[$Text]" }
-                            round-edges { Write-Output "    $Key($Text)" }
-                            stadium { Write-Output "    $Key([$Text])" }
-                            subroutine { Write-Output "    $Key[[$Text]]" }
-                            cylindrical { Write-Output "    $Key[($Text)]" }
-                            circle { Write-Output "    $Key(($Text))" }
-                            asymmetric { Write-Output "    $Key>$Text]" }
-                            rhombus { Write-Output "    $Key{$Text}" }
-                            hexagon { Write-Output "    $Key{{$Text}}" }
-                            parallelogram { Write-Output "    $Key[/$Text/]" }
-                            parallelogram-alt { Write-Output "    $Key[\$Text\]" }
-                            trapezoid { Write-Output "    $Key[/$Text\]" }
-                            trapezoid-alt { Write-Output "    $Key[\$Text/]" }
-                            double-circle { Write-Output "    $Key((($Text)))" }
+                            rectangle { Write-Output "$Key[$Text]" }
+                            round-edges { Write-Output "$Key($Text)" }
+                            stadium { Write-Output "$Key([$Text])" }
+                            subroutine { Write-Output "$Key[[$Text]]" }
+                            cylindrical { Write-Output "$Key[($Text)]" }
+                            circle { Write-Output "$Key(($Text))" }
+                            asymmetric { Write-Output "$Key>$Text]" }
+                            rhombus { Write-Output "$Key{$Text}" }
+                            hexagon { Write-Output "$Key{{$Text}}" }
+                            parallelogram { Write-Output "$Key[/$Text/]" }
+                            parallelogram-alt { Write-Output "$Key[\$Text\]" }
+                            trapezoid { Write-Output "$Key[/$Text\]" }
+                            trapezoid-alt { Write-Output "$Key[\$Text/]" }
+                            double-circle { Write-Output "$Key((($Text)))" }
                             Default {
                                 Write-Error "'$_' is not supported for Node Shape."
                             }
@@ -429,14 +437,20 @@ function ConvertTo-String {
                     }
                 }
                 flowchartClass {
-                    Write-Output "    classDef $Name $Style"
+                    Write-Output "classDef $Name $Style"
                 }
                 flowchartClick {
-                    Write-Output "    click $Node ""$Url""$( if ( $Tooltip ) {  ' "' + $Tooltip + '"' } )$( if ( $Target ) { " _$Target" } )"
+                    Write-Output "click $Node ""$Url""$( if ( $Tooltip ) {  ' "' + $Tooltip + '"' } )$( if ( $Target ) { " _$Target" } )"
                 }
                 flowchartSubgraph {
-                    Write-Output "    subgraph $Key"
-                    Write-Output "    end"
+                    Write-Output "subgraph $Key"
+                    $(
+                        $Nodes | ConvertTo-String -FromFlowchartNode | Write-Output
+                        $Clicks | ConvertTo-String -FromFlowchartClick | Write-Output
+                        $Links | ConvertTo-String -FromFlowchartLink | Write-Output
+                        ( $Subgraphs | ConvertTo-String -FromFlowchartSubgraph ) -split [Environment]::NewLine | Write-Output
+                    ) | ForEach-Object { "    $_" | Write-Output }
+                    Write-Output "end"
                 }
                 C4ContainerBoundary {
                     Write-Output "Container_Boundary($Key, ""$Name"") {"

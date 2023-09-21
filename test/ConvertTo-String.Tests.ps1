@@ -688,7 +688,7 @@ flowchart LR
             Context subgraphs {
 
                 BeforeEach {
-                    $diagram | Add-MermaidFlowchartSubgraph foo
+                    $subgraph = $diagram | Add-MermaidFlowchartSubgraph foo -PassThru
                 }
 
                 It works {
@@ -699,6 +699,43 @@ flowchart LR
     subgraph foo
     end
 "@.Replace("`r`n", [Environment]::NewLine))
+                }
+
+                Context node {
+
+                    BeforeEach {
+                        $subgraph | Add-MermaidFlowchartNode bar
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
+flowchart LR
+    subgraph foo
+        bar
+    end
+"@.Replace("`r`n", [Environment]::NewLine))
+                    }
+                }
+
+                Context nested-subgraphs {
+
+                    BeforeEach {
+                        $subgraph | Add-MermaidFlowchartSubgraph bar
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
+flowchart LR
+    subgraph foo
+        subgraph bar
+        end
+    end
+"@.Replace("`r`n", [Environment]::NewLine))
+                    }
                 }
             }
         }
