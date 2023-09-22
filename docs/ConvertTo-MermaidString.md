@@ -1,7 +1,7 @@
 ---
 external help file: PsMermaidTools-help.xml
 Module Name: PsMermaidTools
-online version: https://mermaid-js.github.io/mermaid/#/entityRelationshipDiagram?id=entities-and-relationships
+online version: https://mermaid.js.org/syntax/flowchart.html#subgraphs
 schema: 2.0.0
 ---
 
@@ -21,12 +21,18 @@ ConvertTo-MermaidString -Type <String> -Relations <PSObject[]> -ContainerBoundar
 ### flowchart
 ```
 ConvertTo-MermaidString -Type <String> [-Title <String>] [-Orientation <String>] -Nodes <PSObject[]>
- -Links <PSObject[]> -Classes <PSObject[]> -Clicks <PSObject[]> [<CommonParameters>]
+ -Links <PSObject[]> -Classes <PSObject[]> -Clicks <PSObject[]> -Subgraphs <PSObject[]> [<CommonParameters>]
 ```
 
 ### erDiagram
 ```
 ConvertTo-MermaidString -Type <String> [-Title <String>] -Relations <PSObject[]> [<CommonParameters>]
+```
+
+### flowchartSubgraph
+```
+ConvertTo-MermaidString -Nodes <PSObject[]> -Links <PSObject[]> -Clicks <PSObject[]> -Subgraphs <PSObject[]>
+ -Key <String> [-FromFlowchartSubgraph] [<CommonParameters>]
 ```
 
 ### C4ContainerBoundary
@@ -168,7 +174,7 @@ Collection of nodes for a flowchart.
 
 ```yaml
 Type: PSObject[]
-Parameter Sets: flowchart
+Parameter Sets: flowchart, flowchartSubgraph
 Aliases:
 
 Required: True
@@ -183,7 +189,7 @@ Collection of links for a flowchart.
 
 ```yaml
 Type: PSObject[]
-Parameter Sets: flowchart
+Parameter Sets: flowchart, flowchartSubgraph
 Aliases:
 
 Required: True
@@ -213,7 +219,22 @@ Collection of clicks for a flowchart.
 
 ```yaml
 Type: PSObject[]
-Parameter Sets: flowchart
+Parameter Sets: flowchart, flowchartSubgraph
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Subgraphs
+Collection of subgraphs for a flowchart.
+
+```yaml
+Type: PSObject[]
+Parameter Sets: flowchart, flowchartSubgraph
 Aliases:
 
 Required: True
@@ -498,7 +519,7 @@ Identifier of the node/container/component.
 
 ```yaml
 Type: String
-Parameter Sets: C4ContainerBoundary, C4Component, flowchartNode
+Parameter Sets: flowchartSubgraph, C4ContainerBoundary, C4Component, flowchartNode
 Aliases:
 
 Required: True
@@ -655,6 +676,21 @@ Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -FromFlowchartSubgraph
+region flowchartSubgraph
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: flowchartSubgraph
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

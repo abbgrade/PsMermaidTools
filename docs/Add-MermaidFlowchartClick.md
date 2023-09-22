@@ -1,14 +1,14 @@
 ---
 external help file: PsMermaidTools-help.xml
 Module Name: PsMermaidTools
-online version: https://mermaid-js.github.io/mermaid/#/entityRelationshipDiagram?id=entities-and-relationships
+online version: https://mermaid.js.org/syntax/flowchart.html#interaction
 schema: 2.0.0
 ---
 
 # Add-MermaidFlowchartClick
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Adds a new click interaction to a flowchart.
 
 ## SYNTAX
 
@@ -18,7 +18,7 @@ Add-MermaidFlowchartClick [-Diagram <Object>] [-Node] <String> [-Url] <String> [
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Add a hyperlink to a node as click interaction, that opens a website on clicking on the specified node.
 
 ## EXAMPLES
 
@@ -32,7 +32,7 @@ PS C:\> {{ Add example code here }}
 ## PARAMETERS
 
 ### -Diagram
-{{ Fill Diagram Description }}
+The diagram, that the click is added to.
 
 ```yaml
 Type: Object
@@ -47,53 +47,7 @@ Accept wildcard characters: False
 ```
 
 ### -Node
-{{ Fill Node Description }}
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 0
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Target
-{{ Fill Target Description }}
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-Accepted values: self, blank, parent, top
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Tooltip
-{{ Fill Tooltip Description }}
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Url
-{{ Fill Url Description }}
+The key of the node, to add the click to.
 
 ```yaml
 Type: String
@@ -107,16 +61,61 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Url
+The url to open, when the node is clicked.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Tooltip
+The tooltip text.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Target
+The target to open the url to.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
-### System.Object
-
 ## OUTPUTS
 
-### System.Object
 ## NOTES
 
 ## RELATED LINKS
+
+[https://mermaid.js.org/syntax/flowchart.html#interaction](https://mermaid.js.org/syntax/flowchart.html#interaction)
+
