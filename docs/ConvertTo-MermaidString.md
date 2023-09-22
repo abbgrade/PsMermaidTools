@@ -1,7 +1,7 @@
 ---
 external help file: PsMermaidTools-help.xml
 Module Name: PsMermaidTools
-online version: https://mermaid-js.github.io/mermaid/#/entityRelationshipDiagram?id=entities-and-relationships
+online version: https://mermaid.js.org/syntax/flowchart.html#subgraphs
 schema: 2.0.0
 ---
 

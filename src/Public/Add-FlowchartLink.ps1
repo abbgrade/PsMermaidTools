@@ -1,5 +1,18 @@
 function Add-FlowchartLink {
 
+    <#
+
+    .SYNOPSIS
+    Adds a new link between nodes to a flowchart.
+
+    .DESCRIPTION
+    Creates a link between nodes. If one of the node is not defined before, it will implicitly created.
+
+    .LINK
+    https://mermaid.js.org/syntax/flowchart.html#links-between-nodes
+
+    #>
+
     [CmdletBinding()]
     param (
         # The flowchart diagram, that the relation is added to.

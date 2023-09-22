@@ -1,5 +1,18 @@
 function Add-FlowchartSubgraph {
 
+    <#
+
+    .SYNOPSIS
+    Adds a new flowchart to a flowchart.
+
+    .DESCRIPTION
+    Create and add a subgraph. Subgraphs may contain nodes, links, interactions and other subgraphs.
+
+    .LINK
+    https://mermaid.js.org/syntax/flowchart.html#subgraphs
+
+    #>
+
     [CmdletBinding()]
     param (
         # The diagram or parent subgraph, that the subgraph is added to.
