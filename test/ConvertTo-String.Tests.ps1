@@ -648,6 +648,23 @@ flowchart LR
 
                     }
 
+                    Context without-text-with-shape {
+                        BeforeEach {
+                            $diagram | Add-MermaidFlowchartNode A -Class foo -Shape stadium
+                        }
+
+                        It works {
+                            $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                            $output | Should -Not -BeNullOrEmpty
+                            $output | Should -Be (@"
+flowchart LR
+    classDef foo fill:#ffffff
+    A([A]):::foo
+"@.Replace("`r`n", [Environment]::NewLine))
+                        }
+
+                    }
+
                     Context with-text {
                         BeforeEach {
                             $diagram | Add-MermaidFlowchartNode A bar -Class foo

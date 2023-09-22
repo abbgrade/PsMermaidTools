@@ -398,43 +398,27 @@ function ConvertTo-String {
                     )$( if ( $Text ) { "|$Text|" } ) $DestinationNode"
                 }
                 flowchartNode {
-                    if ( $Class ) {
-                        if ( $Text ) {
-                            Write-Output "$Key[$Text]:::$Class"
-                        }
-                        else {
-                            Write-Output "$Key:::$Class"
-                        }
-                    }
-                    else {
+                    Write-Output "$Key$(
                         switch ( $Shape ) {
-                            '' {
-                                if ( $Text ) {
-                                    Write-Output "$Key[$Text]"
-                                }
-                                else {
-                                    Write-Output "$Key"
-                                }
-                            }
-                            rectangle { Write-Output "$Key[$( $Text ? $Text : $Key )]" }
-                            round-edges { Write-Output "$Key($( $Text ? $Text : $Key ))" }
-                            stadium { Write-Output "$Key([$( $Text ? $Text : $Key )])" }
-                            subroutine { Write-Output "$Key[[$( $Text ? $Text : $Key )]]" }
-                            cylindrical { Write-Output "$Key[($( $Text ? $Text : $Key ))]" }
-                            circle { Write-Output "$Key(($( $Text ? $Text : $Key )))" }
-                            asymmetric { Write-Output "$Key>$( $Text ? $Text : $Key )]" }
-                            rhombus { Write-Output "$Key{$( $Text ? $Text : $Key )}" }
-                            hexagon { Write-Output "$Key{{$( $Text ? $Text : $Key )}}" }
-                            parallelogram { Write-Output "$Key[/$( $Text ? $Text : $Key )/]" }
-                            parallelogram-alt { Write-Output "$Key[\$( $Text ? $Text : $Key )\]" }
-                            trapezoid { Write-Output "$Key[/$( $Text ? $Text : $Key )\]" }
-                            trapezoid-alt { Write-Output "$Key[\$( $Text ? $Text : $Key )/]" }
-                            double-circle { Write-Output "$Key((($( $Text ? $Text : $Key ))))" }
+                            '' { "$( $Text ? "[$Text]" : '' )" }
+                            rectangle { "[$( $Text ? $Text : $Key )]" }
+                            round-edges { "($( $Text ? $Text : $Key ))" }
+                            stadium { "([$( $Text ? $Text : $Key )])" }
+                            subroutine { "[[$( $Text ? $Text : $Key )]]" }
+                            cylindrical { "[($( $Text ? $Text : $Key ))]" }
+                            circle { "(($( $Text ? $Text : $Key )))" }
+                            asymmetric { ">$( $Text ? $Text : $Key )]" }
+                            rhombus { "{$( $Text ? $Text : $Key )}" }
+                            hexagon { "{{$( $Text ? $Text : $Key )}}" }
+                            parallelogram { "[/$( $Text ? $Text : $Key )/]" }
+                            parallelogram-alt { "[\$( $Text ? $Text : $Key )\]" }
+                            trapezoid { "[/$( $Text ? $Text : $Key )\]" }
+                            trapezoid-alt { "[\$( $Text ? $Text : $Key )/]" }
+                            double-circle { "((($( $Text ? $Text : $Key ))))" }
                             Default {
                                 Write-Error "'$_' is not supported for Node Shape."
                             }
-                        }
-                    }
+                        } )$( $Class ? ":::$Class" : '' )"
                 }
                 flowchartClass {
                     Write-Output "classDef $Name $Style"
