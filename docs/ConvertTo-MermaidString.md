@@ -31,8 +31,8 @@ ConvertTo-MermaidString -Type <String> [-Title <String>] -Relations <PSObject[]>
 
 ### flowchartSubgraph
 ```
-ConvertTo-MermaidString -Nodes <PSObject[]> -Links <PSObject[]> -Clicks <PSObject[]> -Subgraphs <PSObject[]>
- -Key <String> [-FromFlowchartSubgraph] [<CommonParameters>]
+ConvertTo-MermaidString [-Title <String>] -Nodes <PSObject[]> -Links <PSObject[]> -Clicks <PSObject[]>
+ -Subgraphs <PSObject[]> -Key <String> [-FromFlowchartSubgraph] [<CommonParameters>]
 ```
 
 ### C4ContainerBoundary
@@ -129,7 +129,7 @@ Title of the diagram.
 
 ```yaml
 Type: String
-Parameter Sets: flowchart, erDiagram
+Parameter Sets: flowchart, erDiagram, flowchartSubgraph
 Aliases:
 
 Required: False

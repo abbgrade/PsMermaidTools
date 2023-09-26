@@ -43,6 +43,7 @@ function ConvertTo-String {
         # Title of the diagram.
         [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'erDiagram')]
         [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartSubgraph')]
         [string] $Title,
 
         #endregion
@@ -427,7 +428,7 @@ function ConvertTo-String {
                     Write-Output "click $Node ""$Url""$( if ( $Tooltip ) {  ' "' + $Tooltip + '"' } )$( if ( $Target ) { " _$Target" } )"
                 }
                 flowchartSubgraph {
-                    Write-Output "subgraph $Key"
+                    Write-Output "subgraph $Key$( $Title ? " [$Title]" : '' )"
                     $(
                         $Nodes | ConvertTo-String -FromFlowchartNode | Write-Output
                         $Clicks | ConvertTo-String -FromFlowchartClick | Write-Output
