@@ -43,6 +43,7 @@ function ConvertTo-String {
         # Title of the diagram.
         [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'erDiagram')]
         [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartSubgraph')]
         [string] $Title,
 
         #endregion
@@ -65,11 +66,13 @@ function ConvertTo-String {
 
         # Collection of nodes for a flowchart.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartSubgraph')]
         [AllowEmptyCollection()]
         [PSCustomObject[]] $Nodes,
 
         # Collection of links for a flowchart.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartSubgraph')]
         [AllowEmptyCollection()]
         [PSCustomObject[]] $Links,
 
@@ -80,8 +83,15 @@ function ConvertTo-String {
 
         # Collection of clicks for a flowchart.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartSubgraph')]
         [AllowEmptyCollection()]
         [PSCustomObject[]] $Clicks,
+
+        # Collection of subgraphs for a flowchart.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartSubgraph')]
+        [AllowEmptyCollection()]
+        [PSCustomObject[]] $Subgraphs,
 
         #endregion
 
@@ -184,6 +194,7 @@ function ConvertTo-String {
 
         # Identifier of the node/container/component.
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartNode')]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartSubgraph')]
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4ContainerBoundary')]
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4Component')]
         [string] $Key,
@@ -238,6 +249,13 @@ function ConvertTo-String {
 
         #endregion
 
+        #region flowchartSubgraph
+
+        [Parameter(ParameterSetName = 'flowchartSubgraph')]
+        [switch] $FromFlowchartSubgraph,
+
+        #endregion
+
         #region erRelationship
 
         # Cardinality of the first entity.
@@ -281,10 +299,13 @@ function ConvertTo-String {
                         left-to-right { "$Type LR" | Write-Output }
                         default { $Type | Write-Output }
                     }
-                    $Classes | ConvertTo-String -FromFlowchartClass | Write-Output
-                    $Nodes | ConvertTo-String -FromFlowchartNode | Write-Output
-                    $Clicks | ConvertTo-String -FromFlowchartClick | Write-Output
-                    $Links | ConvertTo-String -FromFlowchartLink | Write-Output
+                    $(
+                        $Classes | ConvertTo-String -FromFlowchartClass | Write-Output
+                        $Nodes | ConvertTo-String -FromFlowchartNode | Write-Output
+                        $Clicks | ConvertTo-String -FromFlowchartClick | Write-Output
+                        $Links | ConvertTo-String -FromFlowchartLink | Write-Output
+                        ( $Subgraphs | ConvertTo-String -FromFlowchartSubgraph ) -split [Environment]::NewLine | Write-Output
+                    ) | ForEach-Object { "    $_" | Write-Output }
                 }
                 C4ComponentDiagram {
                     $Type | Write-Output
@@ -292,15 +313,17 @@ function ConvertTo-String {
                     $Relations | ConvertTo-String | Write-Output
                 }
                 erRelation {
-                    if ( $SecondEntity ) {
-                        Write-Output "    $FirstEntity $( $Relationship | ConvertTo-String ) $SecondEntity$( if ( $Label ) {" : $Label" })"
-                    }
-                    else {
-                        Write-Output "    $FirstEntity"
-                    }
+                    $(
+                        if ( $SecondEntity ) {
+                            Write-Output "$FirstEntity $( $Relationship | ConvertTo-String ) $SecondEntity$( if ( $Label ) {" : $Label" })"
+                        }
+                        else {
+                            Write-Output "$FirstEntity"
+                        }
+                    ) | ForEach-Object { "    $_" | Write-Output }
                 }
                 flowchartLink {
-                    Write-Output "    $SourceNode $(
+                    Write-Output "$SourceNode $(
                         switch ( $Line ) {
                             solid { "$(
                                 switch ( $SourceHead ) {
@@ -376,49 +399,43 @@ function ConvertTo-String {
                     )$( if ( $Text ) { "|$Text|" } ) $DestinationNode"
                 }
                 flowchartNode {
-                    if ( $Class ) {
-                        if ( $Text ) {
-                            Write-Output "    $Key[$Text]:::$Class"
-                        }
-                        else {
-                            Write-Output "    $Key:::$Class"
-                        }
-                    }
-                    else {
+                    Write-Output "$Key$(
                         switch ( $Shape ) {
-                            '' {
-                                if ( $Text ) {
-                                    Write-Output "    $Key[$Text]"
-                                }
-                                else {
-                                    Write-Output "    $Key"
-                                }
-                            }
-                            rectangle { Write-Output "    $Key[$Text]" }
-                            round-edges { Write-Output "    $Key($Text)" }
-                            stadium { Write-Output "    $Key([$Text])" }
-                            subroutine { Write-Output "    $Key[[$Text]]" }
-                            cylindrical { Write-Output "    $Key[($Text)]" }
-                            circle { Write-Output "    $Key(($Text))" }
-                            asymmetric { Write-Output "    $Key>$Text]" }
-                            rhombus { Write-Output "    $Key{$Text}" }
-                            hexagon { Write-Output "    $Key{{$Text}}" }
-                            parallelogram { Write-Output "    $Key[/$Text/]" }
-                            parallelogram-alt { Write-Output "    $Key[\$Text\]" }
-                            trapezoid { Write-Output "    $Key[/$Text\]" }
-                            trapezoid-alt { Write-Output "    $Key[\$Text/]" }
-                            double-circle { Write-Output "    $Key((($Text)))" }
+                            '' { "$( $Text ? "[$Text]" : '' )" }
+                            rectangle { "[$( $Text ? $Text : $Key )]" }
+                            round-edges { "($( $Text ? $Text : $Key ))" }
+                            stadium { "([$( $Text ? $Text : $Key )])" }
+                            subroutine { "[[$( $Text ? $Text : $Key )]]" }
+                            cylindrical { "[($( $Text ? $Text : $Key ))]" }
+                            circle { "(($( $Text ? $Text : $Key )))" }
+                            asymmetric { ">$( $Text ? $Text : $Key )]" }
+                            rhombus { "{$( $Text ? $Text : $Key )}" }
+                            hexagon { "{{$( $Text ? $Text : $Key )}}" }
+                            parallelogram { "[/$( $Text ? $Text : $Key )/]" }
+                            parallelogram-alt { "[\$( $Text ? $Text : $Key )\]" }
+                            trapezoid { "[/$( $Text ? $Text : $Key )\]" }
+                            trapezoid-alt { "[\$( $Text ? $Text : $Key )/]" }
+                            double-circle { "((($( $Text ? $Text : $Key ))))" }
                             Default {
                                 Write-Error "'$_' is not supported for Node Shape."
                             }
-                        }
-                    }
+                        } )$( $Class ? ":::$Class" : '' )"
                 }
                 flowchartClass {
-                    Write-Output "    classDef $Name $Style"
+                    Write-Output "classDef $Name $Style"
                 }
                 flowchartClick {
-                    Write-Output "    click $Node ""$Url""$( if ( $Tooltip ) {  ' "' + $Tooltip + '"' } )$( if ( $Target ) { " _$Target" } )"
+                    Write-Output "click $Node ""$Url""$( if ( $Tooltip ) {  ' "' + $Tooltip + '"' } )$( if ( $Target ) { " _$Target" } )"
+                }
+                flowchartSubgraph {
+                    Write-Output "subgraph $Key$( $Title ? " [$Title]" : '' )"
+                    $(
+                        $Nodes | ConvertTo-String -FromFlowchartNode | Write-Output
+                        $Clicks | ConvertTo-String -FromFlowchartClick | Write-Output
+                        $Links | ConvertTo-String -FromFlowchartLink | Write-Output
+                        ( $Subgraphs | ConvertTo-String -FromFlowchartSubgraph ) -split [Environment]::NewLine | Write-Output
+                    ) | ForEach-Object { "    $_" | Write-Output }
+                    Write-Output "end"
                 }
                 C4ContainerBoundary {
                     Write-Output "Container_Boundary($Key, ""$Name"") {"

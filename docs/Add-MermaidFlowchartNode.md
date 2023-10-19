@@ -1,14 +1,14 @@
 ---
 external help file: PsMermaidTools-help.xml
 Module Name: PsMermaidTools
-online version: https://mermaid-js.github.io/mermaid/#/entityRelationshipDiagram?id=entities-and-relationships
+online version: https://mermaid.js.org/syntax/flowchart.html#node-shapes
 schema: 2.0.0
 ---
 
 # Add-MermaidFlowchartNode
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Adds a new node to a flowchart.
 
 ## SYNTAX
 
@@ -18,7 +18,8 @@ Add-MermaidFlowchartNode [-Diagram <Object>] [-Key] <String> [[-Text] <String>] 
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Create and add a note explicitly to the diagram.
+You can specify the style via class or geometry.
 
 ## EXAMPLES
 
@@ -31,23 +32,8 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -Class
-{{ Fill Class Description }}
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Diagram
-{{ Fill Diagram Description }}
+The diagram, that the relation is added to.
 
 ```yaml
 Type: Object
@@ -62,7 +48,7 @@ Accept wildcard characters: False
 ```
 
 ### -Key
-{{ Fill Key Description }}
+The identifier of the node.
 
 ```yaml
 Type: String
@@ -70,20 +56,19 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 0
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Shape
-{{ Fill Shape Description }}
+### -Text
+The node text.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
-Accepted values: rectangle, round-edges, stadium, subroutine, cylindrical, circle, asymmetric, rhombus, hexagon, parallelogram, parallelogram-alt, trapezoid, trapezoid-alt, double-circle
+Aliases: Name
 
 Required: False
 Position: 2
@@ -92,16 +77,31 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Text
-{{ Fill Text Description }}
+### -Shape
+The node shape.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: Name
+Aliases:
 
 Required: False
-Position: 1
+Position: 3
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Class
+The class of the node.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -112,11 +112,11 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### System.Object
-
 ## OUTPUTS
 
-### System.Object
 ## NOTES
 
 ## RELATED LINKS
+
+[https://mermaid.js.org/syntax/flowchart.html#node-shapes](https://mermaid.js.org/syntax/flowchart.html#node-shapes)
+

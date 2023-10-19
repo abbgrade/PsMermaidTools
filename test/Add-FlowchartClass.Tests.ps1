@@ -12,7 +12,7 @@ Describe Add-FlowchartClass {
             $diagram = New-MermaidDiagram -Flowchart -Orientation top-down
         }
 
-        It works-by-named-parmeters {
+        It works-by-named-parameters {
             $diagram | Add-MermaidFlowchartClass -Name foo -Style 'fill:#ffffff'
             $diagram | Should -Not -BeNullOrEmpty
             $diagram.Classes | Should -Not -BeNullOrEmpty

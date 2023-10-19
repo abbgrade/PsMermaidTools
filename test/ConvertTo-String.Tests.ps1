@@ -174,7 +174,7 @@ flowchart LR
 
                 }
 
-                Context round-edges {
+                Context rectangle-shape {
                     BeforeEach {
                         $diagram | Add-MermaidFlowchartNode A node rectangle
                     }
@@ -185,6 +185,23 @@ flowchart LR
                         $output | Should -Be (@"
 flowchart LR
     A[node]
+"@.Replace("`r`n", [Environment]::NewLine))
+                    }
+                }
+
+                Context rectangle-shape-without-text {
+                    BeforeEach {
+                        $diagram | Add-MermaidFlowchartNode -Key A -Shape rectangle
+                        $diagram | Add-MermaidFlowchartNode -Key B -Shape rectangle
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
+flowchart LR
+    A[A]
+    B[B]
 "@.Replace("`r`n", [Environment]::NewLine))
                     }
                 }
@@ -631,6 +648,23 @@ flowchart LR
 
                     }
 
+                    Context without-text-with-shape {
+                        BeforeEach {
+                            $diagram | Add-MermaidFlowchartNode A -Class foo -Shape stadium
+                        }
+
+                        It works {
+                            $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                            $output | Should -Not -BeNullOrEmpty
+                            $output | Should -Be (@"
+flowchart LR
+    classDef foo fill:#ffffff
+    A([A]):::foo
+"@.Replace("`r`n", [Environment]::NewLine))
+                        }
+
+                    }
+
                     Context with-text {
                         BeforeEach {
                             $diagram | Add-MermaidFlowchartNode A bar -Class foo
@@ -680,6 +714,60 @@ flowchart LR
                         $output | Should -Be (@"
 flowchart LR
     click foo "http://localhost" _blank
+"@.Replace("`r`n", [Environment]::NewLine))
+                    }
+                }
+            }
+
+            Context subgraphs {
+
+                BeforeEach {
+                    $subgraph = $diagram | Add-MermaidFlowchartSubgraph foo -PassThru
+                }
+
+                It works {
+                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                    $output | Should -Not -BeNullOrEmpty
+                    $output | Should -Be (@"
+flowchart LR
+    subgraph foo
+    end
+"@.Replace("`r`n", [Environment]::NewLine))
+                }
+
+                Context node {
+
+                    BeforeEach {
+                        $subgraph | Add-MermaidFlowchartNode bar
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
+flowchart LR
+    subgraph foo
+        bar
+    end
+"@.Replace("`r`n", [Environment]::NewLine))
+                    }
+                }
+
+                Context nested-subgraphs {
+
+                    BeforeEach {
+                        $subgraph | Add-MermaidFlowchartSubgraph bar 'this is a nested subgraph'
+                    }
+
+                    It works {
+                        $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                        $output | Should -Not -BeNullOrEmpty
+                        $output | Should -Be (@"
+flowchart LR
+    subgraph foo
+        subgraph bar [this is a nested subgraph]
+        end
+    end
 "@.Replace("`r`n", [Environment]::NewLine))
                     }
                 }

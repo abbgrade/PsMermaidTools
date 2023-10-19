@@ -1,6 +1,6 @@
 #Requires -Modules @{ ModuleName='Pester'; ModuleVersion='5.0.0' }
 
-Describe Add-FcLink {
+Describe Add-FlowchartLink {
 
     BeforeAll {
         Import-Module $PSScriptRoot/../src/PsMermaidTools.psd1 -Force
@@ -12,7 +12,7 @@ Describe Add-FcLink {
             $diagram = New-MermaidDiagram -Flowchart -Orientation top-down
         }
 
-        It works-by-named-parmeters {
+        It works-by-named-parameters {
             $diagram | Add-MermaidFlowchartLink -Source A -Destination B
             $diagram | Should -Not -BeNullOrEmpty
             $diagram.Links | Should -Not -BeNullOrEmpty
@@ -24,7 +24,7 @@ Describe Add-FcLink {
             $diagram.Links[0].Line | Should -Be solid
         }
 
-        It works-by-named-parmeters-with-text {
+        It works-by-named-parameters-with-text {
             $diagram | Add-MermaidFlowchartLink -Source A -Destination B -Line solid -Text 'text'
             $diagram | Should -Not -BeNullOrEmpty
             $diagram.Links | Should -Not -BeNullOrEmpty

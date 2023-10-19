@@ -12,7 +12,7 @@ Describe Add-FlowchartClick {
             $diagram = New-MermaidDiagram -Flowchart
         }
 
-        It works-by-named-parmeters {
+        It works-by-named-parameters {
             $diagram | Add-MermaidFlowchartClick -Node foo -Url 'http://localhost' -Tooltip 'home sweet home' -Target blank
             $diagram | Should -Not -BeNullOrEmpty
             $diagram.Clicks | Should -Not -BeNullOrEmpty

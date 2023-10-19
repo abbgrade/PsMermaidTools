@@ -1,23 +1,25 @@
 ---
 external help file: PsMermaidTools-help.xml
 Module Name: PsMermaidTools
-online version: https://mermaid.js.org/syntax/flowchart.html#classes
+online version: https://mermaid.js.org/syntax/flowchart.html#subgraphs
 schema: 2.0.0
 ---
 
-# Add-MermaidFlowchartClass
+# Add-MermaidFlowchartSubgraph
 
 ## SYNOPSIS
-Adds a new class to a flowchart.
+Adds a new flowchart to a flowchart.
 
 ## SYNTAX
 
 ```
-Add-MermaidFlowchartClass [-Diagram <Object>] [-Name] <String> [-Style] <String> [<CommonParameters>]
+Add-MermaidFlowchartSubgraph [-Diagram <Object>] [-Key] <String> [[-Title] <String>] [-PassThru]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Create a class and add it to a flowchart to define the style of a set of nodes.
+Create and add a subgraph.
+Subgraphs may contain nodes, links, interactions and other subgraphs.
 
 ## EXAMPLES
 
@@ -31,7 +33,7 @@ PS C:\> {{ Add example code here }}
 ## PARAMETERS
 
 ### -Diagram
-The diagram, that the class is added to.
+The diagram or parent subgraph, that the subgraph is added to.
 
 ```yaml
 Type: Object
@@ -45,8 +47,8 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -Name
-The class name.
+### -Key
+The identifier of the subgraph.
 
 ```yaml
 Type: String
@@ -60,17 +62,32 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Style
-The class tyle.
+### -Title
+The subgraph title.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: 2
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PassThru
+Return the created subgraph object.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -86,5 +103,5 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## RELATED LINKS
 
-[https://mermaid.js.org/syntax/flowchart.html#classes](https://mermaid.js.org/syntax/flowchart.html#classes)
+[https://mermaid.js.org/syntax/flowchart.html#subgraphs](https://mermaid.js.org/syntax/flowchart.html#subgraphs)
 

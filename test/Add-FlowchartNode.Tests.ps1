@@ -12,7 +12,7 @@ Describe Add-FlowchartNode {
             $diagram = New-MermaidDiagram -Flowchart -Orientation top-down
         }
 
-        It works-by-named-parmeters-minimum {
+        It works-by-named-parameters-minimum {
             $diagram | Add-MermaidFlowchartNode -Key A
             $diagram | Should -Not -BeNullOrEmpty
             $diagram.Nodes | Should -Not -BeNullOrEmpty
@@ -34,7 +34,7 @@ Describe Add-FlowchartNode {
             $diagram.Nodes[0].Class | Should -BeNull
         }
 
-        It works-by-named-parmeters {
+        It works-by-named-parameters {
             $diagram | Add-MermaidFlowchartNode -Key A -Text foo -Shape round-edges
             $diagram | Should -Not -BeNullOrEmpty
             $diagram.Nodes | Should -Not -BeNullOrEmpty
@@ -62,7 +62,7 @@ Describe Add-FlowchartNode {
                 $diagram | Add-MermaidFlowchartClass foobar 'solid:#ffffff'
             }
 
-            It works-by-named-parmeters-with-class-without-name {
+            It works-by-named-parameters-with-class-without-name {
                 $diagram | Add-MermaidFlowchartNode -Key A -Class foobar
                 $diagram | Should -Not -BeNullOrEmpty
                 $diagram.Nodes | Should -Not -BeNullOrEmpty
@@ -84,7 +84,7 @@ Describe Add-FlowchartNode {
                 $diagram.Nodes[0].Class | Should -Be foobar
             }
 
-            It works-by-named-parmeters-with-class-and-name {
+            It works-by-named-parameters-with-class-and-name {
                 $diagram | Add-MermaidFlowchartNode -Key A -Text foo -Class foobar
                 $diagram | Should -Not -BeNullOrEmpty
                 $diagram.Nodes | Should -Not -BeNullOrEmpty

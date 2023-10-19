@@ -1,5 +1,18 @@
 function Add-FlowchartClick {
 
+    <#
+
+    .SYNOPSIS
+    Adds a new click interaction to a flowchart.
+
+    .DESCRIPTION
+    Add a hyperlink to a node as click interaction, that opens a website on clicking on the specified node.
+
+    .LINK
+    https://mermaid.js.org/syntax/flowchart.html#interaction
+
+    #>
+
     [CmdletBinding()]
     param (
         # The diagram, that the click is added to.
