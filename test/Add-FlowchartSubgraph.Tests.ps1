@@ -12,7 +12,7 @@ Describe FlowchartSubgraph {
             $diagram = New-MermaidDiagram -Flowchart -Orientation top-down
         }
 
-        It works-by-named-parameters {
+        It works-minimum-by-named-parameters {
             $diagram | Add-MermaidFlowchartSubgraph -Key A
             $diagram | Should -Not -BeNullOrEmpty
             $diagram.Subgraphs | Should -Not -BeNullOrEmpty
@@ -20,12 +20,30 @@ Describe FlowchartSubgraph {
             $diagram.Subgraphs[0].Key | Should -Be A
         }
 
-        It works-by-position {
+        It works-minimum-by-position {
             $diagram | Add-MermaidFlowchartSubgraph A
             $diagram | Should -Not -BeNullOrEmpty
             $diagram.Subgraphs | Should -Not -BeNullOrEmpty
             $diagram.Subgraphs.Count | Should -Be 1
             $diagram.Subgraphs[0].Key | Should -Be A
+        }
+
+        It works-by-named-parameters {
+            $diagram | Add-MermaidFlowchartSubgraph -Key A -Title 'Foo bar'
+            $diagram | Should -Not -BeNullOrEmpty
+            $diagram.Subgraphs | Should -Not -BeNullOrEmpty
+            $diagram.Subgraphs.Count | Should -Be 1
+            $diagram.Subgraphs[0].Key | Should -Be A
+            $diagram.Subgraphs[0].Title | Should -Be 'Foo bar'
+        }
+
+        It works-by-position {
+            $diagram | Add-MermaidFlowchartSubgraph A 'Foo bar'
+            $diagram | Should -Not -BeNullOrEmpty
+            $diagram.Subgraphs | Should -Not -BeNullOrEmpty
+            $diagram.Subgraphs.Count | Should -Be 1
+            $diagram.Subgraphs[0].Key | Should -Be A
+            $diagram.Subgraphs[0].Title | Should -Be 'Foo bar'
         }
 
         It works-by-named-parameters-with-passthru {

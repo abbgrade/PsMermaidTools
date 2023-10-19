@@ -25,6 +25,10 @@ function Add-FlowchartSubgraph {
         [ValidateNotNullOrEmpty()]
         [string] $Key,
 
+        # The subgraph title.
+        [Parameter(Position = 1)]
+        [string] $Title,
+
         # Return the created subgraph object.
         [Parameter()]
         [switch] $PassThru
@@ -37,6 +41,10 @@ function Add-FlowchartSubgraph {
             Links     = @()
             Clicks    = @()
             Subgraphs = @()
+        }
+
+        if ( $Title ) {
+            $subgraph | Add-Member Title $Title
         }
 
         $Diagram.Subgraphs += $subgraph

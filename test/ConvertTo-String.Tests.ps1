@@ -756,7 +756,7 @@ flowchart LR
                 Context nested-subgraphs {
 
                     BeforeEach {
-                        $subgraph | Add-MermaidFlowchartSubgraph bar
+                        $subgraph | Add-MermaidFlowchartSubgraph bar 'this is a nested subgraph'
                     }
 
                     It works {
@@ -765,7 +765,7 @@ flowchart LR
                         $output | Should -Be (@"
 flowchart LR
     subgraph foo
-        subgraph bar
+        subgraph bar [this is a nested subgraph]
         end
     end
 "@.Replace("`r`n", [Environment]::NewLine))
