@@ -46,7 +46,7 @@ function ConvertTo-String {
         [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartSubgraph')]
         [string] $Title,
 
-        # Title of the diagram.
+        # Configuration of the diagram.
         [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'erDiagram')]
         [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
         [hashtable] $Config,

@@ -14,12 +14,12 @@ Creates a new mermaid diagram.
 
 ### erDiagram (Default)
 ```
-New-MermaidDiagram [-ErDiagram] [-Title <String>] [<CommonParameters>]
+New-MermaidDiagram [-ErDiagram] [-Title <String>] [-Config <Hashtable>] [-ProgressAction <ActionPreference>]
 ```
 
 ### flowchart
 ```
-New-MermaidDiagram [-Flowchart] [[-Orientation] <String>] [-Title <String>] [<CommonParameters>]
+New-MermaidDiagram [-Flowchart] [[-Orientation] <String>] [-Title <String>] [-Config <Hashtable>]
 ```
 
 ### C4Component
@@ -114,6 +114,21 @@ The diagram title.
 
 ```yaml
 Type: String
+Parameter Sets: erDiagram, flowchart
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Config
+The diagram configuration.
+
+```yaml
+Type: Hashtable
 Parameter Sets: erDiagram, flowchart
 Aliases:
 

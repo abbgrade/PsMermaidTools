@@ -54,7 +54,7 @@ function New-Diagram {
         [Parameter( ParameterSetName = 'erDiagram')]
         [string] $Title,
 
-        # The diagram title.
+        # The diagram configuration.
         [Parameter( ParameterSetName = 'flowchart')]
         [Parameter( ParameterSetName = 'erDiagram')]
         [hashtable] $Config
