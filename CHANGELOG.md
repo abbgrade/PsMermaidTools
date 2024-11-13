@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Wrong PowerShellVersion in manifest file.
+- Added config to diagrams.
 
 ## [0.5.0] - 2023-09-22
 
