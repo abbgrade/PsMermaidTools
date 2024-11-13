@@ -52,7 +52,12 @@ function New-Diagram {
         # The diagram title.
         [Parameter( ParameterSetName = 'flowchart')]
         [Parameter( ParameterSetName = 'erDiagram')]
-        [string] $Title
+        [string] $Title,
+
+        # The diagram configuration.
+        [Parameter( ParameterSetName = 'flowchart')]
+        [Parameter( ParameterSetName = 'erDiagram')]
+        [hashtable] $Config
     )
 
     $definition = [PSCustomObject]@{
@@ -61,12 +66,23 @@ function New-Diagram {
 
     switch ( $definition.Type ) {
         erDiagram {
-            $definition | Add-Member Title $Title
+            if ( $Title ) {
+                $definition | Add-Member Title $Title
+            }
+
+            if ( $Config ) {
+                $definition | Add-Member Config $Config
+            }
+
             $definition | Add-Member Relations @()
         }
         flowchart {
             if ( $Title ) {
                 $definition | Add-Member Title $Title
+            }
+
+            if ( $Config ) {
+                $definition | Add-Member Config $Config
             }
 
             if ( $Orientation ) {

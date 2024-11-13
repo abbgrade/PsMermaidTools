@@ -108,6 +108,44 @@ flowchart
             }
         }
 
+        Context with-title {
+
+            BeforeEach {
+                $diagram = New-MermaidDiagram -Flowchart -Orientation left-to-right -Title 'Test Diagram'
+            }
+
+            It works-empty {
+                $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                $output | Should -Not -BeNullOrEmpty
+                $output | Should -Be (@"
+---
+title: Test Diagram
+---
+flowchart LR
+"@.Replace("`r`n", [Environment]::NewLine))
+            }
+        }
+
+        Context with-config {
+
+            BeforeEach {
+                $diagram = New-MermaidDiagram -Flowchart -Config @{ flowchart = @{ defaultRenderer = 'elk' } }
+            }
+
+            It works-empty {
+                $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                $output | Should -Not -BeNullOrEmpty
+                $output | Should -Be (@"
+---
+config:
+    flowchart:
+      defaultRenderer: elk
+---
+flowchart
+"@.Replace("`r`n", [Environment]::NewLine))
+            }
+        }
+
         Context with-orientation {
 
             BeforeEach {
@@ -120,24 +158,6 @@ flowchart
                 $output | Should -Be (@"
 flowchart LR
 "@.Replace("`r`n", [Environment]::NewLine))
-            }
-
-            Context with-title {
-
-                BeforeEach {
-                    $diagram = New-MermaidDiagram -Flowchart -Orientation left-to-right -Title 'Test Diagram'
-                }
-
-                It works-empty {
-                    $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
-                    $output | Should -Not -BeNullOrEmpty
-                    $output | Should -Be (@"
----
-title: Test Diagram
----
-flowchart LR
-"@.Replace("`r`n", [Environment]::NewLine))
-                }
             }
 
             Context nodes {

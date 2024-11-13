@@ -46,6 +46,11 @@ function ConvertTo-String {
         [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartSubgraph')]
         [string] $Title,
 
+        # Configuration of the diagram.
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'erDiagram')]
+        [Parameter(ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
+        [hashtable] $Config,
+
         #endregion
 
         #region erDiagram
@@ -286,9 +291,16 @@ function ConvertTo-String {
                     $Relations | ConvertTo-String | Write-Output
                 }
                 flowchart {
-                    if ( $Title ) {
+                    if ( $Title -or $Config ) {
                         '---' | Write-Output
-                        "title: $Title" | Write-Output
+                        $frontmatter = [ordered]@{}
+                        if ( $Title ) {
+                            $frontmatter.title = $Title
+                        }
+                        if ( $Config ) {
+                            $frontmatter.config = $Config
+                        }
+                        $frontmatter | ConvertTo-Yaml | Write-Output
                         '---' | Write-Output
                     }
                     switch ( $Orientation ) {
