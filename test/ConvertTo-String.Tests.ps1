@@ -138,8 +138,8 @@ flowchart LR
                 $output | Should -Be (@"
 ---
 config:
-    flowchart:
-      defaultRenderer: elk
+  flowchart:
+    defaultRenderer: elk
 ---
 flowchart
 "@.Replace("`r`n", [Environment]::NewLine))
