@@ -315,8 +315,8 @@ function ConvertTo-String {
                         $Classes | ConvertTo-String -FromFlowchartClass | Write-Output
                         $Nodes | ConvertTo-String -FromFlowchartNode | Write-Output
                         $Clicks | ConvertTo-String -FromFlowchartClick | Write-Output
-                        $Links | ConvertTo-String -FromFlowchartLink | Write-Output
                         ( $Subgraphs | ConvertTo-String -FromFlowchartSubgraph ) -split [Environment]::NewLine | Write-Output
+                        $Links | ConvertTo-String -FromFlowchartLink | Write-Output
                     ) | ForEach-Object { "    $_" | Write-Output }
                 }
                 C4ComponentDiagram {
@@ -444,8 +444,8 @@ function ConvertTo-String {
                     $(
                         $Nodes | ConvertTo-String -FromFlowchartNode | Write-Output
                         $Clicks | ConvertTo-String -FromFlowchartClick | Write-Output
-                        $Links | ConvertTo-String -FromFlowchartLink | Write-Output
                         ( $Subgraphs | ConvertTo-String -FromFlowchartSubgraph ) -split [Environment]::NewLine | Write-Output
+                        $Links | ConvertTo-String -FromFlowchartLink | Write-Output
                     ) | ForEach-Object { "    $_" | Write-Output }
                     Write-Output "end"
                 }
