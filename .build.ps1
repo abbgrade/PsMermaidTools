@@ -15,4 +15,6 @@ task InstallBuildDependencies {
     Install-Module Yayaml -Scope CurrentUser
 }
 task InstallTestDependencies {}
-task InstallReleaseDependencies {}
+task InstallReleaseDependencies {
+    Install-Module Yayaml -Scope CurrentUser
+}
