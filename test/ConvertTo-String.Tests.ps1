@@ -188,7 +188,7 @@ flowchart LR
                         $output | Should -Not -BeNullOrEmpty
                         $output | Should -Be (@"
 flowchart LR
-    A[node &quot;]
+    A["node &quot;"]
 "@.Replace("`r`n", [Environment]::NewLine))
                     }
 
@@ -204,7 +204,7 @@ flowchart LR
                         $output | Should -Not -BeNullOrEmpty
                         $output | Should -Be (@"
 flowchart LR
-    A[node]
+    A["node"]
 "@.Replace("`r`n", [Environment]::NewLine))
                     }
                 }
@@ -220,8 +220,8 @@ flowchart LR
                         $output | Should -Not -BeNullOrEmpty
                         $output | Should -Be (@"
 flowchart LR
-    A[A]
-    B[B]
+    A["A"]
+    B["B"]
 "@.Replace("`r`n", [Environment]::NewLine))
                     }
                 }
@@ -236,7 +236,7 @@ flowchart LR
                         $output | Should -Not -BeNullOrEmpty
                         $output | Should -Be (@"
 flowchart LR
-    A(node)
+    A("node")
 "@.Replace("`r`n", [Environment]::NewLine))
                     }
                 }
@@ -251,7 +251,7 @@ flowchart LR
                         $output | Should -Not -BeNullOrEmpty
                         $output | Should -Be (@"
 flowchart LR
-    A([node])
+    A(["node"])
 "@.Replace("`r`n", [Environment]::NewLine))
                     }
                 }
@@ -266,7 +266,7 @@ flowchart LR
                         $output | Should -Not -BeNullOrEmpty
                         $output | Should -Be (@"
 flowchart LR
-    A[[node]]
+    A[["node"]]
 "@.Replace("`r`n", [Environment]::NewLine))
                     }
                 }
@@ -281,7 +281,7 @@ flowchart LR
                         $output | Should -Not -BeNullOrEmpty
                         $output | Should -Be (@"
 flowchart LR
-    A[(node)]
+    A[("node")]
 "@.Replace("`r`n", [Environment]::NewLine))
                     }
                 }
@@ -296,7 +296,7 @@ flowchart LR
                         $output | Should -Not -BeNullOrEmpty
                         $output | Should -Be (@"
 flowchart LR
-    A((node))
+    A(("node"))
 "@.Replace("`r`n", [Environment]::NewLine))
                     }
                 }
@@ -311,7 +311,7 @@ flowchart LR
                         $output | Should -Not -BeNullOrEmpty
                         $output | Should -Be (@"
 flowchart LR
-    A>node]
+    A>"node"]
 "@.Replace("`r`n", [Environment]::NewLine))
                     }
                 }
@@ -326,7 +326,7 @@ flowchart LR
                         $output | Should -Not -BeNullOrEmpty
                         $output | Should -Be (@"
 flowchart LR
-    A{node}
+    A{"node"}
 "@.Replace("`r`n", [Environment]::NewLine))
                     }
                 }
@@ -341,7 +341,7 @@ flowchart LR
                         $output | Should -Not -BeNullOrEmpty
                         $output | Should -Be (@"
 flowchart LR
-    A{{node}}
+    A{{"node"}}
 "@.Replace("`r`n", [Environment]::NewLine))
                     }
                 }
@@ -356,7 +356,7 @@ flowchart LR
                         $output | Should -Not -BeNullOrEmpty
                         $output | Should -Be (@"
 flowchart LR
-    A[/node/]
+    A[/"node"/]
 "@.Replace("`r`n", [Environment]::NewLine))
                     }
                 }
@@ -371,7 +371,7 @@ flowchart LR
                         $output | Should -Not -BeNullOrEmpty
                         $output | Should -Be (@"
 flowchart LR
-    A[\node\]
+    A[\"node"\]
 "@.Replace("`r`n", [Environment]::NewLine))
                     }
                 }
@@ -386,7 +386,7 @@ flowchart LR
                         $output | Should -Not -BeNullOrEmpty
                         $output | Should -Be (@"
 flowchart LR
-    A[/node\]
+    A[/"node"\]
 "@.Replace("`r`n", [Environment]::NewLine))
                     }
                 }
@@ -401,7 +401,7 @@ flowchart LR
                         $output | Should -Not -BeNullOrEmpty
                         $output | Should -Be (@"
 flowchart LR
-    A[\node/]
+    A[\"node"/]
 "@.Replace("`r`n", [Environment]::NewLine))
                     }
                 }
@@ -416,7 +416,7 @@ flowchart LR
                         $output | Should -Not -BeNullOrEmpty
                         $output | Should -Be (@"
 flowchart LR
-    A(((node)))
+    A((("node")))
 "@.Replace("`r`n", [Environment]::NewLine))
                     }
                 }
@@ -679,7 +679,7 @@ flowchart LR
                             $output | Should -Be (@"
 flowchart LR
     classDef foo fill:#ffffff
-    A([A]):::foo
+    A(["A"]):::foo
 "@.Replace("`r`n", [Environment]::NewLine))
                         }
 
@@ -696,7 +696,7 @@ flowchart LR
                             $output | Should -Be (@"
 flowchart LR
     classDef foo fill:#ffffff
-    A[bar]:::foo
+    A["bar"]:::foo
 "@.Replace("`r`n", [Environment]::NewLine))
                         }
 
@@ -717,7 +717,7 @@ flowchart LR
                         $output | Should -Not -BeNullOrEmpty
                         $output | Should -Be (@"
 flowchart LR
-    click foo "http://localhost" "&lt;- home sweet home" _blank
+    click foo "http://localhost" "<- home sweet home" _blank
 "@.Replace("`r`n", [Environment]::NewLine))
                     }
                 }
@@ -776,7 +776,7 @@ flowchart LR
                 Context nested-subgraphs {
 
                     BeforeEach {
-                        $subgraph | Add-MermaidFlowchartSubgraph bar '<- this is a nested subgraph'
+                        $subgraph | Add-MermaidFlowchartSubgraph bar 'this is a (nested) subgraph'
                     }
 
                     It works {
@@ -785,7 +785,7 @@ flowchart LR
                         $output | Should -Be (@"
 flowchart LR
     subgraph foo
-        subgraph bar [&lt;- this is a nested subgraph]
+        subgraph bar ["this is a (nested) subgraph"]
         end
     end
 "@.Replace("`r`n", [Environment]::NewLine))
