@@ -12,6 +12,7 @@ $ModuleName = 'PsMermaidTools'
 
 task InstallBuildDependencies {
     Install-Module platyPs -Scope CurrentUser
+    Install-Module Yayaml -Scope CurrentUser
 }
 task InstallTestDependencies {}
 task InstallReleaseDependencies {}
