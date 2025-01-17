@@ -86,5 +86,16 @@ task UpdatePsBuildTasksTasks {
 }
 
 #endregion
+#region PowerShell Module
 
-task UpdatePsBuildTasks -Jobs UpdateBuildTasks, UpdateWorkflows, UpdateIndexPage, UpdateVsCodeTasks, UpdatePsBuildTasksTasks
+task UpdateModuleFile {
+    requires ModuleName
+    New-Item -Type Directory "$PSScriptRoot\..\src" -ErrorAction SilentlyContinue
+    Invoke-WebRequest `
+        -Uri "https://raw.githubusercontent.com/abbgrade/PsBuildTasks/$PsBuildTaskBranch/Powershell/MyModuleName.psm1" `
+        -OutFile "$PSScriptRoot\..\src\$ModuleName.psm1"
+}
+
+#endregion
+
+task UpdatePsBuildTasks -Jobs UpdateBuildTasks, UpdateWorkflows, UpdateIndexPage, UpdateVsCodeTasks, UpdatePsBuildTasksTasks, UpdateModuleFile

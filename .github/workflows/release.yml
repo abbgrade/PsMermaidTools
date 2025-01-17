@@ -5,7 +5,7 @@ on:
 
 jobs:
   release:
-    uses: abbgrade/PsBuildTasks/.github/workflows/release-windows.yml@1.8.2
+    uses: abbgrade/PsBuildTasks/.github/workflows/release-windows.yml@1.11.0
     with:
       module-name: PsMermaidTools
     secrets:
