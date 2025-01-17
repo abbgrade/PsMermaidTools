@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fixed broken HTML by escaping.
+
 ## [0.5.1] - 2025-01-17
 
 ### Fixed
