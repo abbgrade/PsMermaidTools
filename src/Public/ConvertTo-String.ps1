@@ -335,7 +335,7 @@ function ConvertTo-String {
                     ) | ForEach-Object { "    $_" | Write-Output }
                 }
                 flowchartLink {
-                    $escapedText = [System.Web.HttpUtility]::HtmlEncode($Text)
+                    $escapedText = Get-EscapedString $Text
                     Write-Output "$SourceNode $(
                         switch ( $Line ) {
                             solid { "$(
@@ -412,24 +412,24 @@ function ConvertTo-String {
                     )$( if ( $Text ) { "|$escapedText|" } ) $DestinationNode"
                 }
                 flowchartNode {
-                    $escapedText = [System.Web.HttpUtility]::HtmlEncode($Text ? $Text : $Key)
+                    $escapedText = Get-EscapedString ($Text ? $Text : $Key)
                     Write-Output "$Key$(
                         switch ( $Shape ) {
-                            '' { "$( $Text ? "[$escapedText]" : '' )" }
-                            rectangle { "[$escapedText]" }
-                            round-edges { "($escapedText)" }
-                            stadium { "([$escapedText])" }
-                            subroutine { "[[$escapedText]]" }
-                            cylindrical { "[($escapedText)]" }
-                            circle { "(($escapedText))" }
-                            asymmetric { ">$escapedText]" }
-                            rhombus { "{$escapedText}" }
-                            hexagon { "{{$escapedText}}" }
-                            parallelogram { "[/$escapedText/]" }
-                            parallelogram-alt { "[\$escapedText\]" }
-                            trapezoid { "[/$escapedText\]" }
-                            trapezoid-alt { "[\$escapedText/]" }
-                            double-circle { "((($escapedText)))" }
+                            '' { "$( $Text ? '["' + $escapedText + '"]' : '' )" }
+                            rectangle { '["' + $escapedText + '"]' }
+                            round-edges { '("' + $escapedText + '")' }
+                            stadium { '(["' + $escapedText + '"])' }
+                            subroutine { '[["' + $escapedText + '"]]' }
+                            cylindrical { '[("' + $escapedText + '")]' }
+                            circle { '(("' + $escapedText + '"))' }
+                            asymmetric { '>"' + $escapedText + '"]' }
+                            rhombus { '{"' + $escapedText + '"}' }
+                            hexagon { '{{"' + $escapedText + '"}}' }
+                            parallelogram { '[/"' + $escapedText + '"/]' }
+                            parallelogram-alt { '[\"' + $escapedText + '"\]' }
+                            trapezoid { '[/"' + $escapedText + '"\]' }
+                            trapezoid-alt { '[\"' + $escapedText + '"/]' }
+                            double-circle { '((("' + $escapedText + '")))' }
                             Default {
                                 Write-Error "'$_' is not supported for Node Shape."
                             }
@@ -439,10 +439,10 @@ function ConvertTo-String {
                     Write-Output "classDef $Name $Style"
                 }
                 flowchartClick {
-                    Write-Output "click $Node ""$Url""$( if ( $Tooltip ) {  ' "' + [System.Web.HttpUtility]::HtmlEncode($Tooltip) + '"' } )$( if ( $Target ) { " _$Target" } )"
+                    Write-Output "click $Node ""$Url""$( if ( $Tooltip ) {  ' "' + ( Get-EscapedString $Tooltip ) + '"' } )$( if ( $Target ) { " _$Target" } )"
                 }
                 flowchartSubgraph {
-                    Write-Output "subgraph $Key$( $Title ? ' [' + [System.Web.HttpUtility]::HtmlEncode($Title) + ']' : '' )"
+                    Write-Output "subgraph $Key$( $Title ? ' ["' + ( Get-EscapedString $Title ) + '"]' : '' )"
                     $(
                         $Nodes | ConvertTo-String -FromFlowchartNode | Write-Output
                         $Clicks | ConvertTo-String -FromFlowchartClick | Write-Output
