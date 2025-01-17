@@ -20,13 +20,13 @@ ConvertTo-MermaidString -Type <String> -Relations <PSObject[]> -ContainerBoundar
 
 ### flowchart
 ```
-ConvertTo-MermaidString -Type <String> [-Title <String>] [-Orientation <String>] -Nodes <PSObject[]>
- -Links <PSObject[]> -Classes <PSObject[]> -Clicks <PSObject[]> -Subgraphs <PSObject[]> [<CommonParameters>]
+ConvertTo-MermaidString -Type <String> [-Title <String>] [-Config <Hashtable>] [-Orientation <String>]
+ -Nodes <PSObject[]> -Links <PSObject[]> -Classes <PSObject[]> -Clicks <PSObject[]> -Subgraphs <PSObject[]>
 ```
 
 ### erDiagram
 ```
-ConvertTo-MermaidString -Type <String> [-Title <String>] -Relations <PSObject[]> [<CommonParameters>]
+ConvertTo-MermaidString -Type <String> [-Title <String>] [-Config <Hashtable>] -Relations <PSObject[]>
 ```
 
 ### flowchartSubgraph
@@ -130,6 +130,21 @@ Title of the diagram.
 ```yaml
 Type: String
 Parameter Sets: flowchart, erDiagram, flowchartSubgraph
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Config
+Configuration of the diagram.
+
+```yaml
+Type: Hashtable
+Parameter Sets: flowchart, erDiagram
 Aliases:
 
 Required: False

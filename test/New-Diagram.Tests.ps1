@@ -46,6 +46,13 @@ Describe New-Diagram {
         $diagram.Orientation | Should -Be top-down
     }
 
+    It creates-diagram-with-config {
+        $diagram = New-MermaidDiagram -Flowchart -Config @{ flowchart = @{ defaultRenderer = 'elk' } }
+        $diagram.Config | Should -Not -BeNullOrEmpty
+        $diagram.Config.flowchart | Should -Not -BeNullOrEmpty
+        $diagram.Config.flowchart.defaultRenderer | Should -Be 'elk'
+    }
+
     It creates-c4-component-diagram {
         $diagram = New-MermaidDiagram -C4Component
         $diagram | Should -Not -BeNullOrEmpty

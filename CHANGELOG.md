@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.1] - 2025-01-17
+
+### Fixed
+
+- Wrong PowerShellVersion in manifest file.
+- Added config to diagrams.
+- Escaped strings in flowcharts.
+
 ## [0.5.0] - 2023-09-22
 
 ### Added

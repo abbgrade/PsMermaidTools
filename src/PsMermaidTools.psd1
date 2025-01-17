@@ -12,7 +12,7 @@
 RootModule = 'PsMermaidTools.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.5.0'
+ModuleVersion = '0.5.1'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -33,7 +33,7 @@ Copyright = '(c) Steffen Kampmann. All rights reserved.'
 Description = 'PowerShell Module to create Mermaid diagrams.'
 
 # Minimum version of the PowerShell engine required by this module
-# PowerShellVersion = ''
+PowerShellVersion = '7.0'
 
 # Name of the PowerShell host required by this module
 # PowerShellHostName = ''
@@ -51,7 +51,11 @@ Description = 'PowerShell Module to create Mermaid diagrams.'
 # ProcessorArchitecture = ''
 
 # Modules that must be imported into the global environment prior to importing this module
-# RequiredModules = @()
+RequiredModules = @(
+@{
+    ModuleName = 'Yayaml'
+    ModuleVersion = '0.3.0'
+})
 
 # Assemblies that must be loaded prior to importing this module
 # RequiredAssemblies = @()
