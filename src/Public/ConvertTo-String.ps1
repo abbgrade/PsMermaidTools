@@ -335,6 +335,7 @@ function ConvertTo-String {
                     ) | ForEach-Object { "    $_" | Write-Output }
                 }
                 flowchartLink {
+                    $escapedText = [System.Web.HttpUtility]::HtmlEncode($Text)
                     Write-Output "$SourceNode $(
                         switch ( $Line ) {
                             solid { "$(
@@ -408,26 +409,27 @@ function ConvertTo-String {
                                 Write-Error "convert $_ is not supported."
                             }
                         }
-                    )$( if ( $Text ) { "|$Text|" } ) $DestinationNode"
+                    )$( if ( $Text ) { "|$escapedText|" } ) $DestinationNode"
                 }
                 flowchartNode {
+                    $escapedText = [System.Web.HttpUtility]::HtmlEncode($Text ? $Text : $Key)
                     Write-Output "$Key$(
                         switch ( $Shape ) {
-                            '' { "$( $Text ? "[$Text]" : '' )" }
-                            rectangle { "[$( $Text ? $Text : $Key )]" }
-                            round-edges { "($( $Text ? $Text : $Key ))" }
-                            stadium { "([$( $Text ? $Text : $Key )])" }
-                            subroutine { "[[$( $Text ? $Text : $Key )]]" }
-                            cylindrical { "[($( $Text ? $Text : $Key ))]" }
-                            circle { "(($( $Text ? $Text : $Key )))" }
-                            asymmetric { ">$( $Text ? $Text : $Key )]" }
-                            rhombus { "{$( $Text ? $Text : $Key )}" }
-                            hexagon { "{{$( $Text ? $Text : $Key )}}" }
-                            parallelogram { "[/$( $Text ? $Text : $Key )/]" }
-                            parallelogram-alt { "[\$( $Text ? $Text : $Key )\]" }
-                            trapezoid { "[/$( $Text ? $Text : $Key )\]" }
-                            trapezoid-alt { "[\$( $Text ? $Text : $Key )/]" }
-                            double-circle { "((($( $Text ? $Text : $Key ))))" }
+                            '' { "$( $Text ? "[$escapedText]" : '' )" }
+                            rectangle { "[$escapedText]" }
+                            round-edges { "($escapedText)" }
+                            stadium { "([$escapedText])" }
+                            subroutine { "[[$escapedText]]" }
+                            cylindrical { "[($escapedText)]" }
+                            circle { "(($escapedText))" }
+                            asymmetric { ">$escapedText]" }
+                            rhombus { "{$escapedText}" }
+                            hexagon { "{{$escapedText}}" }
+                            parallelogram { "[/$escapedText/]" }
+                            parallelogram-alt { "[\$escapedText\]" }
+                            trapezoid { "[/$escapedText\]" }
+                            trapezoid-alt { "[\$escapedText/]" }
+                            double-circle { "((($escapedText)))" }
                             Default {
                                 Write-Error "'$_' is not supported for Node Shape."
                             }
@@ -437,10 +439,10 @@ function ConvertTo-String {
                     Write-Output "classDef $Name $Style"
                 }
                 flowchartClick {
-                    Write-Output "click $Node ""$Url""$( if ( $Tooltip ) {  ' "' + $Tooltip + '"' } )$( if ( $Target ) { " _$Target" } )"
+                    Write-Output "click $Node ""$Url""$( if ( $Tooltip ) {  ' "' + [System.Web.HttpUtility]::HtmlEncode($Tooltip) + '"' } )$( if ( $Target ) { " _$Target" } )"
                 }
                 flowchartSubgraph {
-                    Write-Output "subgraph $Key$( $Title ? " [$Title]" : '' )"
+                    Write-Output "subgraph $Key$( $Title ? ' [' + [System.Web.HttpUtility]::HtmlEncode($Title) + ']' : '' )"
                     $(
                         $Nodes | ConvertTo-String -FromFlowchartNode | Write-Output
                         $Clicks | ConvertTo-String -FromFlowchartClick | Write-Output

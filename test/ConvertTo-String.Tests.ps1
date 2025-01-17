@@ -180,7 +180,7 @@ flowchart LR
 
                 Context no-shape {
                     BeforeEach {
-                        $diagram | Add-MermaidFlowchartNode A node
+                        $diagram | Add-MermaidFlowchartNode A 'node "'
                     }
 
                     It works {
@@ -188,7 +188,7 @@ flowchart LR
                         $output | Should -Not -BeNullOrEmpty
                         $output | Should -Be (@"
 flowchart LR
-    A[node]
+    A[node &quot;]
 "@.Replace("`r`n", [Environment]::NewLine))
                     }
 
@@ -460,7 +460,7 @@ flowchart LR
                 Context Text-on-links {
 
                     BeforeEach {
-                        $diagram | Add-MermaidFlowchartLink A B -Text 'text' -DestinationHead open
+                        $diagram | Add-MermaidFlowchartLink A B -Text 'text "' -DestinationHead open
                     }
 
                     It works {
@@ -468,7 +468,7 @@ flowchart LR
                         $output | Should -Not -BeNullOrEmpty
                         $output | Should -Be (@"
 flowchart LR
-    A ---|text| B
+    A ---|text &quot;| B
 "@.Replace("`r`n", [Environment]::NewLine))
                     }
                 }
@@ -476,7 +476,7 @@ flowchart LR
                 Context A-link-with-arrow-head-and-text {
 
                     BeforeEach {
-                        $diagram | Add-MermaidFlowchartLink A B -Text 'text'
+                        $diagram | Add-MermaidFlowchartLink A B -Text text
                     }
 
                     It works {
@@ -709,7 +709,7 @@ flowchart LR
                 Context with-tooltip {
 
                     BeforeEach {
-                        $diagram | Add-MermaidFlowchartClick foo 'http://localhost' -Tooltip 'home sweet home' -Target blank
+                        $diagram | Add-MermaidFlowchartClick foo 'http://localhost' -Tooltip '<- home sweet home' -Target blank
                     }
 
                     It works {
@@ -717,7 +717,7 @@ flowchart LR
                         $output | Should -Not -BeNullOrEmpty
                         $output | Should -Be (@"
 flowchart LR
-    click foo "http://localhost" "home sweet home" _blank
+    click foo "http://localhost" "&lt;- home sweet home" _blank
 "@.Replace("`r`n", [Environment]::NewLine))
                     }
                 }
@@ -776,7 +776,7 @@ flowchart LR
                 Context nested-subgraphs {
 
                     BeforeEach {
-                        $subgraph | Add-MermaidFlowchartSubgraph bar 'this is a nested subgraph'
+                        $subgraph | Add-MermaidFlowchartSubgraph bar '<- this is a nested subgraph'
                     }
 
                     It works {
@@ -785,7 +785,7 @@ flowchart LR
                         $output | Should -Be (@"
 flowchart LR
     subgraph foo
-        subgraph bar [this is a nested subgraph]
+        subgraph bar [&lt;- this is a nested subgraph]
         end
     end
 "@.Replace("`r`n", [Environment]::NewLine))
