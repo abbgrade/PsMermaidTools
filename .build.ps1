@@ -10,13 +10,14 @@ $ModuleName = 'PsMermaidTools'
 . $PSScriptRoot/tasks/Build.Tasks.ps1
 . $PSScriptRoot/tasks/PsBuild.Tasks.ps1
 
-task InstallBuildDependencies {
+task InstallModuleDependencies -Jobs {
+    Install-Module Yayaml -Scope CurrentUser
+}
+
+task InstallBuildDependencies -Jobs InstallModuleDependencies, {
     Install-Module platyPs -Scope CurrentUser
-    Install-Module Yayaml -Scope CurrentUser
 }
-task InstallTestDependencies {
-    Install-Module Yayaml -Scope CurrentUser
-}
-task InstallReleaseDependencies {
-    Install-Module Yayaml -Scope CurrentUser
-}
+
+task InstallTestDependencies -Jobs InstallModuleDependencies
+
+task InstallReleaseDependencies -Jobs InstallModuleDependencies
