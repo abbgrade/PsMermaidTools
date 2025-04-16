@@ -38,6 +38,25 @@ erDiagram
             }
         }
 
+        Context with-config {
+
+            BeforeEach {
+                $diagram = New-MermaidDiagram -ErDiagram -Config @{ layout = 'elk' }
+            }
+
+            It works-empty {
+                $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                $output | Should -Not -BeNullOrEmpty
+                $output | Should -Be (@"
+---
+config:
+  layout: elk
+---
+erDiagram
+"@.Replace("`r`n", [Environment]::NewLine))
+            }
+        }
+
         Context minimum {
             BeforeEach {
                 $diagram | Add-MermaidErRelation -Entity Entity
@@ -129,7 +148,7 @@ flowchart LR
         Context with-config {
 
             BeforeEach {
-                $diagram = New-MermaidDiagram -Flowchart -Config @{ flowchart = @{ defaultRenderer = 'elk' } }
+                $diagram = New-MermaidDiagram -Flowchart -Config @{ layout = 'elk' }
             }
 
             It works-empty {
@@ -138,8 +157,7 @@ flowchart LR
                 $output | Should -Be (@"
 ---
 config:
-  flowchart:
-    defaultRenderer: elk
+  layout: elk
 ---
 flowchart
 "@.Replace("`r`n", [Environment]::NewLine))

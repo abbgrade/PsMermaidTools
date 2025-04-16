@@ -282,9 +282,16 @@ function ConvertTo-String {
         @(
             switch ($PSCmdlet.ParameterSetName) {
                 erDiagram {
-                    if ( $Title ) {
+                    if ( $Title -or $Config ) {
                         '---' | Write-Output
-                        "title: $Title" | Write-Output
+                        $frontmatter = [ordered]@{}
+                        if ( $Title ) {
+                            $frontmatter.title = $Title
+                        }
+                        if ( $Config ) {
+                            $frontmatter.config = $Config
+                        }
+                        $frontmatter | ConvertTo-Yaml | Write-Output
                         '---' | Write-Output
                     }
                     $Type | Write-Output
