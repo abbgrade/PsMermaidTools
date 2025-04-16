@@ -14,7 +14,9 @@ task InstallBuildDependencies {
     Install-Module platyPs -Scope CurrentUser
     Install-Module Yayaml -Scope CurrentUser
 }
-task InstallTestDependencies {}
+task InstallTestDependencies {
+    Install-Module Yayaml -Scope CurrentUser
+}
 task InstallReleaseDependencies {
     Install-Module Yayaml -Scope CurrentUser
 }
