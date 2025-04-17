@@ -108,6 +108,29 @@ erDiagram
 "@.Replace("`r`n", [Environment]::NewLine))
             }
         }
+
+        Context with-attributes {
+            BeforeEach {
+                $diagram | Add-MermaidErAttribute -Entity Customer -Name Name -Type String
+                $diagram | Add-MermaidErAttribute -Entity Customer -Name Sector -Type String
+                $diagram | Add-MermaidErAttribute -Entity Order -Name Number -Type Int
+            }
+
+            It works {
+                $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                $output | Should -Not -BeNullOrEmpty
+                $output | Should -Be (@"
+erDiagram
+    Customer {
+        String Name
+        String Sector
+    }
+    Order {
+        Int Number
+    }
+"@.Replace("`r`n", [Environment]::NewLine))
+            }
+        }
     }
 
     Context flowchart {
