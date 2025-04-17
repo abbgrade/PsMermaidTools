@@ -74,6 +74,7 @@ function New-Diagram {
                 $definition | Add-Member Config $Config
             }
 
+            $definition | Add-Member Entities ([ordered]@{})
             $definition | Add-Member Relations @()
         }
         flowchart {

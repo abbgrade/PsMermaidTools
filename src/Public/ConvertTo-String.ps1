@@ -38,6 +38,7 @@ function ConvertTo-String {
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'erDiagram')]
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchart')]
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4ComponentDiagram')]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'erAttribute')]
         [string] $Type,
 
         # Title of the diagram.
@@ -60,6 +61,10 @@ function ConvertTo-String {
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4ComponentDiagram')]
         [AllowEmptyCollection()]
         [PSCustomObject[]] $Relations,
+
+        # Collection of entities.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'erDiagram')]
+        [PSCustomObject[]] $Entities,
 
         #endregion
 
@@ -161,6 +166,29 @@ function ConvertTo-String {
 
         #endregion
 
+        #region erRelationship
+
+        # Cardinality of the first entity.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'erRelationship')]
+        [string] $FirstCardinality,
+
+        # Cardinality of the second entity.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'erRelationship')]
+        [string] $SecondCardinality,
+
+        # Flags if one entity may exist without the other.
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'erRelationship')]
+        [bool] $Identifying,
+
+        #endregion
+
+        #region erEntity
+
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'erEntity')]
+        [PSCustomObject[]] $Attributes,
+
+        #endregion
+
         #region flowchartLink
 
         [Parameter(ParameterSetName = 'flowchartLink')]
@@ -223,6 +251,8 @@ function ConvertTo-String {
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'flowchartClass')]
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4ContainerBoundary')]
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'C4Component')]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'erEntity')]
+        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'erAttribute')]
         [string] $Name,
 
         # Style of the class.
@@ -257,23 +287,7 @@ function ConvertTo-String {
         #region flowchartSubgraph
 
         [Parameter(ParameterSetName = 'flowchartSubgraph')]
-        [switch] $FromFlowchartSubgraph,
-
-        #endregion
-
-        #region erRelationship
-
-        # Cardinality of the first entity.
-        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'erRelationship')]
-        [string] $FirstCardinality,
-
-        # Cardinality of the second entity.
-        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'erRelationship')]
-        [string] $SecondCardinality,
-
-        # Flags if one entity may exist without the other.
-        [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'erRelationship')]
-        [bool] $Identifying
+        [switch] $FromFlowchartSubgraph
 
         #endregion
     )
@@ -295,6 +309,9 @@ function ConvertTo-String {
                         '---' | Write-Output
                     }
                     $Type | Write-Output
+                    if ( $Entities -and $Entities.Values ) {
+                        $Entities.Values | ConvertTo-String | Write-Output
+                    }
                     $Relations | ConvertTo-String | Write-Output
                 }
                 flowchart {
@@ -340,6 +357,14 @@ function ConvertTo-String {
                             Write-Output "$FirstEntity"
                         }
                     ) | ForEach-Object { "    $_" | Write-Output }
+                }
+                erEntity {
+                    "    $Name {" | Write-Output
+                    $Attributes | ConvertTo-String | Write-Output
+                    '    }' | Write-Output
+                }
+                erAttribute {
+                    "        $Type $Name" | Write-Output
                 }
                 flowchartLink {
                     $escapedText = Get-EscapedString $Text
