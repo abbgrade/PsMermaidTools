@@ -351,10 +351,10 @@ function ConvertTo-String {
                 erRelation {
                     $(
                         if ( $SecondEntity ) {
-                            Write-Output "$FirstEntity $( $Relationship | ConvertTo-String ) $SecondEntity$( if ( $Label ) {" : $Label" })"
+                            Write-Output """$FirstEntity"" $( $Relationship | ConvertTo-String ) ""$SecondEntity""$( if ( $Label ) {' : "' + $Label + '"' })"
                         }
                         else {
-                            Write-Output "$FirstEntity"
+                            Write-Output """$FirstEntity"""
                         }
                     ) | ForEach-Object { "    $_" | Write-Output }
                 }
@@ -364,7 +364,12 @@ function ConvertTo-String {
                     '    }' | Write-Output
                 }
                 erAttribute {
-                    "        $Type $Name" | Write-Output
+                    $cleansedName = $Name.
+                        Replace(' ', '_').
+                        Replace('/', '_').
+                        Replace('.', '_').
+                        Replace('%', '_')
+                    "        $Type $cleansedName" | Write-Output
                 }
                 flowchartLink {
                     $escapedText = Get-EscapedString $Text
