@@ -67,7 +67,7 @@ erDiagram
                 $output | Should -Not -BeNullOrEmpty
                 $output | Should -Be (@"
 erDiagram
-    Entity
+    "Entity"
 "@.Replace("`r`n", [Environment]::NewLine))
             }
         }
@@ -94,7 +94,7 @@ erDiagram
             It works-for-relation {
                 $output = $diagram.Relations[0] | ConvertTo-MermaidString -ErrorAction Stop
                 $output | Should -Not -BeNullOrEmpty
-                $output | Should -Be '    Customer ||--o{ Order : places'
+                $output | Should -Be '    "Customer" ||--o{ "Order" : "places"'
             }
 
             It works-for-diagram {
@@ -102,9 +102,9 @@ erDiagram
                 $output | Should -Not -BeNullOrEmpty
                 $output | Should -Be (@"
 erDiagram
-    Customer ||--o{ Order : places
-    Order ||--|{ LineItem : contains
-    Customer }|..|{ DeliveryAddress : uses
+    "Customer" ||--o{ "Order" : "places"
+    "Order" ||--|{ "LineItem" : "contains"
+    "Customer" }|..|{ "DeliveryAddress" : "uses"
 "@.Replace("`r`n", [Environment]::NewLine))
             }
         }
@@ -128,6 +128,21 @@ erDiagram
     Order {
         Int Number
     }
+"@.Replace("`r`n", [Environment]::NewLine))
+            }
+        }
+
+        Context with-special-characters {
+            BeforeEach {
+                $diagram | Add-MermaidErRelation -FirstEntity Motörhead -FirstCardinality One-or-more -SecondEntity 'Rock/Roll' -SecondCardinality Exactly-one -Label plays
+            }
+
+            It works {
+                $output = $diagram | ConvertTo-MermaidString -ErrorAction Stop
+                $output | Should -Not -BeNullOrEmpty
+                $output | Should -Be (@"
+erDiagram
+    "Motörhead" }|--|| "Rock/Roll" : "plays"
 "@.Replace("`r`n", [Environment]::NewLine))
             }
         }
